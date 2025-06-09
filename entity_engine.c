@@ -113,8 +113,6 @@ void chickenBrain() {
 
         moveEntityAlongPath(&entities[i]);
 
-        printf("Got executed! Editing with GitHub works fine!");
-
         renderEntity(1, entities[i].position.x - 32, entities[i].position.y - 32);
     }
 }
