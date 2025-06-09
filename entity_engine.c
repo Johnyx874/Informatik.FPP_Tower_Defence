@@ -4,24 +4,24 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define MAX_ENTITIES 10  // Maximale Anzahl an Entit‰ten
-#define ENTITY_SPACING 100 // Abstand in Pixeln zwischen den Startpositionen der H¸hner
+#define MAX_ENTITIES 10  // Maximale Anzahl an Entit√§ten
+#define ENTITY_SPACING 100 // Abstand in Pixeln zwischen den Startpositionen der H√ºhner
 
-// Struktur f¸r einen 2D-Vektor
+// Struktur f√ºr einen 2D-Vektor
 typedef struct {
     int x, y;
 } Vector2;
 
-// Struktur f¸r einen Pfad mit mehreren Punkten
+// Struktur f√ºr einen Pfad mit mehreren Punkten
 typedef struct {
     Vector2* points;
     int count;
 } Path;
 
-// Struktur f¸r ein einzelnes "Huhn"/Entity
+// Struktur f√ºr ein einzelnes "Huhn"/Entity
 typedef struct {
     Vector2 position;         // Aktuelle Position
-    int currentTargetIndex;  // Index des n‰chsten Wegpunkts
+    int currentTargetIndex;  // Index des n√§chsten Wegpunkts
     int speed;               // Bewegungsgeschwindigkeit (Pixel pro Frame)
 } EntityData;
 
@@ -47,14 +47,14 @@ EntityData entities[MAX_ENTITIES];
 int entityCount = 0; // Aktuelle Anzahl an Entitys
 
 
-// F¸gt ein neues Entity zum Entity-Array hinzu
+// F√ºgt ein neues Entity zum Entity-Array hinzu
 void addEntity(Vector2 startPos, int speed) {
     if (entityCount >= MAX_ENTITIES) return;  // Sicherheitscheck
 
     entities[entityCount].position = startPos;         // Startposition setzen
     entities[entityCount].currentTargetIndex = 0;      // Beginnt bei Wegpunkt 0
     entities[entityCount].speed = speed;               // Geschwindigkeit setzen
-    entityCount++;                                     // Anzahl erhˆhen
+    entityCount++;                                     // Anzahl erh√∂hen
 }
 
 
@@ -93,8 +93,8 @@ void moveEntityAlongPath(EntityData* e) {
 
 void cloneEntity(int amount, int spacing) {
 
-    // OPTION A: 10 H¸hner mit Abstand generieren (einmalig bei Start)
-    if (MAX_ENTITIES - amount >= 0) {  // Verhindert mehrfaches Hinzuf¸gen
+    // OPTION A: 10 H√ºhner mit Abstand generieren (einmalig bei Start)
+    if (MAX_ENTITIES - amount >= 0) {  // Verhindert mehrfaches Hinzuf√ºgen
         for (int i = 0; i < amount; i++) {
 
             Vector2 startPos = { 0 - i * spacing, 590 };  // Abstand auf X-Achse
@@ -106,21 +106,21 @@ void cloneEntity(int amount, int spacing) {
 }
 
 
-// Logik f¸r alle H¸hner aufrufen (mehrere gleichzeitig)
+// Logik f√ºr alle H√ºhner aufrufen (mehrere gleichzeitig)
 void chickenBrain() {
 
     for (int i = 0; i < entityCount; i++) {
 
         moveEntityAlongPath(&entities[i]);
 
-        printf("Got executed!");
+        printf("Got executed! Editing with GitHub works fine!");
 
         renderEntity(1, entities[i].position.x - 32, entities[i].position.y - 32);
     }
 }
 
 
-// Dummy-Funktion f¸r eine Kanone (kann sp‰ter erweitert werden)
+// Dummy-Funktion f√ºr eine Kanone (kann sp√§ter erweitert werden)
 void cannonBrain(int x_position, int y_position) {
 
     renderEntity(2, x_position, y_position);
