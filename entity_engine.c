@@ -144,8 +144,8 @@ void cannonBrain(int x_position, int y_position) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager() {
 
-    spawnAndCloneEntity(theChicken, 5, 100);
-    //spawnEntity(theChicken, 0);
+    //spawnAndCloneEntity(theChicken, 5, 100);
+    spawnEntity(theChicken, 0);
 
     moveEntity(theChicken);
 
