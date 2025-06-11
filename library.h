@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+extern bool running_first_frame;
+
 bool InitApp();  // Initialisieren, Texturen laden
 
 void GameLoop(); // Haubt Game Loop

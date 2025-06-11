@@ -1,8 +1,11 @@
 // entity_engine.c
 
 #include "library.h"
+bool running_first_frame;
+
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define MAX_ENTITIES 10  // Maximale Anzahl an Entitäten
 #define ENTITY_SPACING 100 // Abstand in Pixeln zwischen den Startpositionen der Hühner
@@ -18,11 +21,15 @@ typedef struct {
     int count;
 } Path;
 
-// Struktur für ein einzelnes "Huhn"/Entity
+// Struktur für ein einzelnes Entity
 typedef struct {
+
+    char type[50];            // Type des Entitys
+    int textureIndex;         // Von dem Entity verwendete Textur
     Vector2 position;         // Aktuelle Position
-    int currentTargetIndex;  // Index des nächsten Wegpunkts
-    int speed;               // Bewegungsgeschwindigkeit (Pixel pro Frame)
+    int currentTargetIndex;   // Index des nächsten Wegpunkts
+    int speed;                // Bewegungsgeschwindigkeit (Pixel pro Frame)
+
 } EntityData;
 
 
@@ -42,19 +49,27 @@ Vector2 pathPoints[] = {
 // Initialisierung des Pfads
 Path path = { pathPoints, 9 };
 
-// Array zur Speicherung mehrerer Entitys
-EntityData entities[MAX_ENTITIES];
-int entityCount = 0; // Aktuelle Anzahl an Entitys
 
+EntityData entities[MAX_ENTITIES];  // Array zur Speicherung mehrerer Entitys
+int entityCount = 0;                // Aktuelle Anzahl an Entitys
+
+//EntityData theChicken = { "chicken", { 0, 590 }, 0, 5 };
+EntityData theChicken = { "chicken", 1, {0, 590}, 0, 5};
+EntityData theSecond = { "second", 2, {0, 590}, 0, 10 };
 
 // Fügt ein neues Entity zum Entity-Array hinzu
-void addEntity(Vector2 startPos, int speed) {
+void addEntity(char *type, Vector2 position, int speed) {
     if (entityCount >= MAX_ENTITIES) return;  // Sicherheitscheck
 
-    entities[entityCount].position = startPos;         // Startposition setzen
+    
+
+    strcpy_s(entities[entityCount].type, 50, type);
+    //entities[entityCount].type = type;
+    entities[entityCount].position = position;      // Startposition setzen
     entities[entityCount].currentTargetIndex = 0;      // Beginnt bei Wegpunkt 0
-    entities[entityCount].speed = speed;               // Geschwindigkeit setzen
+    entities[entityCount].speed = speed;            // Geschwindigkeit setzen
     entityCount++;                                     // Anzahl erhöhen
+
 }
 
 
@@ -91,31 +106,66 @@ void moveEntityAlongPath(EntityData* e) {
 }
 
 
-void cloneEntity(int amount, int spacing) {
+//void spawnAndCloneEntity(EntityData* e, int amount, int spacing) {
+//
+//    spawnEntity(&e);
+//
+//    /*
+//    // OPTION A: 10 Hühner mit Abstand generieren (einmalig bei Start)
+//    if (MAX_ENTITIES - amount >= 0) {  // Verhindert mehrfaches Hinzufügen
+//        for (int i = 0; i < amount; i++) {
+//
+//            Vector2 startPos = { 0 - i * spacing, 590 };  // Abstand auf X-Achse
+//
+//            addEntity(startPos, 5);
+//        }
+//    }
+//    */
+//
+//}
 
-    // OPTION A: 10 Hühner mit Abstand generieren (einmalig bei Start)
-    if (MAX_ENTITIES - amount >= 0) {  // Verhindert mehrfaches Hinzufügen
-        for (int i = 0; i < amount; i++) {
 
-            Vector2 startPos = { 0 - i * spacing, 590 };  // Abstand auf X-Achse
+void spawnEntity(EntityData* e) {
 
-            addEntity(startPos, 5);
+    char type[50]; strcpy_s(type, 50, e->type);
+    Vector2 position = e->position; 
+    int speed = e->speed;               
+
+    if (running_first_frame) {
+        addEntity(type, position, speed);
+        printf("Entity added\n");
+    }
+    
+    for (int i = 0; i <= entityCount; i++) {
+
+        //if (entities[i].type == e->type) {
+        if (strcmp(e->type, entities[i].type) == 0) {
+            moveEntityAlongPath(&entities[i]);
+            renderEntity(e->textureIndex, entities[i].position.x - 32, entities[i].position.y - 32);
+            printf("Entity moved\n");
         }
-    }
-
-}
 
 
-// Logik für alle Hühner aufrufen (mehrere gleichzeitig)
-void chickenBrain() {
+        /*int test = strcmp(e->type, entities[i].type);
 
-    for (int i = 0; i < entityCount; i++) {
-
-        moveEntityAlongPath(&entities[i]);
-
-        renderEntity(1, entities[i].position.x - 32, entities[i].position.y - 32);
+        printf("i = %d, entityCount = %d\n", i, entityCount);
+        printf("strcmp output: %d\n", test);
+        printf("e->type: %s\n", e->type);
+        printf("entities[i].type: %s\n\n", entities[i].type);*/
     }
 }
+
+
+ //Logik für alle Hühner aufrufen (mehrere gleichzeitig)
+//void chickenBrain() {
+//
+//    for (int i = 0; i < entityCount; i++) {
+//
+//        moveEntityAlongPath(&entities[i]);
+//
+//        
+//    }
+//}
 
 
 // Dummy-Funktion für eine Kanone (kann später erweitert werden)
@@ -128,9 +178,16 @@ void cannonBrain(int x_position, int y_position) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager() {
 
+    spawnEntity(&theChicken);
+    spawnEntity(&theSecond);
+
+    /*
     cloneEntity(5, 100);
 
     chickenBrain();
 
     cannonBrain(500, 500);
+    */
+
+    printf("------------------\n");
 }
