@@ -140,9 +140,9 @@ void renderEntity(int index, int x_offset, int y_offset) {
 
   //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
-    case 1: renderTexture(texture3, 0, 0, 64, 64, x_offset, y_offset); break;
+    case 1: renderTexture(texture3, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
     
-    case 2: renderTexture(texture2, 0, 0, 128, 128, x_offset, y_offset); break;
+    case 2: renderTexture(texture2, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
 
     }
 
