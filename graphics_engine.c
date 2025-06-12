@@ -182,17 +182,6 @@ bool quitGame(bool running) {
             SDL_DestroyWindow(window);
 
         }
-
-        if (event.type == SDL_EVENT_KEY_DOWN) {
-
-            if (event.key.key == SDLK_C) {
-
-                spawnEntity_this_frame = true;
-
-                printf("spawn\n");
-
-            }
-        }
     }
     
     return running;

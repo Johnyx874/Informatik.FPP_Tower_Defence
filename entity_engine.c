@@ -31,6 +31,7 @@ typedef struct {
     Vector2 position;         // Aktuelle Position
     int currentTargetIndex;   // Index des nächsten Wegpunkts
     int speed;                // Bewegungsgeschwindigkeit (Pixel pro Frame)
+    int health;
 
 } EntityData;
 
@@ -56,7 +57,7 @@ EntityData entities[MAX_ENTITIES];  // Array zur Speicherung mehrerer Entitys
 int entityCount = 0;                // Aktuelle Anzahl an Entitys
 
 EntityData theChicken = { "chicken", 1, {0, 590}, 0, 5};
-EntityData theSecond = { "second", 2, {0, 590}, 0, 10 };
+EntityData theSecond = { "second", 2, {0, 590}, 0, 10};
 
 
 // Bewegt eine einzelne Entity entlang des Pfads
@@ -141,8 +142,6 @@ void cannonBrain(int x_position, int y_position) {
 
     renderEntity(2, x_position, y_position);
 }
-
-
 
 
 // Haupt-Entity-Manager: verwaltet alle "Brains"

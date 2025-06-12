@@ -11,6 +11,8 @@ bool InitApp();  // Initialisieren, Texturen laden
 
 void GameLoop(); // Haubt Game Loop
 
+void checkEvents(); // nach Events suchen
+
 void entityManager(); // Verwalten von Entitys
 
 void renderClear(); // Renderer leeren

@@ -18,8 +18,7 @@ void GameLoop() {
 
         running = quitGame(running);
 
-		
-
+		checkEvents();
 
 		renderClear();
 
