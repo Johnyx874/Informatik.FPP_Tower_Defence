@@ -2,6 +2,7 @@
 
 #include "library.h"		// Zugriff auf Header-Datei
 bool running_first_frame;
+bool spawnEntity_this_frame;
 
 #include <stdio.h>		// Standart I/O Library
 #include <stdbool.h>		// Verwenden von Boolians
@@ -13,7 +14,11 @@ void GameLoop() {
 
     while (running) {
 
+		spawnEntity_this_frame = false;
+
         running = quitGame(running);
+
+		
 
 
 		renderClear();
@@ -27,7 +32,9 @@ void GameLoop() {
 
 		countFrame();
 
+
 		running_first_frame = false;
+
 
         SDL_Delay(20);
 

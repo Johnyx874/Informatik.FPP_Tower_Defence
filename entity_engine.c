@@ -3,11 +3,13 @@
 #include "library.h"
 bool running_first_frame;
 
+bool spawnEntity_this_frame;
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
-#define MAX_ENTITIES 10  // Maximale Anzahl an Entitäten
+#define MAX_ENTITIES 100  // Maximale Anzahl an Entitäten
 #define ENTITY_SPACING 100 // Abstand in Pixeln zwischen den Startpositionen der Hühner
 
 // Struktur für einen 2D-Vektor
@@ -97,7 +99,7 @@ void moveEntity(EntityData e) {
         if (strcmp(e.type, entities[i].type) == 0) {
             moveAlongPath(&entities[i]);
             renderEntity(e.textureIndex, entities[i].position.x, entities[i].position.y);
-            printf("  - Entity moved\n");
+            //printf("  - Entity moved\n");
         }
     }
 }
@@ -106,11 +108,11 @@ void moveEntity(EntityData e) {
 void spawnEntity(EntityData e, int offset) {
 
     if (entityCount >= MAX_ENTITIES) {    // Sicherheitscheck
-        printf("Too much Entitys!");
+        printf("Too much Entitys!\n");
         return;
     }
 
-    if (running_first_frame) {
+    //if (running_first_frame) {
 
         strcpy_s(entities[entityCount].type, 50, e.type);
 
@@ -122,7 +124,7 @@ void spawnEntity(EntityData e, int offset) {
         entityCount++;                                     // Anzahl erhöhen
 
         printf("  - Entity added\n");
-    }
+    //}
 }
 
 
@@ -141,15 +143,27 @@ void cannonBrain(int x_position, int y_position) {
 }
 
 
+
+
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager() {
 
-    spawnAndCloneEntity(theChicken, 5, 100);
-    //spawnEntity(theChicken, 0);
+
+    // wenn Taste "C" gedrückt dann
+    // chicken spawnen
+
+    if (spawnEntity_this_frame) {
+
+        spawnEntity(theChicken, 0);
+    }
+
+    //spawnAndCloneEntity(theChicken, 9, 50);
+    //spawnEntity(theSecond, 0);
 
     moveEntity(theChicken);
+    //moveEntity(theSecond);
 
     //spawnAndCloneEntity(theChicken, 5, 100);
 
-    printf("-------- entityManger completed--------\n\n");
+    //printf("-------- entityManger completed--------\n\n");
 }

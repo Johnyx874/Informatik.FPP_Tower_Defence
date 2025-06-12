@@ -36,6 +36,9 @@
     <ClCompile Include="entity_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="menu_engine.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library.h">

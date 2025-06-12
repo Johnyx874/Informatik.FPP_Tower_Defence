@@ -5,6 +5,8 @@
 
 extern bool running_first_frame;
 
+extern bool spawnEntity_this_frame;
+
 bool InitApp();  // Initialisieren, Texturen laden
 
 void GameLoop(); // Haubt Game Loop

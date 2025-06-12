@@ -3,6 +3,7 @@
 #define SDL_MAIN_HANDLED
 
 #include "library.h"
+bool spawnEntity_this_frame;
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -103,13 +104,13 @@ bool InitApp(void)
     }
 
 
-    texture1 = LoadTexture("D:/Informatik/Additional Files/Images/first_map.bmp", &texture1_width, &texture1_height);
+    texture1 = LoadTexture("H:/Additional Files/Images/first_map.bmp", &texture1_width, &texture1_height);
     if (!texture1) return false;
 
-    texture2 = LoadTexture("D:/Informatik/Additional Files/Images/cannon128.bmp", &texture2_width, &texture2_height);
+    texture2 = LoadTexture("H:/Additional Files/Images/cannon128.bmp", &texture2_width, &texture2_height);
     if (!texture2) return false;
 
-    texture3 = LoadTexture("D:/Informatik/Additional Files/Images/chicken.bmp", &texture3_width, &texture3_height);
+    texture3 = LoadTexture("H:/Additional Files/Images/chicken.bmp", &texture3_width, &texture3_height);
     if (!texture3) {
 
         printf("Error Loading Texture");
@@ -164,6 +165,7 @@ void renderPresent() {
 }
 
 
+
 bool quitGame(bool running) {
     
     SDL_Event event;
@@ -179,6 +181,17 @@ bool quitGame(bool running) {
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
 
+        }
+
+        if (event.type == SDL_EVENT_KEY_DOWN) {
+
+            if (event.key.key == SDLK_C) {
+
+                spawnEntity_this_frame = true;
+
+                printf("spawn\n");
+
+            }
         }
     }
     
