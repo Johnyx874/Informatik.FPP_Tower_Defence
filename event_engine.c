@@ -17,21 +17,14 @@ void checkEvents() {
         }
 
         if (event.type == SDL_EVENT_KEY_DOWN) {
-
             if (event.key.key == SDLK_C) {
-
                 spawnEntity_this_frame = true;
-
-                printf("spawn\n");
-
             }
-
-            printf("Button!");
         }
 
    
 
     }
 
-    //printf("checked\n");
+    
 }

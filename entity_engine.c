@@ -2,8 +2,9 @@
 
 #include "library.h"
 bool running_first_frame;
-
 bool spawnEntity_this_frame;
+
+#include "structs.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -11,30 +12,6 @@ bool spawnEntity_this_frame;
 
 #define MAX_ENTITIES 100  // Maximale Anzahl an Entitäten
 #define ENTITY_SPACING 100 // Abstand in Pixeln zwischen den Startpositionen der Hühner
-
-// Struktur für einen 2D-Vektor
-typedef struct {
-    int x, y;
-} Vector2;
-
-// Struktur für einen Pfad mit mehreren Punkten
-typedef struct {
-    Vector2* points;
-    int count;
-} Path;
-
-// Struktur für ein einzelnes Entity
-typedef struct {
-
-    char type[50];            // Type des Entitys
-    int textureIndex;         // Von dem Entity verwendete Textur
-    Vector2 position;         // Aktuelle Position
-    int currentTargetIndex;   // Index des nächsten Wegpunkts
-    int speed;                // Bewegungsgeschwindigkeit (Pixel pro Frame)
-    int health;
-
-} EntityData;
-
 
 // Definition der Punkte des Pfads
 Vector2 pathPoints[] = {
