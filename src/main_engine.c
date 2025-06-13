@@ -1,6 +1,6 @@
 // main_engine.c
 
-#include "library.h"		// Zugriff auf Header-Datei
+#include "../include/library.h"		// Zugriff auf Header-Datei
 bool running_first_frame;
 bool spawnEntity_this_frame;
 bool running = true;

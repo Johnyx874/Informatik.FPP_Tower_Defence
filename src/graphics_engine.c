@@ -2,7 +2,7 @@
 
 #define SDL_MAIN_HANDLED
 
-#include "library.h"
+#include "../include/library.h"
 bool spawnEntity_this_frame;
 bool running;
 
@@ -105,13 +105,13 @@ bool InitApp(void)
     }
 
 
-    texture1 = LoadTexture("images/first_map.bmp", &texture1_width, &texture1_height);
+    texture1 = LoadTexture("assets/first_map.bmp", &texture1_width, &texture1_height);
     if (!texture1) return false;
 
-    texture2 = LoadTexture("images/cannon128.bmp", &texture2_width, &texture2_height);
+    texture2 = LoadTexture("assets/cannon128.bmp", &texture2_width, &texture2_height);
     if (!texture2) return false;
 
-    texture3 = LoadTexture("images/chicken.bmp", &texture3_width, &texture3_height);
+    texture3 = LoadTexture("assets/chicken.bmp", &texture3_width, &texture3_height);
     if (!texture3) {
 
         printf("Error Loading Texture");

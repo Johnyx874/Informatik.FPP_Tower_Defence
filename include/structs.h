@@ -1,3 +1,5 @@
+// structs.h
+
 #pragma once
 
 // Struktur für einen 2D-Vektor

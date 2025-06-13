@@ -1,10 +1,10 @@
 // entity_engine.c
 
-#include "library.h"
+#include "../include/library.h"
 bool running_first_frame;
 bool spawnEntity_this_frame;
 
-#include "structs.h"
+#include "../include/structs.h"
 
 #include <stdio.h>
 #include <stdbool.h>
