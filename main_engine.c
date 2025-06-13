@@ -3,6 +3,7 @@
 #include "library.h"		// Zugriff auf Header-Datei
 bool running_first_frame;
 bool spawnEntity_this_frame;
+bool running = true;
 
 #include <stdio.h>		// Standart I/O Library
 #include <stdbool.h>		// Verwenden von Boolians
@@ -10,13 +11,12 @@ bool spawnEntity_this_frame;
 
 void GameLoop() {
 
-    bool running = true;
+    running = true;
 
     while (running) {
 
 		spawnEntity_this_frame = false;
 
-        running = quitGame(running);
 
 		checkEvents();
 

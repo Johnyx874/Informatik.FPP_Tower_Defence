@@ -7,6 +7,8 @@ extern bool running_first_frame;
 
 extern bool spawnEntity_this_frame;
 
+extern bool running;
+
 bool InitApp();  // Initialisieren, Texturen laden
 
 void GameLoop(); // Haubt Game Loop
@@ -27,4 +29,4 @@ void totalFrames(); // anzeigen von insgesamt gerenderten Frames
 
 void countFrame(); // frame_counter + 1
 
-bool quitGame(bool running); // Beenden des Spiels
+void quitGame(); // Beenden des Spiels

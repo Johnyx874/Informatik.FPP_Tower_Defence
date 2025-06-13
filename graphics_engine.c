@@ -4,6 +4,7 @@
 
 #include "library.h"
 bool spawnEntity_this_frame;
+bool running;
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -166,23 +167,14 @@ void renderPresent() {
 
 
 
-bool quitGame(bool running) {
+void quitGame() {
+
+    SDL_DestroyTexture(texture1);
+    SDL_DestroyTexture(texture2);
+    SDL_DestroyTexture(texture3);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+
+    running = false;
     
-    SDL_Event event;
-
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_EVENT_QUIT) {
-
-            running = false;
-
-            SDL_DestroyTexture(texture1);
-            SDL_DestroyTexture(texture2);
-            SDL_DestroyTexture(texture3);
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-
-        }
-    }
-    
-    return running;
 }

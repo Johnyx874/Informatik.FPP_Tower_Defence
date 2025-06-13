@@ -147,22 +147,12 @@ void cannonBrain(int x_position, int y_position) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager() {
 
-
-    // wenn Taste "C" gedrückt dann
-    // chicken spawnen
-
     if (spawnEntity_this_frame) {
 
         spawnEntity(theChicken, 0);
     }
 
-    //spawnAndCloneEntity(theChicken, 9, 50);
-    //spawnEntity(theSecond, 0);
-
     moveEntity(theChicken);
-    //moveEntity(theSecond);
-
-    //spawnAndCloneEntity(theChicken, 5, 100);
-
+   
     //printf("-------- entityManger completed--------\n\n");
 }
