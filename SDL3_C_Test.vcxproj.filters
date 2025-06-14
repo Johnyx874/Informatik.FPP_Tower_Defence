@@ -50,16 +50,19 @@
     <ClInclude Include="include\structs.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="entity_engine.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics_engine.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="main_engine.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="include\event_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tower_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\entity_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphics_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\main_engine.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

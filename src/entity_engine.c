@@ -12,8 +12,6 @@
     bool running_first_frame;
 
 
-
-
 // Definition der Punkte des Pfads
 Vector2 pathPoints[] = {
     {390, 590},

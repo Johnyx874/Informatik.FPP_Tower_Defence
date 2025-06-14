@@ -141,12 +141,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="entity_engine.h" />
-    <ClInclude Include="graphics_engine.h" />
+    <ClInclude Include="include\entity_engine.h" />
     <ClInclude Include="include\event_engine.h" />
+    <ClInclude Include="include\graphics_engine.h" />
     <ClInclude Include="include\library.h" />
+    <ClInclude Include="include\main_engine.h" />
     <ClInclude Include="include\structs.h" />
-    <ClInclude Include="main_engine.h" />
+    <ClInclude Include="include\tower_engine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
