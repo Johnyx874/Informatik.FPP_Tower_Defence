@@ -2,7 +2,6 @@
 
 #include "../include/library.h"
 bool running_first_frame;
-bool spawnEntity_this_frame;
 
 #include "../include/structs.h"
 
@@ -122,9 +121,9 @@ void cannonBrain(int x_position, int y_position) {
 
 
 // Haupt-Entity-Manager: verwaltet alle "Brains"
-void entityManager() {
+void entityManager(InputState input) {
 
-    if (spawnEntity_this_frame) {
+    if (input.spawnEntity) {
 
         spawnEntity(theChicken, 0);
     }

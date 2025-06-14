@@ -2,6 +2,12 @@
 
 #pragma once
 
+// event_engine.h
+typedef struct {
+    bool quit;
+    bool spawnEntity;
+} InputState;
+
 // Struktur für einen 2D-Vektor
 typedef struct {
     int x, y;

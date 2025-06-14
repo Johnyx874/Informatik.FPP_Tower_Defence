@@ -2,20 +2,20 @@
 #pragma once
 
 #include <stdbool.h>
+#include "structs.h"
+
 
 extern bool running_first_frame;
 
 extern bool spawnEntity_this_frame;
 
-extern bool running;
-
-bool InitApp();  // Initialisieren, Texturen laden
+bool startSDL();  // Initialisieren, Texturen laden
 
 void GameLoop(); // Haubt Game Loop
 
-void checkEvents(); // nach Events suchen
+void checkEvents(InputState* input); // nach Events suchen und in InputState abspeichern
 
-void entityManager(); // Verwalten von Entitys
+void entityManager(InputState input); // Verwalten von Entitys
 
 void renderClear(); // Renderer leeren
 
@@ -29,4 +29,4 @@ void totalFrames(); // anzeigen von insgesamt gerenderten Frames
 
 void countFrame(); // frame_counter + 1
 
-void quitGame(); // Beenden des Spiels
+void quitSDL(); // Beenden des Spiels

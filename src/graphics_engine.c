@@ -3,8 +3,6 @@
 #define SDL_MAIN_HANDLED
 
 #include "../include/library.h"
-bool spawnEntity_this_frame;
-bool running;
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -76,7 +74,7 @@ SDL_Texture* LoadTexture(const char* path, int* out_width, int* out_height)
 }
 
 
-bool InitApp(void)
+bool startSDL(void)
 {
     SDL_SetAppMetadata("Centered Texture Example", "1.0", "com.example.centeredtexture");
 
@@ -85,12 +83,6 @@ bool InitApp(void)
         return false;
     }
 
-    /*
-    if (!SDL_CreateWindowAndRenderer("Centered BMP", WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer)) {
-        SDL_Log("CreateWindowAndRenderer failed: %s", SDL_GetError());
-        return false;
-    }
-    */
 
     window = SDL_CreateWindow("SDL3 Textures Test", WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     if (!window) {
@@ -167,14 +159,12 @@ void renderPresent() {
 
 
 
-void quitGame() {
+void quitSDL() {
 
     SDL_DestroyTexture(texture1);
     SDL_DestroyTexture(texture2);
     SDL_DestroyTexture(texture3);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-
-    running = false;
     
 }

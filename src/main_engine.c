@@ -2,8 +2,8 @@
 
 #include "../include/library.h"		// Zugriff auf Header-Datei
 bool running_first_frame;
-bool spawnEntity_this_frame;
-bool running = true;
+
+#include "../include/structs.h"		// Zugriff auf Header-Datei
 
 #include <stdio.h>		// Standart I/O Library
 #include <stdbool.h>		// Verwenden von Boolians
@@ -11,25 +11,26 @@ bool running = true;
 
 void GameLoop() {
 
-    running = true;
+    bool running = true;
 
     while (running) {
 
-		spawnEntity_this_frame = false;
+		InputState input = { 0 };		// alle Inputs reseten
+		checkEvents(&input);		// nach Inputs suchen
+
+		if (input.quit) { running = false; }		// spiel bei Quit-Input beenden
 
 
-		checkEvents();
+		renderClear();	// Bildschirm leeren
 
-		renderClear();
+		renderStatic();	// Statische Objekte rendern
 
-		renderStatic();
+        entityManager(input);	// Entitys berechnen und rendern
 
-        entityManager();
-
-		renderPresent();
+		renderPresent();	// Bildschirm füllen
 
 
-		countFrame();
+		countFrame();	// gerenderten Frame zählen
 
 
 		running_first_frame = false;
@@ -43,13 +44,16 @@ void GameLoop() {
 
 int main() {
 
-	// Initialisierung und Texturen laden
-	InitApp();
+	// SDL hochfahren
+	startSDL();
 
 	running_first_frame = true;
 
 	// Game Loop
 	GameLoop();
+
+	// SDL herunterfahren
+	quitSDL();
 
 	// Anzeigen von insgesamt gerenderten Frames
 	totalFrames();
