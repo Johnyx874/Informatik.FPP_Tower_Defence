@@ -1,16 +1,18 @@
 // entity_engine.c
 
-#include "../include/library.h"
-bool running_first_frame;
-
-#include "../include/structs.h"
-
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
-#define MAX_ENTITIES 100  // Maximale Anzahl an Entitäten
-#define ENTITY_SPACING 100 // Abstand in Pixeln zwischen den Startpositionen der Hühner
+#include "../include/entity_engine.h"
+#include "../include/graphics_engine.h"
+
+#include "../include/structs.h"
+#include "../include/library.h"
+    bool running_first_frame;
+
+
+
 
 // Definition der Punkte des Pfads
 Vector2 pathPoints[] = {
@@ -89,7 +91,7 @@ void spawnEntity(EntityData e, int offset) {
         return;
     }
 
-    //if (running_first_frame) {
+    if (running_first_frame) {
 
         strcpy_s(entities[entityCount].type, 50, e.type);
 
@@ -101,7 +103,7 @@ void spawnEntity(EntityData e, int offset) {
         entityCount++;                                     // Anzahl erhöhen
 
         printf("  - Entity added\n");
-    //}
+    }
 }
 
 
@@ -113,19 +115,34 @@ void spawnAndCloneEntity(EntityData e, int amount, int spacing) {
     }
 }
 
-// Dummy-Funktion für eine Kanone (kann später erweitert werden)
-void cannonBrain(int x_position, int y_position) {
 
-    renderEntity(2, x_position, y_position);
+void deleteEntity(EntityData* e) {
+
+    strcpy_s(e->type, 50, "");
+    e->textureIndex = 0;
+    e->position.x = 0;
+    e->position.y = 0;
+    e->currentTargetIndex = 0;
+    e->speed = 0;
+    e->health = 0;
+
 }
+
+// Dummy-Funktion für eine Kanone (kann später erweitert werden)
+//void cannonBrain(int x_position, int y_position) {
+//
+//    renderEntity(2, x_position, y_position);
+//}
 
 
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager(InputState input) {
 
+    spawnEntity(theChicken, 0);
+
     if (input.spawnEntity) {
 
-        spawnEntity(theChicken, 0);
+        deleteEntity(&entities[0]);
     }
 
     moveEntity(theChicken);

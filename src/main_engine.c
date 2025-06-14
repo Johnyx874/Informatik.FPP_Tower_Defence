@@ -9,7 +9,7 @@ bool running_first_frame;
 #include <stdbool.h>		// Verwenden von Boolians
 
 
-void GameLoop() {
+void GameLoop(void) {
 
     bool running = true;
 
@@ -42,7 +42,7 @@ void GameLoop() {
 }
 
 
-int main() {
+int main(void) {
 
 	// SDL hochfahren
 	startSDL();

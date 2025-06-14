@@ -33,7 +33,7 @@ static int frame_counter = 0;
 
 
 // Funktion: insgesamt gerenderte Frames anzeigen
-void totalFrames() {
+void totalFrames(void) {
 
     printf("----------------------------------------------------------\n");
     if (frame_counter == 100000) { printf("\n   Anzahl gerenderter Frames: >100000"); }
@@ -44,7 +44,7 @@ void totalFrames() {
 }
 
 
-void countFrame() {
+void countFrame(void) {
     frame_counter++;
 }
 
@@ -74,8 +74,8 @@ SDL_Texture* LoadTexture(const char* path, int* out_width, int* out_height)
 }
 
 
-bool startSDL(void)
-{
+bool startSDL(void){
+
     SDL_SetAppMetadata("Centered Texture Example", "1.0", "com.example.centeredtexture");
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -143,23 +143,23 @@ void renderEntity(int index, int x_offset, int y_offset) {
 }
 
 
-void renderClear() {
+void renderClear(void) {
     SDL_RenderClear(renderer);
 }
 
 
-void renderStatic() {
+void renderStatic(void) {
     renderTexture(texture1, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
 }
 
 
-void renderPresent() {
+void renderPresent(void) {
     SDL_RenderPresent(renderer);
 }
 
 
 
-void quitSDL() {
+void quitSDL(void) {
 
     SDL_DestroyTexture(texture1);
     SDL_DestroyTexture(texture2);

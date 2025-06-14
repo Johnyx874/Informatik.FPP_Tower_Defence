@@ -24,24 +24,42 @@
     <ClCompile Include="simple_window.c">
       <Filter>Dateienspeicher</Filter>
     </ClCompile>
-    <ClCompile Include="bmp_test.c">
+    <ClCompile Include="src\entity_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="graphics_engine.c">
+    <ClCompile Include="src\event_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="main_engine.c">
+    <ClCompile Include="src\graphics_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="entity_engine.c">
+    <ClCompile Include="src\main_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="menu_engine.c">
+    <ClCompile Include="src\menu_engine.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tower_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="library.h">
+    <ClInclude Include="include\library.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\structs.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="entity_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="main_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event_engine.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

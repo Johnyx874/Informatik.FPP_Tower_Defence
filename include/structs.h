@@ -1,6 +1,7 @@
 // structs.h
-
 #pragma once
+
+#include <stdbool.h>
 
 // event_engine.h
 typedef struct {
