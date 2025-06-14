@@ -3,14 +3,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
-#include "../include/entity_engine.h"
-#include "../include/graphics_engine.h"
+#include <stdlib.h>
 
 #include "../include/structs.h"
 #include "../include/library.h"
-    bool running_first_frame;
+bool running_first_frame;
 
+#include "../include/entity_engine.h"
+#include "../include/graphics_engine.h"
+#include "../include/tower_engine.h"
 
 // Definition der Punkte des Pfads
 Vector2 pathPoints[] = {
@@ -136,7 +137,7 @@ void deleteEntity(EntityData* e) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager(InputState input) {
 
-    spawnEntity(theChicken, 0);
+    spawnAndCloneEntity(theChicken, 2, 200);
 
     if (input.spawnEntity) {
 
@@ -144,6 +145,11 @@ void entityManager(InputState input) {
     }
 
     moveEntity(theChicken);
-   
+    
+    float distance = getDistanceAB(entities[0].position, entities[1].position);
+
+    system("cls");
+    printf("     %f     \n", distance);
+
     //printf("-------- entityManger completed--------\n\n");
 }

@@ -1,12 +1,18 @@
 // main_engine.c
 
-#include "../include/library.h"		// Zugriff auf Header-Datei
-bool running_first_frame;
-
-#include "../include/structs.h"		// Zugriff auf Header-Datei
-
 #include <stdio.h>		// Standart I/O Library
 #include <stdbool.h>		// Verwenden von Boolians
+#include <stdlib.h>		// Verwendung von system();
+
+#include <SDL3/SDL.h>
+
+#include "../include/structs.h"		// Zugriff auf Header-Datei
+#include "../include/library.h"		// Zugriff auf Header-Datei
+	bool running_first_frame;
+
+#include "../include/graphics_engine.h"
+#include "../include/entity_engine.h"
+
 
 
 void GameLoop(void) {
@@ -35,8 +41,7 @@ void GameLoop(void) {
 
 		running_first_frame = false;
 
-
-        SDL_Delay(20);
+        SDL_Delay(50);
 
     }
 }
