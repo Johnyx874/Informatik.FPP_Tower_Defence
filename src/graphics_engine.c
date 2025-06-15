@@ -20,6 +20,8 @@ static SDL_Renderer* renderer = NULL;   // Wertespeicher für Renderer
 static SDL_Texture* texture1 = NULL;
 static SDL_Texture* texture2 = NULL;
 static SDL_Texture* texture3 = NULL;
+static SDL_Texture* texture4 = NULL;
+static SDL_Texture* texture5 = NULL;
 
 // Breite und Höhe der Texturen
 static int texture1_width = 0;
@@ -28,6 +30,10 @@ static int texture2_width = 0;
 static int texture2_height = 0;
 static int texture3_width = 0;
 static int texture3_height = 0;
+static int texture4_width = 0;
+static int texture4_height = 0;
+static int texture5_width = 0;
+static int texture5_height = 0;
 
 static int frame_counter = 0;
 
@@ -98,18 +104,20 @@ bool startSDL(void){
 
 
     texture1 = LoadTexture("assets/first_map.bmp", &texture1_width, &texture1_height);
-    if (!texture1) return false;
+    if (!texture1) { printf("Error Loading Texture"); return false; }
 
-    texture2 = LoadTexture("assets/cannon128.bmp", &texture2_width, &texture2_height);
-    if (!texture2) return false;
+    texture2 = LoadTexture("assets/chicken.bmp", &texture2_width, &texture2_height);
+    if (!texture2) { printf("Error Loading Texture"); return false; }
 
-    texture3 = LoadTexture("assets/chicken.bmp", &texture3_width, &texture3_height);
-    if (!texture3) {
+    texture3 = LoadTexture("assets/boar.bmp", &texture3_width, &texture3_height);
+    if (!texture3) { printf("Error Loading Texture"); return false; }
 
-        printf("Error Loading Texture");
+    texture4 = LoadTexture("assets/cannon128.bmp", &texture4_width, &texture4_height);
+    if (!texture3) { printf("Error Loading Texture"); return false; }
 
-        return false;
-    }
+    texture5 = LoadTexture("assets/crossbow128.bmp", &texture5_width, &texture5_height);
+    if (!texture3) { printf("Error Loading Texture"); return false; }
+
     return true;
 }
 
@@ -134,12 +142,26 @@ void renderEntity(int index, int x_offset, int y_offset) {
 
   //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
-    case 1: renderTexture(texture3, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+    case 1: renderTexture(texture2, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
     
-    case 2: renderTexture(texture2, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+    case 2: renderTexture(texture3, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
 
     }
 
+}
+
+
+void renderTower(int index, int x_offset, int y_offset) {
+
+    switch (index) {
+
+  //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
+
+    case 1: renderTexture(texture4, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+
+    case 2: renderTexture(texture5, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+
+    }
 }
 
 

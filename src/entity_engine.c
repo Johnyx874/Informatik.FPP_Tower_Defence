@@ -137,7 +137,7 @@ void deleteEntity(EntityData* e) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager(InputState input) {
 
-    spawnAndCloneEntity(theChicken, 2, 200);
+    spawnEntity(theChicken, 0);
 
     if (input.spawnEntity) {
 
@@ -146,10 +146,10 @@ void entityManager(InputState input) {
 
     moveEntity(theChicken);
     
-    float distance = getDistanceAB(entities[0].position, entities[1].position);
+    /*float distance = getDistanceAB(entities[0].position, entities[1].position);
 
     system("cls");
-    printf("     %f     \n", distance);
+    printf("     %f     \n", distance);*/
 
     //printf("-------- entityManger completed--------\n\n");
 }

@@ -31,3 +31,14 @@ typedef struct {
     int health;
 
 } EntityData;
+
+// Struktur für einen Tower
+typedef struct {
+
+    char type[50];            // Type des Towers
+    int textureIndex;         // Von dem Tower verwendete Textur
+    Vector2 position;         // Aktuelle Position
+    
+    //int speed;                // Angriffsgeschwindigkeit ?
+    
+} TowerData;

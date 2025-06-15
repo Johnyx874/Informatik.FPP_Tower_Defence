@@ -12,6 +12,7 @@
 
 #include "../include/graphics_engine.h"
 #include "../include/entity_engine.h"
+#include "../include/tower_engine.h"
 
 
 
@@ -33,6 +34,8 @@ void GameLoop(void) {
 
         entityManager(input);	// Entitys berechnen und rendern
 
+		towerManager();
+
 		renderPresent();	// Bildschirm füllen
 
 
@@ -41,7 +44,7 @@ void GameLoop(void) {
 
 		running_first_frame = false;
 
-        SDL_Delay(50);
+        SDL_Delay(20);
 
     }
 }
