@@ -11,6 +11,7 @@
 #include "../include/library.h"		
 	bool running_first_frame;
 #include "../include/entity_engine.h"	
+	int entityCount;
 #include "../include/graphics_engine.h"	
 #include "../include/tower_engine.h"	
 
@@ -34,8 +35,6 @@ float getDistanceAB(Vector2 A, Vector2 B) {
 	if (dis_bc < 0) { dis_bc *= -1; }
 
 	float dis_ab = sqrt( (dis_ac * dis_ac) + (dis_bc * dis_bc) );
-
-	printf("%f", dis_ab);
 
 	return dis_ab;
 }
@@ -73,17 +72,36 @@ void addTower(TowerData t, int x_position, int y_position) {
 }
 
 
+void everyDistance(void) {
+
+	for (int Ti = 0; Ti < towerCount; Ti++) {
+		for (int Ei = 0; Ei < entityCount; Ei++) {
+
+			float distance = getDistanceAB(towers[Ti].position, entities[Ei].position);
+
+			//printf("\nTower %d -> Entity %d = %f\n", Ti, Ei, distance);
+
+			if (distance <= 110) {
+				deleteEntity(&entities[Ei]);
+			}
+		}
+	}
+}
+
+
 void towerManager(void) {
 
 	addTower(cannon, 600, 500);
 
+	addTower(crossbow, 1000, 100);
+
 	positionTowers();
 
-
-	float distance = getDistanceAB(towers[0].position, entities[0].position);
+	everyDistance();
+	
 
 	
-	printf("Distance = %f\n\n", distance);
+	
 
 	//placeTower(crossbow, 1000, 100);
 	

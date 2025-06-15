@@ -137,7 +137,7 @@ void deleteEntity(EntityData* e) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager(InputState input) {
 
-    spawnEntity(theChicken, 0);
+    spawnAndCloneEntity(theChicken, 5, 100);
 
     if (input.spawnEntity) {
 
