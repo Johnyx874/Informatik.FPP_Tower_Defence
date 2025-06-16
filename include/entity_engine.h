@@ -9,7 +9,7 @@
 extern Vector2 pathPoints[];
 extern Path path;
 extern EntityData entities[MAX_ENTITIES];
-extern entityCount;
+extern int entityCount;
 extern EntityData theChicken;
 extern EntityData theSecond;
 

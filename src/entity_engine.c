@@ -69,7 +69,7 @@ void moveAlongPath(EntityData* e) {
     }
 }
 
-
+// Bewegt alle Entitys eines Types
 void moveEntity(EntityData e) {
 
     for (int i = 0; i <= entityCount; i++) {
@@ -127,19 +127,13 @@ void deleteEntity(EntityData* e) {
 
 }
 
-// Dummy-Funktion für eine Kanone (kann später erweitert werden)
-//void cannonBrain(int x_position, int y_position) {
-//
-//    renderEntity(2, x_position, y_position);
-//}
-
 
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager(InputState input) {
 
     spawnAndCloneEntity(theChicken, 5, 100);
 
-    if (input.spawnEntity) {
+    if (input.key_c) {
 
         deleteEntity(&entities[0]);
     }
@@ -153,3 +147,28 @@ void entityManager(InputState input) {
 
     //printf("-------- entityManger completed--------\n\n");
 }
+
+
+// Maybe gut? 
+// 
+//    || 
+//    ||
+//    \/
+
+//void removeFromList(TowerData* list, int* counter, int indexToRemove) {
+//    if (indexToRemove < 0 || indexToRemove >= *counter) {
+//        printf("Invalid index!\n");
+//        return;
+//    }
+//
+//    // Nachrutschen ab indexToRemove
+//    for (int i = indexToRemove; i < (*counter - 1); i++) {
+//        list[i] = list[i + 1];  // Kopiere nächsten Eintrag auf die aktuelle Position
+//    }
+//
+//    // Letzten Eintrag leeren (optional, zur Sicherheit)
+//    memset(&list[*counter - 1], 0, sizeof(TowerData));
+//
+//    // Counter anpassen
+//    (*counter)--;
+//}

@@ -5,10 +5,17 @@
 
 // event_engine.h
 typedef struct {
+
+    float x_mouse_position, y_mouse_position;
+
     bool quit;
-    bool spawnEntity;
-    bool space_pressed;
-    bool left_click;
+    
+    bool key_c;
+    bool key_1;
+    bool key_space;
+    bool key_escape;
+
+    bool button_left;
 } InputState;
 
 // Struktur für einen 2D-Vektor

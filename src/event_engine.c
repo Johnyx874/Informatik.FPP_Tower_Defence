@@ -10,32 +10,39 @@ bool spawnEntity_this_frame;
 
 void checkEvents(InputState* input) {
 
+    // Aktuelle Maus-Position
+    uint32_t buttons = SDL_GetMouseState(&input->x_mouse_position, &input->y_mouse_position);
+
+    
+    // Aktuelle Events ( Generelle Events, Tastendrücke && Maustastendrücke )
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
 
-        if (event.type == SDL_EVENT_QUIT) {
+        switch (event.type) {
+
+        case SDL_EVENT_QUIT:
             input->quit = true;
-        }
 
-        if (event.type == SDL_EVENT_KEY_DOWN) {
+        case SDL_EVENT_KEY_DOWN:
+
             if (event.key.key == SDLK_C) {
-
-                input->spawnEntity = true;
+                input->key_c = true;
             }
-        }
-
-        if (event.type == SDL_EVENT_KEY_DOWN) {
-            if (event.key.key == SDLK_SPACE) {
-
-                input->space_pressed = true;
+            else if (event.key.key == SDLK_1) {
+                input->key_1 = true;
             }
-        }
+            else if (event.key.key == SDLK_SPACE) {
+                input->key_space = true;
+            }
+            else if (event.key.key == SDLK_ESCAPE) {
+                input->key_escape = true;
+            }
 
-        if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+        case SDL_EVENT_MOUSE_BUTTON_DOWN:
             if (event.button.button == SDL_BUTTON_LEFT) {
 
-                input->left_click = true;
+                input->button_left = true;
             }
         }
     }

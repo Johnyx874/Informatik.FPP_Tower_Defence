@@ -1,4 +1,4 @@
-// tower_engine.c
+﻿// tower_engine.c
 
 // Zugriff auf Bibliothecken
 #include <stdio.h>		// Standart I/O Library
@@ -12,7 +12,7 @@
 #include "../include/structs.h"
 #include "../include/library.h"		
 	bool running_first_frame;
-	bool place = true;
+	bool placing = false;
 	float old_x = 0;
 	float old_y = 0;
 #include "../include/entity_engine.h"	
@@ -20,11 +20,16 @@
 #include "../include/graphics_engine.h"	
 #include "../include/tower_engine.h"	
 
+
 TowerData towers[MAX_TOWERS];
 int towerCount = 0;
 
+TowerData activeTowers[MAX_ACTIVE_TOWERS];
+int activeTowerCount = 0;
+
 TowerData cannon = { "cannon", 1, {0, 0} };
 TowerData crossbow = { "crossbow", 2, {0, 0} };
+
 
 float getDistanceAB(Vector2 A, Vector2 B) {
 
@@ -45,78 +50,36 @@ float getDistanceAB(Vector2 A, Vector2 B) {
 }
 
 
-void positionTowers(InputState input) {
-
-
-	float x_mouse_position, y_mouse_position;
-	
-	if (input.left_click) {
-		place = false;
-	}
-
-	if (place) {
-
-		uint32_t buttons = SDL_GetMouseState(&x_mouse_position, &y_mouse_position);
-
-		old_x = x_mouse_position;
-		old_y = y_mouse_position;
-
-		renderTower(towers[0].textureIndex, x_mouse_position, y_mouse_position);
-
-		towers[0].position.x = x_mouse_position;
-		towers[0].position.y = y_mouse_position;
-	}
-	else {
-		renderTower(towers[0].textureIndex, old_x, old_y);
-
-		towers[0].position.x = old_x;
-		towers[0].position.y = old_y;
-	}
-	
-	
-
-	/*x = x / 10000000;
-	y = y / 10000000;*/
-
-	
-	//printf("X: %f Y: %f\n", x_mouse_position, y_mouse_position);
-
-	/*for (int i = 0; i <= towerCount; i++) {
-
-		if (strcmp(towers[i].type, "") != 0) {
-
-			renderTower(towers[i].textureIndex, towers[i].position.x, towers[i].position.y);
-		}
-	}*/
-}
-
-
-void addTower(TowerData t, int x_position, int y_position) {
+void addTower(TowerData t, int amount) {
 
 	if (running_first_frame) {
 
-		if (towerCount >= MAX_TOWERS) {    // Sicherheitscheck
-			printf("Too much Towers!\n");
-			return;
+		for (int i = 0; i < amount; i++) {
+
+			if (towerCount >= MAX_TOWERS) {    // Sicherheitscheck
+				printf("Too much Towers!\n");
+				return;
+			}
+
+			// Daten auf Listeneintrag kopieren
+			strcpy_s(towers[towerCount].type, 50, t.type);
+			towers[towerCount].textureIndex = t.textureIndex;
+			towers[towerCount].position.x = 0;
+			towers[towerCount].position.y = 0;
+
+			towerCount++;	// Anzahl erhöhen
 		}
-
-		// Daten auf Listeneintrag kopieren
-		strcpy_s(towers[towerCount].type, 50, t.type);
-		towers[towerCount].textureIndex = t.textureIndex;
-		towers[towerCount].position.x = x_position;
-		towers[towerCount].position.y = y_position;
-
-		towerCount++;	// Anzahl erh�hen
+		
 	}                                    
 }
 
 
 void everyDistance(void) {
 
-	for (int Ti = 0; Ti < towerCount; Ti++) {
+	for (int Ti = 0; Ti < activeTowerCount; Ti++) {
 		for (int Ei = 0; Ei < entityCount; Ei++) {
 
-			float distance = getDistanceAB(towers[Ti].position, entities[Ei].position);
+			float distance = getDistanceAB(activeTowers[Ti].position, entities[Ei].position);
 
 			//printf("\nTower %d -> Entity %d = %f\n", Ti, Ei, distance);
 
@@ -128,20 +91,82 @@ void everyDistance(void) {
 }
 
 
+void addToActiveTowers(TowerData t) {
+
+	if (activeTowerCount >= MAX_ACTIVE_TOWERS) {
+		printf("Too many active towers!\n");
+		return;
+	}
+
+	activeTowers[activeTowerCount] = t;
+	activeTowerCount++;
+}
+
+
+void processActiveTowers(void) {
+
+	for (int i = 0; i < activeTowerCount; i++) {
+		
+		renderTower(activeTowers[i].textureIndex, activeTowers[i].position.x, activeTowers[i].position.y);
+		
+	}
+
+	// Liste leeren nach Bearbeitung
+	/*activeTowerCount = 0;*/
+}
+
+
+void placeController(InputState input) {
+
+	if (input.key_1) {
+		placing = true;
+		
+	}
+
+	if (placing) {
+		
+		int unused_tower = -1;
+
+		for (int i = 0; i <= towerCount; i++) {
+
+			if (strcmp(towers[i].type, "cannon") == 0) {
+				if (towers[i].position.x == 0 && towers[i].position.y == 0) {
+					unused_tower = i;
+					break;
+				}
+			}
+		}
+		
+		if (unused_tower >= 0) {
+			renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);	
+		}	
+
+		if (input.button_left) {
+			if (unused_tower >= 0) {
+
+				towers[unused_tower].position.x = input.x_mouse_position;
+				towers[unused_tower].position.y = input.y_mouse_position;
+
+				addToActiveTowers(towers[unused_tower]);
+			}
+
+			placing = false;
+		}
+
+		if (input.key_escape) {
+			placing = false;
+		}
+	}
+}
+
+
 void towerManager(InputState input) {
 
-	addTower(cannon, 600, 500);
-
-	positionTowers(input);
-
-	if (!place) {
-		everyDistance();
-	}
+	addTower(cannon, 5);
 	
+	placeController(input);
 
-	
-	
+	processActiveTowers();
 
-	//placeTower(crossbow, 1000, 100);
-	
+	everyDistance();
 }
