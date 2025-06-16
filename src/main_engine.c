@@ -34,7 +34,7 @@ void GameLoop(void) {
 
         entityManager(input);	// Entitys berechnen und rendern
 
-		towerManager();
+		towerManager(input);
 
 		renderPresent();	// Bildschirm füllen
 

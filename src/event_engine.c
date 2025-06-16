@@ -24,5 +24,12 @@ void checkEvents(InputState* input) {
                 input->spawnEntity = true;
             }
         }
+
+        if (event.type == SDL_EVENT_KEY_DOWN) {
+            if (event.key.key == SDLK_SPACE) {
+
+                input->space_pressed = true;
+            }
+        }
     }
 }

@@ -13,8 +13,8 @@ extern TowerData crossbow;
 
 // Funktionen
 float getDistanceAB(Vector2 A, Vector2 B);
-void positionTowers(void);
+void positionTowers(InputState input);
 void addTower(TowerData t, int x_position, int y_position);
 void everyDistance(void);
-void towerManager(void);
+void towerManager(InputState input);
 

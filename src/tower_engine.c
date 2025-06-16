@@ -6,6 +6,8 @@
 #include <string.h>		// Verwenden von Strings
 #include <math.h>	// Verwenden von sqrt();
 
+#include <SDL3/SDL.h>
+
 // Zugriff auf eigene Header
 #include "../include/structs.h"
 #include "../include/library.h"		
@@ -40,15 +42,28 @@ float getDistanceAB(Vector2 A, Vector2 B) {
 }
 
 
-void positionTowers(void) {
+void positionTowers(InputState input) {
 
-	for (int i = 0; i <= towerCount; i++) {
+	float x_mouse_position, y_mouse_position;
+	uint32_t buttons = SDL_GetMouseState(&x_mouse_position, &y_mouse_position);
+
+	renderTower(towers[0].textureIndex, x_mouse_position, y_mouse_position);
+	
+	
+
+	/*x = x / 10000000;
+	y = y / 10000000;*/
+
+	
+	printf("X: %f Y: %f\n", x_mouse_position, y_mouse_position);
+
+	/*for (int i = 0; i <= towerCount; i++) {
 
 		if (strcmp(towers[i].type, "") != 0) {
 
 			renderTower(towers[i].textureIndex, towers[i].position.x, towers[i].position.y);
 		}
-	}
+	}*/
 }
 
 
@@ -89,15 +104,12 @@ void everyDistance(void) {
 }
 
 
-void towerManager(void) {
+void towerManager(InputState input) {
 
 	addTower(cannon, 600, 500);
 
-	addTower(crossbow, 1000, 100);
+	positionTowers(input);
 
-	positionTowers();
-
-	everyDistance();
 	
 
 	
