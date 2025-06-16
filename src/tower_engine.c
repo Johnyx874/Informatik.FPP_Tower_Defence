@@ -12,6 +12,9 @@
 #include "../include/structs.h"
 #include "../include/library.h"		
 	bool running_first_frame;
+	bool place = true;
+	float old_x = 0;
+	float old_y = 0;
 #include "../include/entity_engine.h"	
 	int entityCount;
 #include "../include/graphics_engine.h"	
@@ -44,10 +47,31 @@ float getDistanceAB(Vector2 A, Vector2 B) {
 
 void positionTowers(InputState input) {
 
-	float x_mouse_position, y_mouse_position;
-	uint32_t buttons = SDL_GetMouseState(&x_mouse_position, &y_mouse_position);
 
-	renderTower(towers[0].textureIndex, x_mouse_position, y_mouse_position);
+	float x_mouse_position, y_mouse_position;
+	
+	if (input.left_click) {
+		place = false;
+	}
+
+	if (place) {
+
+		uint32_t buttons = SDL_GetMouseState(&x_mouse_position, &y_mouse_position);
+
+		old_x = x_mouse_position;
+		old_y = y_mouse_position;
+
+		renderTower(towers[0].textureIndex, x_mouse_position, y_mouse_position);
+
+		towers[0].position.x = x_mouse_position;
+		towers[0].position.y = y_mouse_position;
+	}
+	else {
+		renderTower(towers[0].textureIndex, old_x, old_y);
+
+		towers[0].position.x = old_x;
+		towers[0].position.y = old_y;
+	}
 	
 	
 
@@ -55,7 +79,7 @@ void positionTowers(InputState input) {
 	y = y / 10000000;*/
 
 	
-	printf("X: %f Y: %f\n", x_mouse_position, y_mouse_position);
+	//printf("X: %f Y: %f\n", x_mouse_position, y_mouse_position);
 
 	/*for (int i = 0; i <= towerCount; i++) {
 
@@ -110,6 +134,9 @@ void towerManager(InputState input) {
 
 	positionTowers(input);
 
+	if (!place) {
+		everyDistance();
+	}
 	
 
 	

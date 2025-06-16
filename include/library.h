@@ -6,6 +6,9 @@
 
 
 extern bool running_first_frame;
+extern bool place;
+
+extern float old_x, old_y;
 
 
 

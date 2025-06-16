@@ -8,6 +8,7 @@ typedef struct {
     bool quit;
     bool spawnEntity;
     bool space_pressed;
+    bool left_click;
 } InputState;
 
 // Struktur für einen 2D-Vektor

@@ -31,5 +31,12 @@ void checkEvents(InputState* input) {
                 input->space_pressed = true;
             }
         }
+
+        if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+
+                input->left_click = true;
+            }
+        }
     }
 }
