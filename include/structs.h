@@ -12,11 +12,20 @@ typedef struct {
     
     bool key_c;
     bool key_1;
+    bool key_2;
     bool key_space;
     bool key_escape;
 
     bool button_left;
 } InputState;
+
+// Struktur zur Verwaltung des Placing Systems
+typedef struct {
+
+    bool cannon;
+    bool crossbow;
+    
+} Place;
 
 // Struktur für einen 2D-Vektor
 typedef struct {

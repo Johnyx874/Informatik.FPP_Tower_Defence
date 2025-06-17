@@ -7,6 +7,7 @@
 #define MAX_ACTIVE_TOWERS 100
 
 // Externe Variablen
+extern Place place;
 extern TowerData towers[MAX_TOWERS];
 extern int towerCount;
 extern TowerData activeTowers[MAX_ACTIVE_TOWERS];
@@ -18,5 +19,9 @@ extern TowerData crossbow;
 float getDistanceAB(Vector2 A, Vector2 B);
 void addTower(TowerData t, int amount);
 void everyDistance(void);
+void addToActiveTowers(TowerData t);
+void renderActiveTowers(void);
+void placeTower(TowerData t, InputState input);
+void placeController(InputState input);
 void towerManager(InputState input);
 

@@ -21,6 +21,8 @@
 #include "../include/tower_engine.h"	
 
 
+Place place;
+
 TowerData towers[MAX_TOWERS];
 int towerCount = 0;
 
@@ -103,7 +105,7 @@ void addToActiveTowers(TowerData t) {
 }
 
 
-void processActiveTowers(void) {
+void renderActiveTowers(void) {
 
 	for (int i = 0; i < activeTowerCount; i++) {
 		
@@ -116,47 +118,58 @@ void processActiveTowers(void) {
 }
 
 
+void placeTower(TowerData t, InputState input) {
+
+	int unused_tower = -1;
+
+	for (int i = 0; i <= towerCount; i++) {
+
+		if (strcmp(towers[i].type, t.type) == 0) {
+			if (towers[i].position.x == 0 && towers[i].position.y == 0) {
+				unused_tower = i;
+				break;
+			}
+		}
+	}
+	if (unused_tower == -1) { place = (Place){ 0 }; }
+
+
+	if (unused_tower >= 0) {
+		renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);
+	}
+	
+	if (input.button_left) {
+		if (unused_tower >= 0) {
+
+			towers[unused_tower].position.x = input.x_mouse_position;
+			towers[unused_tower].position.y = input.y_mouse_position;
+
+			addToActiveTowers(towers[unused_tower]);
+
+			place = (Place){ 0 };
+		}
+	}
+}
+
+
 void placeController(InputState input) {
 
+	if (input.key_escape) {
+		place = (Place){ 0 }; // (Place) wichtig für Compiler, handelt sich um Place-Struct handelt.
+	}
+
+
 	if (input.key_1) {
-		placing = true;
-		
+		place.cannon = true;
 	}
+	if (place.cannon) { placeTower(cannon, input); }
 
-	if (placing) {
-		
-		int unused_tower = -1;
 
-		for (int i = 0; i <= towerCount; i++) {
-
-			if (strcmp(towers[i].type, "cannon") == 0) {
-				if (towers[i].position.x == 0 && towers[i].position.y == 0) {
-					unused_tower = i;
-					break;
-				}
-			}
-		}
-		
-		if (unused_tower >= 0) {
-			renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);	
-		}	
-
-		if (input.button_left) {
-			if (unused_tower >= 0) {
-
-				towers[unused_tower].position.x = input.x_mouse_position;
-				towers[unused_tower].position.y = input.y_mouse_position;
-
-				addToActiveTowers(towers[unused_tower]);
-			}
-
-			placing = false;
-		}
-
-		if (input.key_escape) {
-			placing = false;
-		}
+	if (input.key_2) {
+		place.crossbow = true;
 	}
+	if (place.crossbow) { placeTower(crossbow, input); }
+	
 }
 
 
@@ -164,9 +177,11 @@ void towerManager(InputState input) {
 
 	addTower(cannon, 5);
 	
+	addTower(crossbow, 5);
+
 	placeController(input);
 
-	processActiveTowers();
+	renderActiveTowers();
 
 	everyDistance();
 }

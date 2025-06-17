@@ -32,6 +32,9 @@ void checkEvents(InputState* input) {
             else if (event.key.key == SDLK_1) {
                 input->key_1 = true;
             }
+            else if (event.key.key == SDLK_2) {
+                input->key_2 = true;
+            }
             else if (event.key.key == SDLK_SPACE) {
                 input->key_space = true;
             }
