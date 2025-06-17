@@ -18,9 +18,9 @@ extern TowerData crossbow;
 // Funktionen
 float getDistanceAB(Vector2 A, Vector2 B);
 void addTower(TowerData t, int amount);
-void everyDistance(void);
 void addToActiveTowers(TowerData t);
-void renderActiveTowers(void);
+void cannonBrain(void);
+void processActiveTowers(void);
 void placeTower(TowerData t, InputState input);
 void placeController(InputState input);
 void towerManager(InputState input);

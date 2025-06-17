@@ -32,7 +32,7 @@ int activeTowerCount = 0;
 TowerData cannon = { "cannon", 1, {0, 0} };
 TowerData crossbow = { "crossbow", 2, {0, 0} };
 
-
+// Abstand zwischen Punkt A & B berechnen
 float getDistanceAB(Vector2 A, Vector2 B) {
 
 	Vector2 C;
@@ -51,7 +51,7 @@ float getDistanceAB(Vector2 A, Vector2 B) {
 	return dis_ab;
 }
 
-
+// Tower zur generellen Towerliste hinzufügen
 void addTower(TowerData t, int amount) {
 
 	if (running_first_frame) {
@@ -75,24 +75,7 @@ void addTower(TowerData t, int amount) {
 	}                                    
 }
 
-
-void everyDistance(void) {
-
-	for (int Ti = 0; Ti < activeTowerCount; Ti++) {
-		for (int Ei = 0; Ei < entityCount; Ei++) {
-
-			float distance = getDistanceAB(activeTowers[Ti].position, entities[Ei].position);
-
-			//printf("\nTower %d -> Entity %d = %f\n", Ti, Ei, distance);
-
-			if (distance <= 110) {
-				deleteEntity(&entities[Ei]);
-			}
-		}
-	}
-}
-
-
+// Tower zur Liste der aktiven Towers hinzufügen
 void addToActiveTowers(TowerData t) {
 
 	if (activeTowerCount >= MAX_ACTIVE_TOWERS) {
@@ -105,19 +88,42 @@ void addToActiveTowers(TowerData t) {
 }
 
 
-void renderActiveTowers(void) {
+void cannonBrain(int index) {
 
-	for (int i = 0; i < activeTowerCount; i++) {
-		
-		renderTower(activeTowers[i].textureIndex, activeTowers[i].position.x, activeTowers[i].position.y);
-		
+	for (int e = 0; e < entityCount; e++) {
+
+		if (entities[e].textureIndex == 1) {
+
+			float distance = getDistanceAB(towers[index].position, entities[e].position);
+
+			if (distance <= 200) {
+				deleteEntity(&entities[e]);
+			}
+
+			printf("%f\n", distance);
+		}
 	}
 
-	// Liste leeren nach Bearbeitung
-	/*activeTowerCount = 0;*/
 }
 
 
+// Liste der aktiven Towers durchgehen und alle Einträge berechnen
+void processActiveTowers(void) {
+
+	for (int i = 0; i < activeTowerCount; i++) {		// Liste der aktiven Towers durchgehen
+		
+		if (strcmp(activeTowers[i].type, "cannon") == 0) {  // wenn aktiver Tower == Cannon
+			cannonBrain(i);									// dann führe dessen Funktion aus
+		}
+
+		// aktiven Tower rendern
+		renderTower(activeTowers[i].textureIndex, activeTowers[i].position.x, activeTowers[i].position.y);
+	}
+
+}
+
+
+// Platziere Tower mit Maus
 void placeTower(TowerData t, InputState input) {
 
 	int unused_tower = -1;
@@ -151,20 +157,21 @@ void placeTower(TowerData t, InputState input) {
 	}
 }
 
-
+// Verwaltung des Tower Placing Systems
 void placeController(InputState input) {
 
+	// Wenn ESC gedrückt: Platzieren beenden
 	if (input.key_escape) {
-		place = (Place){ 0 }; // (Place) wichtig für Compiler, handelt sich um Place-Struct handelt.
+		place = (Place){ 0 }; // (Place) wichtig für Compiler, handelt sich um Place-Struct
 	}
 
-
+	// Wenn 1 gedrückt: Cannon Tower platzieren
 	if (input.key_1) {
 		place.cannon = true;
 	}
 	if (place.cannon) { placeTower(cannon, input); }
 
-
+	// Wenn 2 gedrückt: Crossbow Tower platzieren
 	if (input.key_2) {
 		place.crossbow = true;
 	}
@@ -172,7 +179,7 @@ void placeController(InputState input) {
 	
 }
 
-
+// Tower verwalten
 void towerManager(InputState input) {
 
 	addTower(cannon, 5);
@@ -181,7 +188,5 @@ void towerManager(InputState input) {
 
 	placeController(input);
 
-	renderActiveTowers();
-
-	everyDistance();
+	processActiveTowers();
 }

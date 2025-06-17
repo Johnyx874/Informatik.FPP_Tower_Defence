@@ -92,16 +92,13 @@ void spawnEntity(EntityData e, int offset) {
 
     if (running_first_frame) {
 
-        strcpy_s(entities[entityCount].type, 50, e.type);
+        entities[entityCount] = e;  // Sämtliche Daten von e nach entities[entityCount] kopieren
 
-        entities[entityCount].position.x = e.position.x - offset;      // Startposition setzen
-        entities[entityCount].position.y = e.position.y;
+        entities[entityCount].position.x = e.position.x - offset;      // X Position ändern
+    
+        entityCount++;      // Anzahl erhöhen
 
-        entities[entityCount].currentTargetIndex = 0;      // Beginnt bei Wegpunkt 0
-        entities[entityCount].speed = e.speed;            // Geschwindigkeit setzen
-        entityCount++;                                     // Anzahl erhöhen
-
-        printf("  - Entity added\n");
+        printf("  - Entity '%s' added\n", entities[entityCount - 1].type);  // Debug Text
     }
 }
 
