@@ -118,7 +118,7 @@ bool startSDL(void){
     }
 
 
-    texture1 = LoadTexture("assets/first_map.bmp", &texture1_width, &texture1_height);
+    texture1 = LoadTexture("assets/map_2.0.bmp", &texture1_width, &texture1_height);
     if (!texture1) { printf("Error Loading Texture"); return false; }
 
     texture2 = LoadTexture("assets/chicken.bmp", &texture2_width, &texture2_height);
