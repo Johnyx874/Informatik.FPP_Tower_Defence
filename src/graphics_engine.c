@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -18,7 +19,7 @@ static SDL_Window* window = NULL;       // Wertespeicher für Fenster
 static SDL_Renderer* renderer = NULL;   // Wertespeicher für Renderer
 static TTF_Font* font = NULL;
 
-static SDL_Color white;
+static SDL_Color white = { 255, 255, 255, 255 };
 
 // Wertespeicher für Texturen
 static SDL_Texture* texture1 = NULL;
@@ -110,13 +111,12 @@ bool startSDL(void){
         return false;
     }
 
-    font = TTF_OpenFont("assets/ByteBounce.ttf", 12);
+    font = TTF_OpenFont("assets/ByteBounce.ttf", 50);
     if (!font) {
         SDL_Log("Fehler beim Laden der Schriftart: %s\n", SDL_GetError());
         return false;
     }
 
-    SDL_Color white = { 255, 255, 255, 255 };
 
     texture1 = LoadTexture("assets/first_map.bmp", &texture1_width, &texture1_height);
     if (!texture1) { printf("Error Loading Texture"); return false; }
@@ -182,7 +182,9 @@ void renderTower(int index, int x_offset, int y_offset) {
 
 void renderText(const char* message, float x, float y, float w, float h) {
 
-    SDL_Surface* textSurface = TTF_RenderText_Blended(font, message, 13, white);
+    size_t len = strlen(message);
+
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, message, len, white);
     if (!textSurface) {
         SDL_Log("Fehler beim Rendern des Textes: %s", SDL_GetError());
         return;
@@ -195,7 +197,7 @@ void renderText(const char* message, float x, float y, float w, float h) {
         return;
     }
 
-    SDL_FRect dst_rect = { x, y, w, h };
+    SDL_FRect dst_rect = { x - (textSurface->w / 2), y, textSurface->w, textSurface->h };
     SDL_RenderTexture(renderer, textTexture, NULL, &dst_rect);
     SDL_DestroyTexture(textTexture);
 }

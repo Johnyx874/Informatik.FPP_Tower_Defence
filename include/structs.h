@@ -56,9 +56,11 @@ typedef struct {
 typedef struct {
 
     char type[50];            // Type des Towers
+    char description[100];    // Beschreibung des Towers
     int textureIndex;         // Von dem Tower verwendete Textur
     Vector2 position;         // Aktuelle Position
     
+
     //int speed;                // Angriffsgeschwindigkeit ?
     
 } TowerData;

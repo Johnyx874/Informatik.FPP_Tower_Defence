@@ -29,8 +29,8 @@ int towerCount = 0;
 TowerData activeTowers[MAX_ACTIVE_TOWERS];
 int activeTowerCount = 0;
 
-TowerData cannon = { "cannon", 1, {0, 0} };
-TowerData crossbow = { "crossbow", 2, {0, 0} };
+TowerData cannon = { "Cannon", "Deletes every entity in 200 pixel radius!", 1, {0, 0}};
+TowerData crossbow = { "Crossbow", "Does nothing at the moment.", 2, {0, 0}};
 
 // Abstand zwischen Punkt A & B berechnen
 float getDistanceAB(Vector2 A, Vector2 B) {
@@ -112,7 +112,7 @@ void processActiveTowers(void) {
 
 	for (int i = 0; i < activeTowerCount; i++) {		// Liste der aktiven Towers durchgehen
 		
-		if (strcmp(activeTowers[i].type, "cannon") == 0) {  // wenn aktiver Tower == Cannon
+		if (strcmp(activeTowers[i].type, "Cannon") == 0) {  // wenn aktiver Tower == Cannon
 			cannonBrain(i);									// dann führe dessen Funktion aus
 		}
 
@@ -126,7 +126,8 @@ void processActiveTowers(void) {
 // Platziere Tower mit Maus
 void placeTower(TowerData t, InputState input) {
 
-	renderText("Placing Tower", 700, 650, 200, 40);
+	renderText(t.type, 650, 700, 200, 40);
+	renderText(t.description, 650, 740, 200, 40);
 
 	int unused_tower = -1;
 
