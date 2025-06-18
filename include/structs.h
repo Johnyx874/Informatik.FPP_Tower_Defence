@@ -2,8 +2,10 @@
 #pragma once
 
 #include <stdbool.h>
+#include <SDL3/SDL.h>
 
-// event_engine.h
+
+// input management
 typedef struct {
 
     float x_mouse_position, y_mouse_position;

@@ -126,6 +126,8 @@ void processActiveTowers(void) {
 // Platziere Tower mit Maus
 void placeTower(TowerData t, InputState input) {
 
+	renderText("Placing Tower", 700, 650, 200, 40);
+
 	int unused_tower = -1;
 
 	for (int i = 0; i <= towerCount; i++) {

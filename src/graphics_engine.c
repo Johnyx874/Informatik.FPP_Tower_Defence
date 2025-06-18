@@ -8,6 +8,7 @@
 #include <stdbool.h>
 
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 // #include <SDL3/SDL_main.h>
 
 #define WINDOW_WIDTH 1300   // std: 1000                  // Breite & Höhe des Fensters festlegen
@@ -15,6 +16,9 @@
 
 static SDL_Window* window = NULL;       // Wertespeicher für Fenster 
 static SDL_Renderer* renderer = NULL;   // Wertespeicher für Renderer
+static TTF_Font* font = NULL;
+
+static SDL_Color white;
 
 // Wertespeicher für Texturen
 static SDL_Texture* texture1 = NULL;
@@ -89,6 +93,10 @@ bool startSDL(void){
         return false;
     }
 
+    if (!TTF_Init()) {
+        SDL_Log("TTF_Init fehlgeschlagen: %s\n", SDL_GetError());
+        return false;
+    }
 
     window = SDL_CreateWindow("SDL3 Textures Test", WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     if (!window) {
@@ -102,6 +110,13 @@ bool startSDL(void){
         return false;
     }
 
+    font = TTF_OpenFont("assets/ByteBounce.ttf", 12);
+    if (!font) {
+        SDL_Log("Fehler beim Laden der Schriftart: %s\n", SDL_GetError());
+        return false;
+    }
+
+    SDL_Color white = { 255, 255, 255, 255 };
 
     texture1 = LoadTexture("assets/first_map.bmp", &texture1_width, &texture1_height);
     if (!texture1) { printf("Error Loading Texture"); return false; }
@@ -165,6 +180,27 @@ void renderTower(int index, int x_offset, int y_offset) {
 }
 
 
+void renderText(const char* message, float x, float y, float w, float h) {
+
+    SDL_Surface* textSurface = TTF_RenderText_Blended(font, message, 13, white);
+    if (!textSurface) {
+        SDL_Log("Fehler beim Rendern des Textes: %s", SDL_GetError());
+        return;
+    }
+
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_DestroySurface(textSurface);
+    if (!textTexture) {
+        SDL_Log("Fehler beim Erstellen der Textur: %s", SDL_GetError());
+        return;
+    }
+
+    SDL_FRect dst_rect = { x, y, w, h };
+    SDL_RenderTexture(renderer, textTexture, NULL, &dst_rect);
+    SDL_DestroyTexture(textTexture);
+}
+
+
 void renderClear(void) {
     SDL_RenderClear(renderer);
 }
@@ -183,6 +219,8 @@ void renderPresent(void) {
 
 void quitSDL(void) {
 
+    if (font) { TTF_CloseFont(font); }
+    TTF_Quit();
     SDL_DestroyTexture(texture1);
     SDL_DestroyTexture(texture2);
     SDL_DestroyTexture(texture3);
