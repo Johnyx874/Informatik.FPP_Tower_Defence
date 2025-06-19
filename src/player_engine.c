@@ -32,9 +32,9 @@ void checkDamage(void) {
 }
 
 // Bonus von Entity auf Player übertragen
-void giveBonus(EntityData e) {
+void giveBonus(int bonus) {
 
-	player.cash += e.bonus;
+	player.cash += bonus;
 
 	printf("Cash: %d\n", player.cash);
 }

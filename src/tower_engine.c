@@ -37,14 +37,16 @@ TowerData cannon = {
 	"Deletes every entity in 200 pixel radius!",	// Description
 	1,												// Texture Index
 	{0, 0},											// Position
-	30												// Reload Time in Frames
+	30,											    // Reload Time in Frames
+	0												// delta Frames
 };
 TowerData crossbow = {				
 	"Crossbow",						// Type
 	"Does nothing at the moment.",  // Description
 	2,								// Texture Index
 	{0, 0},							// Position
-	30								// Reload Time in Frames
+	30,								// Reload Time in Frames
+	0								// delta Frames
 };
 
 // Abstand zwischen Punkt A & B berechnen
@@ -79,10 +81,7 @@ void addTower(TowerData t, int amount) {
 			}
 
 			// Daten auf Listeneintrag kopieren
-			strcpy_s(towers[towerCount].type, 50, t.type);
-			towers[towerCount].textureIndex = t.textureIndex;
-			towers[towerCount].position.x = 0;
-			towers[towerCount].position.y = 0;
+			towers[towerCount] = t;
 
 			towerCount++;	// Anzahl erhöhen
 		}
@@ -105,21 +104,33 @@ void addToActiveTowers(TowerData t) {
 
 void cannonBrain(int index) {
 
-	for (int e = 0; e < entityCount; e++) {
+	if (towers[index].delta_frames >= towers[index].reload_time) {
 
-		if (entities[e].textureIndex == 1) {
+		for (int i = 0; i < entityCount; i++) {
 
-			float distance = getDistanceAB(towers[index].position, entities[e].position);
+			
+
+			float distance = getDistanceAB(towers[index].position, entities[i].position);
 
 			if (distance <= 200) {
-				giveBonus(entities[e]);
-				deleteEntity(&entities[e]);
+				giveBonus(entities[i].bonus);
+				deleteEntity(&entities[i]);
+
+				towers[index].delta_frames = 0;
+
+				printf("Chicken processed...\n");
+
+				break;
 			}
 
-			printf("%f\n", distance);
+			//printf("%f\n", distance);
+			
 		}
 	}
 
+	printf("%d\n", towers[index].delta_frames);
+
+	towers[index].delta_frames++;
 }
 
 

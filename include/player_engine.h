@@ -8,5 +8,5 @@ extern Player player;
 
 // Funktionen
 void checkDamage(void);
-void giveBonus(EntityData e);
+void giveBonus(int bonus);
 void playerManager(void);

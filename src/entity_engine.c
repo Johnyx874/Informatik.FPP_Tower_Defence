@@ -152,19 +152,17 @@ void entityManager(InputState input) {
 
     spawnAndCloneEntity(theChicken, 5, 100);
 
-    if (input.key_c) {
+    spawnAndCloneEntity(theSecond, 3, 150);
+    /*if (input.key_c) {
 
         deleteEntity(&entities[0]);
-    }
+    }*/
 
     moveEntity(theChicken);
+
+    moveEntity(theSecond);
     
-    /*float distance = getDistanceAB(entities[0].position, entities[1].position);
-
-    system("cls");
-    printf("     %f     \n", distance);*/
-
-    //printf("-------- entityManger completed--------\n\n");
+    
 }
 
 

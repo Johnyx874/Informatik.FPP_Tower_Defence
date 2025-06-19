@@ -198,7 +198,6 @@ void renderText(const char* message, int x, int y, bool center) {
     }
 
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_DestroySurface(textSurface);
     if (!textTexture) {
         SDL_Log("Fehler beim Erstellen der Textur: %s", SDL_GetError());
         return;
@@ -212,6 +211,8 @@ void renderText(const char* message, int x, int y, bool center) {
 
     SDL_FRect dst_rect = { x_final, y, textSurface->w, textSurface->h };
     SDL_RenderTexture(renderer, textTexture, NULL, &dst_rect);
+
+    SDL_DestroySurface(textSurface);
     SDL_DestroyTexture(textTexture);
 }
 

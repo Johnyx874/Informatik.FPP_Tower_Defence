@@ -56,9 +56,9 @@ typedef struct {
     Vector2 position;         // Aktuelle Position
     int currentTargetIndex;   // Index des nächsten Wegpunkts
     int speed;                // Bewegungsgeschwindigkeit (Pixel pro Frame)
-    int health;
-    int bonus;
-    int damage;
+    int health;               // Leben des Entitys
+    int bonus;                // Preis für das besiegen eines Entitys
+    int damage;               // Damage den der Spieler für jedes durchgelaufene Entity kassiert
 
 } EntityData;
 
@@ -69,8 +69,7 @@ typedef struct {
     char description[100];    // Beschreibung des Towers
     int textureIndex;         // Von dem Tower verwendete Textur
     Vector2 position;         // Aktuelle Position
-    int reload_time;
-
-    //int speed;                // Angriffsgeschwindigkeit ?
+    int reload_time;          // Anzahl an Frames bis Tower reloaded ist
+    int delta_frames;         // Vergangene Frames nach letztem 'Schuss'
     
 } TowerData;
