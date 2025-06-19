@@ -14,9 +14,9 @@ extern EntityData theChicken;
 extern EntityData theSecond;
 
 // Funktionen
-void moveAlongPath(EntityData* e);
-void moveEntity(EntityData e);
 void spawnEntity(EntityData e, int offset);
 void spawnAndCloneEntity(EntityData e, int amount, int spacing);
 void deleteEntity(EntityData* e);
+void moveAlongPath(EntityData* e);
+void moveEntity(EntityData e);
 void entityManager(InputState input);

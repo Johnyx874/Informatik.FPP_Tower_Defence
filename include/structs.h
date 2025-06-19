@@ -5,6 +5,8 @@
 #include <SDL3/SDL.h>
 
 
+
+
 // input management
 typedef struct {
 
@@ -40,6 +42,15 @@ typedef struct {
     int count;
 } Path;
 
+// Struktur für Player
+typedef struct {
+
+    char name[50];            // Name des Players
+    int cash;                 // Geld des Players
+    int health;               // Leben des Players
+
+} Player;
+
 // Struktur für ein einzelnes Entity
 typedef struct {
 
@@ -49,6 +60,8 @@ typedef struct {
     int currentTargetIndex;   // Index des nächsten Wegpunkts
     int speed;                // Bewegungsgeschwindigkeit (Pixel pro Frame)
     int health;
+    int bonus;
+    int damage;
 
 } EntityData;
 

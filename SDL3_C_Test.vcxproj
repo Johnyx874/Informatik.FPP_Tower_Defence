@@ -135,6 +135,7 @@
     <ClCompile Include="src\graphics_engine.c" />
     <ClCompile Include="src\main_engine.c" />
     <ClCompile Include="src\menu_engine.c" />
+    <ClCompile Include="src\player_engine.c" />
     <ClCompile Include="src\tower_engine.c" />
     <ClCompile Include="window.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -146,6 +147,7 @@
     <ClInclude Include="include\graphics_engine.h" />
     <ClInclude Include="include\library.h" />
     <ClInclude Include="include\main_engine.h" />
+    <ClInclude Include="include\player_engine.h" />
     <ClInclude Include="include\structs.h" />
     <ClInclude Include="include\tower_engine.h" />
   </ItemGroup>

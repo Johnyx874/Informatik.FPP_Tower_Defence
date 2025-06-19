@@ -27,6 +27,7 @@ static SDL_Texture* texture2 = NULL;
 static SDL_Texture* texture3 = NULL;
 static SDL_Texture* texture4 = NULL;
 static SDL_Texture* texture5 = NULL;
+static SDL_Texture* texture6 = NULL;
 
 // Breite und Höhe der Texturen
 static int texture1_width = 0;
@@ -39,6 +40,8 @@ static int texture4_width = 0;
 static int texture4_height = 0;
 static int texture5_width = 0;
 static int texture5_height = 0;
+static int texture6_width = 0;
+static int texture6_height = 0;
 
 static int frame_counter = 0;
 
@@ -133,6 +136,9 @@ bool startSDL(void){
     texture5 = LoadTexture("assets/crossbow128.bmp", &texture5_width, &texture5_height);
     if (!texture3) { printf("Error Loading Texture"); return false; }
 
+    texture6 = LoadTexture("assets/place_indicator.bmp", &texture6_width, &texture6_height);
+    if (!texture1) { printf("Error Loading Texture"); return false; }
+
     return true;
 }
 
@@ -176,11 +182,12 @@ void renderTower(int index, int x_offset, int y_offset) {
 
     case 2: renderTexture(texture5, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
 
+    case 3: renderTexture(texture6, 0, 0, 1300, 900, 0, 0); break;
     }
 }
 
 
-void renderText(const char* message, float x, float y, float w, float h) {
+void renderText(const char* message, int x, int y, bool center) {
 
     size_t len = strlen(message);
 
@@ -197,7 +204,13 @@ void renderText(const char* message, float x, float y, float w, float h) {
         return;
     }
 
-    SDL_FRect dst_rect = { x - (textSurface->w / 2), y, textSurface->w, textSurface->h };
+    int x_final = x;
+
+    if (center) {
+        x_final = x - (textSurface->w / 2);
+    }
+
+    SDL_FRect dst_rect = { x_final, y, textSurface->w, textSurface->h };
     SDL_RenderTexture(renderer, textTexture, NULL, &dst_rect);
     SDL_DestroyTexture(textTexture);
 }

@@ -13,7 +13,7 @@
 #include "../include/graphics_engine.h"
 #include "../include/entity_engine.h"
 #include "../include/tower_engine.h"
-
+#include "../include/player_engine.h"
 
 
 void GameLoop(void) {
@@ -35,6 +35,8 @@ void GameLoop(void) {
         entityManager(input);	// Entitys berechnen und rendern
 
 		towerManager(input);
+
+		playerManager();
 
 		renderPresent();	// Bildschirm füllen
 

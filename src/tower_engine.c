@@ -15,10 +15,12 @@
 	bool placing = false;
 	float old_x = 0;
 	float old_y = 0;
+
 #include "../include/entity_engine.h"	
 	int entityCount;
 #include "../include/graphics_engine.h"	
 #include "../include/tower_engine.h"	
+#include "../include/player_engine.h"
 
 
 Place place;
@@ -97,6 +99,7 @@ void cannonBrain(int index) {
 			float distance = getDistanceAB(towers[index].position, entities[e].position);
 
 			if (distance <= 200) {
+				giveBonus(entities[e]);
 				deleteEntity(&entities[e]);
 			}
 
@@ -126,8 +129,7 @@ void processActiveTowers(void) {
 // Platziere Tower mit Maus
 void placeTower(TowerData t, InputState input) {
 
-	renderText(t.type, 650, 700, 200, 40);
-	renderText(t.description, 650, 740, 200, 40);
+	renderTower(3, 0, 0);
 
 	int unused_tower = -1;
 
@@ -158,6 +160,10 @@ void placeTower(TowerData t, InputState input) {
 			place = (Place){ 0 };
 		}
 	}
+
+	renderText(t.type, 650, 700, true);
+	renderText(t.description, 650, 740, true);
+
 }
 
 // Verwaltung des Tower Placing Systems

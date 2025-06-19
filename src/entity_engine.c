@@ -7,7 +7,7 @@
 
 #include "../include/structs.h"
 #include "../include/library.h"
-bool running_first_frame;
+    bool running_first_frame;
 
 #include "../include/entity_engine.h"
 #include "../include/graphics_engine.h"
@@ -23,7 +23,7 @@ Vector2 pathPoints[] = {
     {960, 720},
     {1170, 720},
     {1170, 440},
-    {1290, 440}
+    {1350, 440}
 };
 
 // Initialisierung des Pfads
@@ -33,54 +33,10 @@ Path path = { pathPoints, 9 };
 EntityData entities[MAX_ENTITIES];  // Array zur Speicherung mehrerer Entitys
 int entityCount = 0;                // Aktuelle Anzahl an Entitys
 
-EntityData theChicken = { "chicken", 1, {0, 590}, 0, 5};
-EntityData theSecond = { "second", 2, {0, 590}, 0, 10};
+// { char type[50], int textureIndex, Vector2 position, int currentTargetIndex, int speed, int health, int bonus, int damage };
+EntityData theChicken = { "chicken", 1, {0, 590}, 0, 5, 10, 100, 10};
+EntityData theSecond = { "second", 2, {0, 590}, 0, 10, 10, 50, 50};
 
-
-// Bewegt eine einzelne Entity entlang des Pfads
-void moveAlongPath(EntityData* e) {
-    if (path.points == NULL || path.count <= 0) return;
-    if (e->currentTargetIndex >= path.count) return;
-
-    Vector2 target = path.points[e->currentTargetIndex];
-
-    Vector2 dir = {
-        target.x - e->position.x,
-        target.y - e->position.y
-    };
-
-    if (dir.x != 0) dir.x = (dir.x > 0) ? 1 : -1;
-    if (dir.y != 0) dir.y = (dir.y > 0) ? 1 : -1;
-
-    e->position.x += dir.x * e->speed;
-    e->position.y += dir.y * e->speed;
-
-    bool reachedX = (dir.x > 0 && e->position.x >= target.x) ||
-        (dir.x < 0 && e->position.x <= target.x) ||
-        (dir.x == 0);
-
-    bool reachedY = (dir.y > 0 && e->position.y >= target.y) ||
-        (dir.y < 0 && e->position.y <= target.y) ||
-        (dir.y == 0);
-
-    if (reachedX && reachedY) {
-        e->position = target;
-        e->currentTargetIndex++;
-    }
-}
-
-// Bewegt alle Entitys eines Types
-void moveEntity(EntityData e) {
-
-    for (int i = 0; i <= entityCount; i++) {
-
-        if (strcmp(e.type, entities[i].type) == 0) {
-            moveAlongPath(&entities[i]);
-            renderEntity(e.textureIndex, entities[i].position.x, entities[i].position.y);
-            //printf("  - Entity moved\n");
-        }
-    }
-}
 
 // Fügt ein neues Entity zum Entity-Array hinzu
 void spawnEntity(EntityData e, int offset) {
@@ -122,6 +78,52 @@ void deleteEntity(EntityData* e) {
     e->speed = 0;
     e->health = 0;
 
+}
+
+
+// Bewegt eine einzelne Entity entlang des Pfads
+void moveAlongPath(EntityData* e) {
+    if (path.points == NULL || path.count <= 0) return;
+    if (e->currentTargetIndex >= path.count) return;
+
+    Vector2 target = path.points[e->currentTargetIndex];
+
+    Vector2 dir = {
+        target.x - e->position.x,
+        target.y - e->position.y
+    };
+
+    if (dir.x != 0) dir.x = (dir.x > 0) ? 1 : -1;
+    if (dir.y != 0) dir.y = (dir.y > 0) ? 1 : -1;
+
+    e->position.x += dir.x * e->speed;
+    e->position.y += dir.y * e->speed;
+
+    bool reachedX = (dir.x > 0 && e->position.x >= target.x) ||
+        (dir.x < 0 && e->position.x <= target.x) ||
+        (dir.x == 0);
+
+    bool reachedY = (dir.y > 0 && e->position.y >= target.y) ||
+        (dir.y < 0 && e->position.y <= target.y) ||
+        (dir.y == 0);
+
+    if (reachedX && reachedY) {
+        e->position = target;
+        e->currentTargetIndex++;
+    }
+}
+
+
+// Bewegt alle Entitys eines Types
+void moveEntity(EntityData e) {
+
+    for (int i = 0; i <= entityCount; i++) {
+
+        if (strcmp(e.type, entities[i].type) == 0) {
+            moveAlongPath(&entities[i]);
+            renderEntity(e.textureIndex, entities[i].position.x, entities[i].position.y);
+        }
+    }
 }
 
 
