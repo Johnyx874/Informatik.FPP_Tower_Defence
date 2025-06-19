@@ -101,6 +101,18 @@ void deleteEntity(EntityData* e) {
 }
 
 
+void killEntity(EntityData* e) {
+
+    if (passedFrames(1, 100)) {
+        deleteEntity(e);
+    }
+    else {
+        renderEntity((e->textureIndex + 1), e->position.x, e->position.y);
+    }
+    
+}
+
+
 // Bewegt eine einzelne Entity entlang des Pfads
 void moveAlongPath(EntityData* e) {
     if (path.points == NULL || path.count <= 0) return;
@@ -135,13 +147,16 @@ void moveAlongPath(EntityData* e) {
 
 
 // Bewegt alle Entitys eines Types
-void moveEntity(EntityData e) {
+void moveEntities(void) {
 
-    for (int i = 0; i <= entityCount; i++) {
+    for (int i = entityCount - 1; i >= 0; i--) {
 
-        if (strcmp(e.type, entities[i].type) == 0) {
+        if (entities[i].kill_it) {
+            killEntity(&entities[i]);
+        }
+        else {
             moveAlongPath(&entities[i]);
-            renderEntity(e.textureIndex, entities[i].position.x, entities[i].position.y);
+            renderEntity(entities[i].textureIndex, entities[i].position.x, entities[i].position.y);
         }
     }
 }
@@ -151,22 +166,26 @@ void moveEntity(EntityData e) {
 void entityManager(InputState input) {
 
     spawnAndCloneEntity(theChicken, 5, 100);
+    //spawnEntity(theChicken, 0);
 
-    spawnAndCloneEntity(theSecond, 3, 150);
+    moveEntities();
+
+    //spawnAndCloneEntity(theSecond, 3, 150);
     /*if (input.key_c) {
 
         deleteEntity(&entities[0]);
     }*/
 
-    moveEntity(theChicken);
 
-    moveEntity(theSecond);
+    
+
+    //moveEntity(theSecond);
     
     
 }
 
 
-// Maybe gut? 
+// Maybe gut? Maybe nötig?
 // 
 //    || 
 //    ||

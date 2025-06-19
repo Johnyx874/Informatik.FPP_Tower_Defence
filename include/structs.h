@@ -59,6 +59,7 @@ typedef struct {
     int health;               // Leben des Entitys
     int bonus;                // Preis für das besiegen eines Entitys
     int damage;               // Damage den der Spieler für jedes durchgelaufene Entity kassiert
+    bool kill_it;             // bool, ob das Entity getötet werden muss
 
 } EntityData;
 

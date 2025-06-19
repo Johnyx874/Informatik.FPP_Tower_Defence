@@ -4,6 +4,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 // Funktionen
+bool passedFrames(int id, int waitFrames);
 void renderClear(); // Renderer leeren
 void renderStatic(); // Statische Objekte rendern (zB: Map)
 void renderPresent(); // Alle geladenen Objekte rendern

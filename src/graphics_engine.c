@@ -15,6 +15,8 @@
 #define WINDOW_WIDTH 1300   // std: 1000                  // Breite & Höhe des Fensters festlegen
 #define WINDOW_HEIGHT 900  // std: 700
 
+#define MAX_FRAME_TRACKERS 32
+
 static SDL_Window* window = NULL;       // Wertespeicher für Fenster 
 static SDL_Renderer* renderer = NULL;   // Wertespeicher für Renderer
 static TTF_Font* font = NULL;
@@ -60,6 +62,31 @@ void totalFrames(void) {
 
 void countFrame(void) {
     frame_counter++;
+}
+
+
+// Funktion: an beliebig vielen Stellen im Code X Frames abzuwarten
+bool passedFrames(int id, int waitFrames) {
+
+    static int counters[MAX_FRAME_TRACKERS] = { 0 };
+
+    if (id < 0 || id >= MAX_FRAME_TRACKERS) {
+        SDL_Log("passedFrames: Ungültige ID");
+        return false;
+    }
+
+    if (counters[id] == -1) {
+        counters[id] = 0;
+        return false;
+    }
+
+    if (counters[id] < waitFrames) {
+        counters[id]++;
+        return false;
+    }
+
+    counters[id] = -1; // Reset für nächste Nutzung
+    return true;
 }
 
 

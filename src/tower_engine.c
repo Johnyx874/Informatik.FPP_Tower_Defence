@@ -104,33 +104,26 @@ void addToActiveTowers(TowerData t) {
 
 void cannonBrain(int index) {
 
-	if (towers[index].delta_frames >= towers[index].reload_time) {
+	if (passedFrames(0, towers[index].reload_time)) {
 
 		for (int i = 0; i < entityCount; i++) {
 
-			
-
 			float distance = getDistanceAB(towers[index].position, entities[i].position);
 
-			if (distance <= 200) {
+			if (distance <= 200 && !entities[i].kill_it) {
+
 				giveBonus(entities[i].bonus);
-				deleteEntity(&entities[i]);
 
-				towers[index].delta_frames = 0;
+				entities[i].kill_it = true;
 
-				printf("Chicken processed...\n");
+				printf("Entity killed..\n");
 
 				break;
 			}
-
-			//printf("%f\n", distance);
 			
 		}
 	}
 
-	printf("%d\n", towers[index].delta_frames);
-
-	towers[index].delta_frames++;
 }
 
 
@@ -157,7 +150,7 @@ void placeTower(TowerData t, InputState input) {
 
 	int unused_tower = -1;
 
-	for (int i = 0; i <= towerCount; i++) {
+	for (int i = 0; i < towerCount; i++) {
 
 		if (strcmp(towers[i].type, t.type) == 0) {
 			if (towers[i].position.x == 0 && towers[i].position.y == 0) {
