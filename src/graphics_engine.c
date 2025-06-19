@@ -166,7 +166,7 @@ void renderEntity(int index, int x_offset, int y_offset) {
     case 1: renderTexture(texture2, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
     
     case 2: renderTexture(texture3, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
-
+    
     }
 
 }

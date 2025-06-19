@@ -40,7 +40,11 @@ void playerManager(void) {
 	checkDamage();
 
 	char buffer[64];
+
 	snprintf(buffer, sizeof(buffer), "HP: %d", player.health);
 	renderText(buffer, 70, 30, false);
+
+	snprintf(buffer, sizeof(buffer), "Cash: %d", player.cash);
+	renderText(buffer, 1000, 30, false);
 
 }

@@ -4,9 +4,6 @@
 #include <stdbool.h>
 #include <SDL3/SDL.h>
 
-
-
-
 // input management
 typedef struct {
 
