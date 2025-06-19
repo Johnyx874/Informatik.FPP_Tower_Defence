@@ -31,8 +31,21 @@ int towerCount = 0;
 TowerData activeTowers[MAX_ACTIVE_TOWERS];
 int activeTowerCount = 0;
 
-TowerData cannon = { "Cannon", "Deletes every entity in 200 pixel radius!", 1, {0, 0}};
-TowerData crossbow = { "Crossbow", "Does nothing at the moment.", 2, {0, 0}};
+// Initialisierung der Towers
+TowerData cannon = {								
+	"Cannon",										// Type
+	"Deletes every entity in 200 pixel radius!",	// Description
+	1,												// Texture Index
+	{0, 0},											// Position
+	30												// Reload Time in Frames
+};
+TowerData crossbow = {				
+	"Crossbow",						// Type
+	"Does nothing at the moment.",  // Description
+	2,								// Texture Index
+	{0, 0},							// Position
+	30								// Reload Time in Frames
+};
 
 // Abstand zwischen Punkt A & B berechnen
 float getDistanceAB(Vector2 A, Vector2 B) {

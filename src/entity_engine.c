@@ -33,9 +33,29 @@ Path path = { pathPoints, 9 };
 EntityData entities[MAX_ENTITIES];  // Array zur Speicherung mehrerer Entitys
 int entityCount = 0;                // Aktuelle Anzahl an Entitys
 
-// { char type[50], int textureIndex, Vector2 position, int currentTargetIndex, int speed, int health, int bonus, int damage };
-EntityData theChicken = { "chicken", 1, {0, 590}, 0, 5, 10, 100, 10};
-EntityData theSecond = { "second", 2, {0, 590}, 0, 10, 10, 50, 50};
+// Initialisierung der Entities
+EntityData theChicken = { 
+    "chicken",           // Type
+    1,                   // Texture Index
+    {0, 590},            // Starting Position
+    0,                   // Next Waypoint Index (= currentTargetIndex)
+
+    5,                   // Speed
+    10,                  // Health
+    100,                 // Bonus
+    10                   // Damage
+};
+EntityData theSecond = { 
+    "second",   // Type
+    2,          // Texture Index
+    {0, 590},   // Starting Position
+    0,          // Next Waypoint Index (= currentTargetIndex)
+
+    10,         // Speed
+    10,         // Health
+    50,         // Bonus
+    50          // Damage
+};
 
 
 // Fügt ein neues Entity zum Entity-Array hinzu

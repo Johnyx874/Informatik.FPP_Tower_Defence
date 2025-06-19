@@ -8,7 +8,12 @@
 #include "../include/entity_engine.h"
 #include "../include/graphics_engine.h"
 
-Player player = { "Player 1", 0, 100 };		// Initialisierung von player
+// Initialisierung des Players
+Player player = { 
+	"Player 1",		// Name
+	0,				// Cash
+	100				// Health
+};			
 
 // wenn Entity die gesamte Map durchlaufen hat, Damage von Entity auf Player übertragen
 void checkDamage(void) {
