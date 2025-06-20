@@ -41,7 +41,9 @@ TowerData crossbow = {
 	90,								// Price
 	5,								// Damage
 	50,								// Reload Time in Frames
-	500							    // Range
+	500,							    // Range
+	true,							// Trifft Luft?
+	false							// Trifft Gepanzert?
 };
 TowerData cannon = {
 	"Cannon",						// Type
@@ -52,7 +54,9 @@ TowerData cannon = {
 	120,							// Price
 	20,								// Damage
 	150,							// Reload Time in Frames
-	250							    // Range
+	250,							    // Range
+	false,							// Trifft Luft?
+	true							// Trifft Gepanzert?
 };
 TowerData minigun = {
 	"Minigun",						// Type
@@ -63,7 +67,9 @@ TowerData minigun = {
 	175,							// Price
 	1,								// Damage
 	12,								// Reload Time in Frames
-	250							    // Range
+	250,							    // Range
+	true,							// Trifft Luft?
+	false							// Trifft Gepanzert?
 };
 TowerData launcher = {
 	"Rocket Launcher",						// Type
@@ -74,7 +80,9 @@ TowerData launcher = {
 	200,							// Price
 	15,								// Damage
 	100,							// Reload Time in Frames
-	1000							// Range
+	1000,							// Range
+	true,							// Trifft Luft?
+	false							// Trifft Gepanzert?
 };
 TowerData saw = {
 	"Saw",						// Type
@@ -85,7 +93,9 @@ TowerData saw = {
 	200,							// Price
 	2,								// Damage
 	5,							// Reload Time in Frames
-	50							// Range
+	50,							// Range
+	false,							// Trifft Luft?
+	false							// Trifft Gepanzert?
 };
 TowerData sniper = {
 	"Sniper",						// Type
@@ -96,7 +106,9 @@ TowerData sniper = {
 	225,							// Price
 	30,								// Damage
 	250,							// Reload Time in Frames
-	1500							// Range
+	1500,							// Range
+	true,							// Trifft Luft?
+	true							// Trifft Gepanzert?
 };
 
 // Abstand zwischen Punkt A & B berechnen
@@ -152,26 +164,46 @@ void addToActiveTowers(TowerData t) {
 }
 
 
+void damageAsInRange(EntityData* e, TowerData t) {
+
+	float distance = getDistanceAB(t.position, e->position);
+
+	if (distance <= t.range && !e->kill_it) {
+
+		giveBonus(e->bonus);
+
+		e->health -= t.damage;
+
+	}
+}
+
+
 void dealDamage(int index) {
 
 	if (passedFrames((index + 100), towers[index].reload_time)) {
 
 		for (int i = 0; i < entityCount; i++) {
 
-			float distance = getDistanceAB(towers[index].position, entities[i].position);
-
-			if (distance <= towers[index].range && !entities[i].kill_it) {
-
-				giveBonus(entities[i].bonus);
-
-				entities[i].health -= towers[index].damage;
-
-				break;
+			if (entities[i].attr_air) {
+				if (towers[index].hits_air) {
+					damageAsInRange(&entities[i], towers[index]);
+					break;
+				}
 			}
-			
+			else if (entities[i].attr_armored) {
+				if (towers[index].hits_armored) {
+					damageAsInRange(&entities[i], towers[index]);
+					break;
+				}
+			}
+			else {
+				if (!towers[index].hits_air) {
+					damageAsInRange(&entities[i], towers[index]);
+					break;
+				}
+			}
 		}
 	}
-
 }
 
 

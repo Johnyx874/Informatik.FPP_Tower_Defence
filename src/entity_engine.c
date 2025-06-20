@@ -42,7 +42,9 @@ EntityData theChicken = {
 
     4,                   // Speed
     15,                  // Health
-    2                 // Bonus
+    2,                   // Bonus
+    false,               // Fliegt?
+    false               // Gepanzert?
 
 };
 EntityData theBoar = { 
@@ -53,7 +55,9 @@ EntityData theBoar = {
 
     3,         // Speed
     40,         // Health
-    5         // Bonus
+    5,         // Bonus
+    false,               // Fliegt?
+    false               // Gepanzert?
 
 };
 EntityData theHopper = {
@@ -64,7 +68,9 @@ EntityData theHopper = {
 
     5,         // Speed
     10,         // Health
-    4         // Bonus
+    4,         // Bonus
+    false,               // Fliegt?
+    false               // Gepanzert?
 
 };
 EntityData theBallon = {
@@ -75,7 +81,9 @@ EntityData theBallon = {
 
     3,         // Speed
     30,         // Health
-    8         // Bonus
+    8,         // Bonus
+    true,               // Fliegt?
+    false               // Gepanzert?
 
 };
 EntityData theCar = {
@@ -86,7 +94,9 @@ EntityData theCar = {
 
     1,         // Speed
     100,         // Health
-    20         // Bonus
+    20,         // Bonus
+    false,               // Fliegt?
+    false               // Gepanzert?
 
 };
 EntityData theWarthog = {
@@ -97,7 +107,9 @@ EntityData theWarthog = {
 
     2,         // Speed
     70,         // Health
-    15         // Bonus
+    15,         // Bonus
+    false,               // Fliegt?
+    true               // Gepanzert?
 
 };
 EntityData theTitan = {
@@ -108,7 +120,9 @@ EntityData theTitan = {
 
     4,         // Speed
     50,         // Health
-    20         // Bonus
+    20,         // Bonus
+    true,               // Fliegt?
+    true               // Gepanzert?
 
 };
 

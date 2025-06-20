@@ -59,6 +59,10 @@ typedef struct {
     int health;               // Leben des Entitys
     int bonus;                // Preis für das besiegen eines Entitys
     int damage;               // Damage den der Spieler für jedes durchgelaufene Entity kassiert
+
+    bool attr_air;            // Attribut: Fliegend
+    bool attr_armored;        // Attribut: Gepanzert
+
     bool kill_it;             // bool, ob das Entity getötet werden muss
 
 } EntityData;
@@ -75,6 +79,7 @@ typedef struct {
     int damage;               // Schaden an Entities
     int reload_time;          // Anzahl an Frames bis Tower reloaded ist
     int range;                // Reichweite in Pixeln
-    // attack type
+    bool hits_air;            // Attribut: Fliegend
+    bool hits_armored;        // Attribut: Gepanzert
     
 } TowerData;
