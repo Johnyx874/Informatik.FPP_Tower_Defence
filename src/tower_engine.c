@@ -38,7 +38,7 @@ TowerData cannon = {
 	1,												// Texture Index
 	{0, 0},											// Position
 	30,											    // Reload Time in Frames
-	0												// delta Frames
+	200												// Range
 };
 TowerData crossbow = {				
 	"Crossbow",						// Type
@@ -110,7 +110,7 @@ void cannonBrain(int index) {
 
 			float distance = getDistanceAB(towers[index].position, entities[i].position);
 
-			if (distance <= 200 && !entities[i].kill_it) {
+			if (distance <= towers[index].range && !entities[i].kill_it) {
 
 				giveBonus(entities[i].bonus);
 
@@ -162,6 +162,7 @@ void placeTower(TowerData t, InputState input) {
 
 	if (unused_tower >= 0) {
 		renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);
+		renderRange(200, input.x_mouse_position, input.y_mouse_position);
 	}
 	
 	if (input.button_left) {

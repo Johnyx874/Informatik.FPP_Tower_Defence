@@ -32,6 +32,7 @@ static SDL_Texture* cannon_tex = NULL;
 static SDL_Texture* crossbow_tex = NULL;
 static SDL_Texture* place_indicator_tex = NULL;
 static SDL_Texture* killed_chicken_tex = NULL;
+static SDL_Texture* range_200_tex = NULL;
 
 // Breite und Höhe der Texturen
 static int map_tex_width = 0;
@@ -48,6 +49,8 @@ static int place_indicator_tex_width = 0;
 static int place_indicator_tex_height = 0;
 static int killed_chicken_tex_width = 0;
 static int killed_chicken_tex_height = 0;
+static int range_200_tex_width = 0;
+static int range_200_tex_height = 0;
 
 static int frame_counter = 0;
 
@@ -167,12 +170,16 @@ bool startSDL(void){
     crossbow_tex = LoadTexture("assets/crossbow128.bmp", &crossbow_tex_width, &crossbow_tex_height);
     if (!crossbow_tex) { printf("Error Loading Texture"); return false; }
 
-    place_indicator_tex = LoadTexture("assets/place_indicator.bmp", &place_indicator_tex_width, &place_indicator_tex_height);
-    if (!place_indicator_tex) { printf("Error Loading Texture"); return false; }
 
     killed_chicken_tex = LoadTexture("assets/killed_chicken.bmp", &killed_chicken_tex_width, &killed_chicken_tex_height);
     if (!killed_chicken_tex) { printf("Error Loading Texture"); return false; }
 
+
+    place_indicator_tex = LoadTexture("assets/place_indicator.bmp", &place_indicator_tex_width, &place_indicator_tex_height);
+    if (!place_indicator_tex) { printf("Error Loading Texture"); return false; }
+
+    range_200_tex = LoadTexture("assets/range_indicator_200.bmp", &range_200_tex_width, &range_200_tex_height);
+    if (!range_200_tex) { printf("Error Loading Texture"); return false; }
 
     return true;
 }
@@ -221,6 +228,19 @@ void renderTower(int index, int x_offset, int y_offset) {
     case 2: renderTexture(crossbow_tex, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
 
     case 3: renderTexture(place_indicator_tex, 0, 0, 1300, 900, 0, 0); break;
+    }
+}
+
+
+void renderRange(int index, int x_offset, int y_offset) {
+
+    switch (index) {
+
+        //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
+
+    case 200: renderTexture(range_200_tex, 0 - 200, 0 - 168, 400, 400, x_offset, y_offset); break;
+
+
     }
 }
 
