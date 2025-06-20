@@ -37,16 +37,20 @@ TowerData cannon = {
 	"Deletes every entity in 200 pixel radius!",	// Description
 	1,												// Texture Index
 	{0, 0},											// Position
+
 	30,											    // Reload Time in Frames
-	200												// Range
+	200,											// Range
+	50												// Price
 };
 TowerData crossbow = {				
 	"Crossbow",						// Type
 	"Does nothing at the moment.",  // Description
 	2,								// Texture Index
 	{0, 0},							// Position
+
 	30,								// Reload Time in Frames
-	0								// delta Frames
+	0,								// Range
+	10								// Price
 };
 
 // Abstand zwischen Punkt A & B berechnen
@@ -144,7 +148,7 @@ void processActiveTowers(void) {
 // Platziere Tower mit Maus
 void placeTower(TowerData t, InputState input) {
 
-	renderTower(3, 0, 0);
+	renderIndicator(1, 0, 0);
 
 	int unused_tower = -1;
 
@@ -161,8 +165,15 @@ void placeTower(TowerData t, InputState input) {
 
 
 	if (unused_tower >= 0) {
-		renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);
-		renderRange(200, input.x_mouse_position, input.y_mouse_position);
+
+		if (player.cash >= t.price) {
+			renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);
+		}
+		else {
+			renderTower((towers[unused_tower].textureIndex + 100), input.x_mouse_position, input.y_mouse_position);
+		}
+
+		renderIndicator(t.range, input.x_mouse_position, input.y_mouse_position);
 	}
 	
 	if (input.button_left) {
@@ -172,6 +183,8 @@ void placeTower(TowerData t, InputState input) {
 			towers[unused_tower].position.y = input.y_mouse_position;
 
 			addToActiveTowers(towers[unused_tower]);
+
+			player.cash -= t.price;
 
 			place = (Place){ 0 };
 		}

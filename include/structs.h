@@ -73,5 +73,6 @@ typedef struct {
 
     int reload_time;          // Anzahl an Frames bis Tower reloaded ist
     int range;                // Reichweite in Pixeln
+    int price;                // Preis des Towers
     
 } TowerData;
