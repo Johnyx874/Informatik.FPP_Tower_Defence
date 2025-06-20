@@ -211,11 +211,8 @@ void dealDamage(int index) {
 void processActiveTowers(void) {
 
 	for (int i = 0; i < activeTowerCount; i++) {		// Liste der aktiven Towers durchgehen
-		
-		//if (strcmp(activeTowers[i].type, "Cannon") == 0) {  // wenn aktiver Tower == Cannon
-		//	cannonBrain(i);									// dann führe dessen Funktion aus
-		//}
 
+		// aktiver Tower macht damage
 		dealDamage(i);
 
 		// aktiven Tower rendern
