@@ -2,6 +2,7 @@
 #pragma once
 
 #include <SDL3_ttf/SDL_ttf.h>
+#define MAX_FRAME_TRACKERS 64
 
 // Funktionen
 bool passedFrames(int id, int waitFrames);
@@ -15,4 +16,5 @@ void totalFrames(); // anzeigen von insgesamt gerenderten Frames
 void countFrame(); // frame_counter + 1
 bool startSDL();  // Initialisieren, Texturen laden
 void quitSDL(); // Beenden des Spiels
+
 

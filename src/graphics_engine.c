@@ -15,7 +15,8 @@
 #define WINDOW_WIDTH 1300   // std: 1000                  // Breite & Höhe des Fensters festlegen
 #define WINDOW_HEIGHT 900  // std: 700
 
-#define MAX_FRAME_TRACKERS 32
+#define MAX_FRAME_TRACKERS 200  // 0-99 -> für Entities
+                                // 100-200 -> für Tower
 
 static SDL_Window* window = NULL;       // Wertespeicher für Fenster 
 static SDL_Renderer* renderer = NULL;   // Wertespeicher für Renderer

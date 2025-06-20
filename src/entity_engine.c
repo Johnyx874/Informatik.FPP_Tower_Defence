@@ -101,9 +101,9 @@ void deleteEntity(EntityData* e) {
 }
 
 
-void killEntity(EntityData* e) {
+void killEntity(EntityData* e, int id) {
 
-    if (passedFrames(1, 100)) {
+    if (passedFrames(id, 15)) {
         deleteEntity(e);
     }
     else {
@@ -152,7 +152,7 @@ void moveEntities(void) {
     for (int i = entityCount - 1; i >= 0; i--) {
 
         if (entities[i].kill_it) {
-            killEntity(&entities[i]);
+            killEntity(&entities[i], i);
         }
         else {
             moveAlongPath(&entities[i]);

@@ -104,7 +104,7 @@ void addToActiveTowers(TowerData t) {
 
 void cannonBrain(int index) {
 
-	if (passedFrames(0, towers[index].reload_time)) {
+	if (passedFrames((index + 100), towers[index].reload_time)) {
 
 		for (int i = 0; i < entityCount; i++) {
 
