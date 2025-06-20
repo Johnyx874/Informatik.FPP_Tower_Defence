@@ -116,8 +116,6 @@ void cannonBrain(int index) {
 
 				entities[i].kill_it = true;
 
-				printf("Entity killed..\n");
-
 				break;
 			}
 			

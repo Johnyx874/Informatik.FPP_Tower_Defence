@@ -105,6 +105,8 @@ void killEntity(EntityData* e, int id) {
 
     if (passedFrames(id, 15)) {
         deleteEntity(e);
+        e->kill_it = false;
+        printf("Entity killed..\n");
     }
     else {
         renderEntity((e->textureIndex + 100), e->position.x, e->position.y);
