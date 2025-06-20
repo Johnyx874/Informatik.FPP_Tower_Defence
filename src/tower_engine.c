@@ -227,4 +227,6 @@ void towerManager(InputState input) {
 	placeController(input);
 
 	processActiveTowers();
+
+	printf("Tower Manager completed\n");
 }
