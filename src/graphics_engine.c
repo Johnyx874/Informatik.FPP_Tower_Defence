@@ -25,26 +25,29 @@ static TTF_Font* font = NULL;
 static SDL_Color white = { 255, 255, 255, 255 };
 
 // Wertespeicher für Texturen
-static SDL_Texture* texture1 = NULL;
-static SDL_Texture* texture2 = NULL;
-static SDL_Texture* texture3 = NULL;
-static SDL_Texture* texture4 = NULL;
-static SDL_Texture* texture5 = NULL;
-static SDL_Texture* texture6 = NULL;
+static SDL_Texture* map_tex = NULL;
+static SDL_Texture* chicken_tex = NULL;
+static SDL_Texture* boar_tex = NULL;
+static SDL_Texture* cannon_tex = NULL;
+static SDL_Texture* crossbow_tex = NULL;
+static SDL_Texture* place_indicator_tex = NULL;
+static SDL_Texture* killed_chicken_tex = NULL;
 
 // Breite und Höhe der Texturen
-static int texture1_width = 0;
-static int texture1_height = 0;
-static int texture2_width = 0;
-static int texture2_height = 0;
-static int texture3_width = 0;
-static int texture3_height = 0;
-static int texture4_width = 0;
-static int texture4_height = 0;
-static int texture5_width = 0;
-static int texture5_height = 0;
-static int texture6_width = 0;
-static int texture6_height = 0;
+static int map_tex_width = 0;
+static int map_tex_height = 0;
+static int chicken_tex_width = 0;
+static int chicken_tex_height = 0;
+static int boar_tex_width = 0;
+static int boar_tex_height = 0;
+static int cannon_tex_width = 0;
+static int cannon_tex_height = 0;
+static int crossbow_tex_width = 0;
+static int crossbow_tex_height = 0;
+static int place_indicator_tex_width = 0;
+static int place_indicator_tex_height = 0;
+static int killed_chicken_tex_width = 0;
+static int killed_chicken_tex_height = 0;
 
 static int frame_counter = 0;
 
@@ -149,23 +152,27 @@ bool startSDL(void){
     }
 
 
-    texture1 = LoadTexture("assets/map_2.0.bmp", &texture1_width, &texture1_height);
-    if (!texture1) { printf("Error Loading Texture"); return false; }
+    map_tex = LoadTexture("assets/map_2.0.bmp", &map_tex_width, &map_tex_height);
+    if (!map_tex) { printf("Error Loading Texture"); return false; }
 
-    texture2 = LoadTexture("assets/chicken.bmp", &texture2_width, &texture2_height);
-    if (!texture2) { printf("Error Loading Texture"); return false; }
+    chicken_tex = LoadTexture("assets/chicken.bmp", &chicken_tex_width, &chicken_tex_height);
+    if (!chicken_tex) { printf("Error Loading Texture"); return false; }
 
-    texture3 = LoadTexture("assets/boar.bmp", &texture3_width, &texture3_height);
-    if (!texture3) { printf("Error Loading Texture"); return false; }
+    boar_tex = LoadTexture("assets/boar.bmp", &boar_tex_width, &boar_tex_height);
+    if (!boar_tex) { printf("Error Loading Texture"); return false; }
 
-    texture4 = LoadTexture("assets/cannon128.bmp", &texture4_width, &texture4_height);
-    if (!texture3) { printf("Error Loading Texture"); return false; }
+    cannon_tex = LoadTexture("assets/cannon128.bmp", &cannon_tex_width, &cannon_tex_height);
+    if (!cannon_tex) { printf("Error Loading Texture"); return false; }
 
-    texture5 = LoadTexture("assets/crossbow128.bmp", &texture5_width, &texture5_height);
-    if (!texture3) { printf("Error Loading Texture"); return false; }
+    crossbow_tex = LoadTexture("assets/crossbow128.bmp", &crossbow_tex_width, &crossbow_tex_height);
+    if (!crossbow_tex) { printf("Error Loading Texture"); return false; }
 
-    texture6 = LoadTexture("assets/place_indicator.bmp", &texture6_width, &texture6_height);
-    if (!texture1) { printf("Error Loading Texture"); return false; }
+    place_indicator_tex = LoadTexture("assets/place_indicator.bmp", &place_indicator_tex_width, &place_indicator_tex_height);
+    if (!place_indicator_tex) { printf("Error Loading Texture"); return false; }
+
+    killed_chicken_tex = LoadTexture("assets/killed_chicken.bmp", &killed_chicken_tex_width, &killed_chicken_tex_height);
+    if (!killed_chicken_tex) { printf("Error Loading Texture"); return false; }
+
 
     return true;
 }
@@ -191,10 +198,13 @@ void renderEntity(int index, int x_offset, int y_offset) {
 
   //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
-    case 1: renderTexture(texture2, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+    case 1: renderTexture(chicken_tex, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
     
-    case 2: renderTexture(texture3, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+    case 2: renderTexture(boar_tex, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
     
+
+    case 101: renderTexture(killed_chicken_tex, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+
     }
 
 }
@@ -206,11 +216,11 @@ void renderTower(int index, int x_offset, int y_offset) {
 
   //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
-    case 1: renderTexture(texture4, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+    case 1: renderTexture(cannon_tex, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
 
-    case 2: renderTexture(texture5, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+    case 2: renderTexture(crossbow_tex, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
 
-    case 3: renderTexture(texture6, 0, 0, 1300, 900, 0, 0); break;
+    case 3: renderTexture(place_indicator_tex, 0, 0, 1300, 900, 0, 0); break;
     }
 }
 
@@ -251,7 +261,7 @@ void renderClear(void) {
 
 
 void renderStatic(void) {
-    renderTexture(texture1, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
+    renderTexture(map_tex, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
 }
 
 
@@ -265,9 +275,9 @@ void quitSDL(void) {
 
     if (font) { TTF_CloseFont(font); }
     TTF_Quit();
-    SDL_DestroyTexture(texture1);
-    SDL_DestroyTexture(texture2);
-    SDL_DestroyTexture(texture3);
+    SDL_DestroyTexture(map_tex);
+    SDL_DestroyTexture(chicken_tex);
+    SDL_DestroyTexture(boar_tex);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     

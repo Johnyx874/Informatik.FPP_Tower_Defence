@@ -107,7 +107,7 @@ void killEntity(EntityData* e, int id) {
         deleteEntity(e);
     }
     else {
-        renderEntity((e->textureIndex + 1), e->position.x, e->position.y);
+        renderEntity((e->textureIndex + 100), e->position.x, e->position.y);
     }
     
 }
