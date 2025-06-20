@@ -40,23 +40,77 @@ EntityData theChicken = {
     {0, 590},            // Starting Position
     0,                   // Next Waypoint Index (= currentTargetIndex)
 
-    5,                   // Speed
-    10,                  // Health
-    100,                 // Bonus
-    10                   // Damage
+    4,                   // Speed
+    15,                  // Health
+    2                 // Bonus
+
 };
-EntityData theSecond = { 
-    "second",   // Type
+EntityData theBoar = { 
+    "boar",   // Type
     2,          // Texture Index
     {0, 590},   // Starting Position
     0,          // Next Waypoint Index (= currentTargetIndex)
 
-    10,         // Speed
-    10,         // Health
-    50,         // Bonus
-    50          // Damage
-};
+    3,         // Speed
+    40,         // Health
+    5         // Bonus
 
+};
+EntityData theHopper = {
+    "hopper",   // Type
+    3,          // Texture Index
+    {0, 590},   // Starting Position
+    0,          // Next Waypoint Index (= currentTargetIndex)
+
+    5,         // Speed
+    10,         // Health
+    4         // Bonus
+
+};
+EntityData theBallon = {
+    "ballon",   // Type
+    4,          // Texture Index
+    {0, 590},   // Starting Position
+    0,          // Next Waypoint Index (= currentTargetIndex)
+
+    3,         // Speed
+    30,         // Health
+    8         // Bonus
+
+};
+EntityData theCar = {
+    "car",   // Type
+    5,          // Texture Index
+    {0, 590},   // Starting Position
+    0,          // Next Waypoint Index (= currentTargetIndex)
+
+    1,         // Speed
+    100,         // Health
+    20         // Bonus
+
+};
+EntityData theWarthog = {
+    "warthog",   // Type
+    6,          // Texture Index
+    {0, 590},   // Starting Position
+    0,          // Next Waypoint Index (= currentTargetIndex)
+
+    2,         // Speed
+    70,         // Health
+    15         // Bonus
+
+};
+EntityData theTitan = {
+    "titan",   // Type
+    7,          // Texture Index
+    {0, 590},   // Starting Position
+    0,          // Next Waypoint Index (= currentTargetIndex)
+
+    4,         // Speed
+    50,         // Health
+    20         // Bonus
+
+};
 
 // Fügt ein neues Entity zum Entity-Array hinzu
 void spawnEntity(EntityData e, int offset) {

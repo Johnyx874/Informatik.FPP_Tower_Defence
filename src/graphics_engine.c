@@ -25,49 +25,51 @@ static TTF_Font* font = NULL;
 static SDL_Color white = { 255, 255, 255, 255 };
 
 // Wertespeicher für Texturen
+static SDL_Texture* chicken_tex = NULL; static int chicken_tex_width = 0; static int chicken_tex_height = 0;
+static SDL_Texture* killed_chicken_tex = NULL; static int killed_chicken_tex_width = 0; static int killed_chicken_tex_height = 0;
+
+static SDL_Texture* boar_tex = NULL; static int boar_tex_width = 0; static int boar_tex_height = 0;
+static SDL_Texture* killed_boar_tex = NULL; static int killed_boar_tex_width = 0; static int killed_boar_tex_height = 0;
+
+static SDL_Texture* hopper_tex = NULL; static int hopper_tex_width = 0; static int hopper_tex_height = 0;
+static SDL_Texture* killed_hopper_tex = NULL; static int killed_hopper_tex_width = 0; static int killed_hopper_tex_height = 0;
+
+static SDL_Texture* ballon_tex = NULL; static int ballon_tex_width = 0; static int ballon_tex_height = 0;
+static SDL_Texture* killed_ballon_tex = NULL; static int killed_ballon_tex_width = 0; static int killed_ballon_tex_height = 0;
+
+static SDL_Texture* car_tex = NULL; static int car_tex_width = 0; static int car_tex_height = 0;
+static SDL_Texture* killed_car_tex = NULL; static int killed_car_tex_width = 0; static int killed_car_tex_height = 0;
+
+static SDL_Texture* warthog_tex = NULL; static int warthog_tex_width = 0; static int warthog_tex_height = 0;
+static SDL_Texture* killed_warthog_tex = NULL; static int killed_warthog_tex_width = 0; static int killed_warthog_tex_height = 0;
+
+static SDL_Texture* titan_tex = NULL; static int titan_tex_width = 0; static int titan_tex_height = 0;
+static SDL_Texture* killed_titan_tex = NULL; static int killed_titan_tex_width = 0; static int killed_titan_tex_height = 0;
+
+
+static SDL_Texture* crossbow_tex = NULL; static int crossbow_tex_width = 0; static int crossbow_tex_height = 0;
+static SDL_Texture* gray_crossbow_tex = NULL; static int gray_crossbow_tex_width = 0; static int gray_crossbow_tex_height = 0;
+
+static SDL_Texture* cannon_tex = NULL; static int cannon_tex_width = 0; static int cannon_tex_height = 0;
+static SDL_Texture* gray_cannon_tex = NULL; static int gray_cannon_tex_width = 0; static int gray_cannon_tex_height = 0;
+
+static SDL_Texture* minigun_tex = NULL; static int minigun_tex_width = 0; static int minigun_tex_height = 0;
+static SDL_Texture* gray_minigun_tex = NULL; static int gray_minigun_tex_width = 0; static int gray_minigun_tex_height = 0;
+
+static SDL_Texture* launcher_tex = NULL; static int launcher_tex_width = 0; static int launcher_tex_height = 0;
+static SDL_Texture* gray_launcher_tex = NULL; static int gray_launcher_tex_width = 0; static int gray_launcher_tex_height = 0;
+
+static SDL_Texture* saw_tex = NULL; static int saw_tex_width = 0; static int saw_tex_height = 0;
+static SDL_Texture* gray_saw_tex = NULL; static int gray_saw_tex_width = 0; static int gray_saw_tex_height = 0;
+
+static SDL_Texture* sniper_tex = NULL; static int sniper_tex_width = 0; static int sniper_tex_height = 0;
+static SDL_Texture* gray_sniper_tex = NULL; static int gray_sniper_tex_width = 0; static int gray_sniper_tex_height = 0;
+
 static SDL_Texture* map_tex = NULL;
-
-static SDL_Texture* chicken_tex = NULL;
-static SDL_Texture* killed_chicken_tex = NULL;
-
-static SDL_Texture* boar_tex = NULL;
-
-static SDL_Texture* cannon_tex = NULL;
-static SDL_Texture* gray_cannon_tex = NULL;
-
-static SDL_Texture* crossbow_tex = NULL;
 
 static SDL_Texture* place_indicator_tex = NULL;
 
 static SDL_Texture* range_200_tex = NULL;
-
-// Breite und Höhe der Texturen
-static int map_tex_width = 0;
-static int map_tex_height = 0;
-
-static int chicken_tex_width = 0;
-static int chicken_tex_height = 0;
-static int killed_chicken_tex_width = 0;
-static int killed_chicken_tex_height = 0;
-
-static int boar_tex_width = 0;
-static int boar_tex_height = 0;
-
-static int cannon_tex_width = 0;
-static int cannon_tex_height = 0;
-static int gray_cannon_tex_width = 0;
-static int gray_cannon_tex_height = 0;
-
-static int crossbow_tex_width = 0;
-static int crossbow_tex_height = 0;
-
-static int place_indicator_tex_width = 0;
-static int place_indicator_tex_height = 0;
-
-static int range_200_tex_width = 0;
-static int range_200_tex_height = 0;
-
-
 
 
 static int frame_counter = 0;

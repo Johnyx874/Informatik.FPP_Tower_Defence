@@ -71,8 +71,10 @@ typedef struct {
     int textureIndex;         // Von dem Tower verwendete Textur
     Vector2 position;         // Aktuelle Position
 
+    int price;                // Preis des Towers
+    int damage;               // Schaden an Entities
     int reload_time;          // Anzahl an Frames bis Tower reloaded ist
     int range;                // Reichweite in Pixeln
-    int price;                // Preis des Towers
+    // attack type
     
 } TowerData;

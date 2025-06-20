@@ -32,25 +32,71 @@ TowerData activeTowers[MAX_ACTIVE_TOWERS];
 int activeTowerCount = 0;
 
 // Initialisierung der Towers
-TowerData cannon = {								
-	"Cannon",										// Type
-	"Deletes every entity in 200 pixel radius!",	// Description
-	1,												// Texture Index
-	{0, 0},											// Position
-
-	30,											    // Reload Time in Frames
-	200,											// Range
-	50												// Price
-};
 TowerData crossbow = {				
 	"Crossbow",						// Type
+	"Does nothing at the moment.",  // Description
+	1,								// Texture Index
+	{0, 0},							// Position
+
+	90,								// Price
+	5,								// Damage
+	50,								// Reload Time in Frames
+	500							    // Range
+};
+TowerData cannon = {
+	"Cannon",						// Type
 	"Does nothing at the moment.",  // Description
 	2,								// Texture Index
 	{0, 0},							// Position
 
-	30,								// Reload Time in Frames
-	0,								// Range
-	10								// Price
+	120,							// Price
+	20,								// Damage
+	150,							// Reload Time in Frames
+	250							    // Range
+};
+TowerData minigun = {
+	"Minigun",						// Type
+	"Does nothing at the moment.",  // Description
+	3,								// Texture Index
+	{0, 0},							// Position
+
+	175,							// Price
+	1,								// Damage
+	12,								// Reload Time in Frames
+	250							    // Range
+};
+TowerData launcher = {
+	"Rocket Launcher",						// Type
+	"Does nothing at the moment.",  // Description
+	4,								// Texture Index
+	{0, 0},							// Position
+
+	200,							// Price
+	15,								// Damage
+	100,							// Reload Time in Frames
+	1000							// Range
+};
+TowerData saw = {
+	"Saw",						// Type
+	"Does nothing at the moment.",  // Description
+	5,								// Texture Index
+	{0, 0},							// Position
+
+	200,							// Price
+	2,								// Damage
+	5,							// Reload Time in Frames
+	50							// Range
+};
+TowerData sniper = {
+	"Sniper",						// Type
+	"Does nothing at the moment.",  // Description
+	6,								// Texture Index
+	{0, 0},							// Position
+
+	225,							// Price
+	30,								// Damage
+	250,							// Reload Time in Frames
+	1500							// Range
 };
 
 // Abstand zwischen Punkt A & B berechnen
@@ -106,7 +152,7 @@ void addToActiveTowers(TowerData t) {
 }
 
 
-void cannonBrain(int index) {
+void dealDamage(int index) {
 
 	if (passedFrames((index + 100), towers[index].reload_time)) {
 
@@ -118,7 +164,7 @@ void cannonBrain(int index) {
 
 				giveBonus(entities[i].bonus);
 
-				entities[i].kill_it = true;
+				entities[i].health -= towers[index].damage;
 
 				break;
 			}
@@ -134,9 +180,11 @@ void processActiveTowers(void) {
 
 	for (int i = 0; i < activeTowerCount; i++) {		// Liste der aktiven Towers durchgehen
 		
-		if (strcmp(activeTowers[i].type, "Cannon") == 0) {  // wenn aktiver Tower == Cannon
-			cannonBrain(i);									// dann führe dessen Funktion aus
-		}
+		//if (strcmp(activeTowers[i].type, "Cannon") == 0) {  // wenn aktiver Tower == Cannon
+		//	cannonBrain(i);									// dann führe dessen Funktion aus
+		//}
+
+		dealDamage(i);
 
 		// aktiven Tower rendern
 		renderTower(activeTowers[i].textureIndex, activeTowers[i].position.x, activeTowers[i].position.y);

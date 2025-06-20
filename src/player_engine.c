@@ -11,8 +11,8 @@
 // Initialisierung des Players
 Player player = { 
 	"Player 1",		// Name
-	0,				// Cash
-	100				// Health
+	150,				// Cash
+	10				// Health
 };			
 
 // wenn Entity die gesamte Map durchlaufen hat, Damage von Entity auf Player übertragen
@@ -22,7 +22,7 @@ void checkDamage(void) {
 
 		if (entities[i].position.x >= 1300) {
 
-			player.health -= entities[i].damage;
+			player.health -= 1;
 
 			printf("HP: %d\n", player.health);
 

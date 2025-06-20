@@ -10,8 +10,14 @@ extern Vector2 pathPoints[];
 extern Path path;
 extern EntityData entities[MAX_ENTITIES];
 extern int entityCount;
+
 extern EntityData theChicken;
-extern EntityData theSecond;
+extern EntityData theBoar;
+extern EntityData theHopper;
+extern EntityData theBallon;
+extern EntityData theCar;
+extern EntityData theWarthog;
+extern EntityData theTitan;
 
 // Funktionen
 void spawnEntity(EntityData e, int offset);
