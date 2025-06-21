@@ -65,11 +65,11 @@ static SDL_Texture* gray_saw_tex = NULL; static int gray_saw_tex_width = 0; stat
 static SDL_Texture* sniper_tex = NULL; static int sniper_tex_width = 0; static int sniper_tex_height = 0;
 static SDL_Texture* gray_sniper_tex = NULL; static int gray_sniper_tex_width = 0; static int gray_sniper_tex_height = 0;
 
-static SDL_Texture* map_tex = NULL;
+static SDL_Texture* map_tex = NULL; static int map_tex_width = 0; static int map_tex_height = 0;
 
-static SDL_Texture* place_indicator_tex = NULL;
+static SDL_Texture* place_indicator_tex = NULL; static int place_indicator_tex_width = 0; static int place_indicator_tex_height = 0;
 
-static SDL_Texture* range_200_tex = NULL;
+static SDL_Texture* range_200_tex = NULL; static int range_200_tex_width = 0; static int range_200_tex_height = 0;
 
 
 static int frame_counter = 0;
@@ -168,39 +168,91 @@ bool startSDL(void){
         return false;
     }
 
-    font = TTF_OpenFont("assets/ByteBounce.ttf", 50);
+    font = TTF_OpenFont("assets/misc/ByteBounce.ttf", 50);
     if (!font) {
         SDL_Log("Fehler beim Laden der Schriftart: %s\n", SDL_GetError());
         return false;
     }
 
 
-    map_tex = LoadTexture("assets/map_2.0.bmp", &map_tex_width, &map_tex_height);
-    if (!map_tex) { printf("Error Loading Texture"); return false; }
-
-    chicken_tex = LoadTexture("assets/chicken.bmp", &chicken_tex_width, &chicken_tex_height);
-    if (!chicken_tex) { printf("Error Loading Texture"); return false; }
-    killed_chicken_tex = LoadTexture("assets/killed_chicken.bmp", &killed_chicken_tex_width, &killed_chicken_tex_height);
-    if (!killed_chicken_tex) { printf("Error Loading Texture"); return false; }
-
-    boar_tex = LoadTexture("assets/boar.bmp", &boar_tex_width, &boar_tex_height);
-    if (!boar_tex) { printf("Error Loading Texture"); return false; }
-
-    cannon_tex = LoadTexture("assets/cannon128.bmp", &cannon_tex_width, &cannon_tex_height);
-    if (!cannon_tex) { printf("Error Loading Texture"); return false; }
-    gray_cannon_tex = LoadTexture("assets/gray_cannon.bmp", &gray_cannon_tex_width, &gray_cannon_tex_height);
-    if (!gray_cannon_tex) { printf("Error Loading Texture"); return false; }
-
-    crossbow_tex = LoadTexture("assets/crossbow128.bmp", &crossbow_tex_width, &crossbow_tex_height);
-    if (!crossbow_tex) { printf("Error Loading Texture"); return false; }
-
-
     
 
-    place_indicator_tex = LoadTexture("assets/place_indicator.bmp", &place_indicator_tex_width, &place_indicator_tex_height);
+    // === Entity Texturen ===
+    chicken_tex = LoadTexture("assets/entities/chicken.bmp", &chicken_tex_width, &chicken_tex_height);
+    if (!chicken_tex) { printf("Error Loading Texture"); return false; }
+    killed_chicken_tex = LoadTexture("assets/damaged_entities/chicken_damaged.bmp", &killed_chicken_tex_width, &killed_chicken_tex_height);
+    if (!killed_chicken_tex) { printf("Error Loading Texture"); return false; }
+
+    boar_tex = LoadTexture("assets/entities/boar.bmp", &boar_tex_width, &boar_tex_height);
+    if (!boar_tex) { printf("Error Loading Texture"); return false; }
+    killed_boar_tex = LoadTexture("assets/damaged_entities/boar_damaged.bmp", &killed_boar_tex_width, &killed_boar_tex_height);
+    if (!killed_boar_tex) { printf("Error Loading Texture"); return false; }
+
+    hopper_tex = LoadTexture("assets/entities/grasshopper.bmp", &hopper_tex_width, &hopper_tex_height);
+    if (!hopper_tex) { printf("Error Loading Texture"); return false; }
+    killed_hopper_tex = LoadTexture("assets/damaged_entities/grasshopper_damaged.bmp", &killed_hopper_tex_width, &killed_hopper_tex_height);
+    if (!killed_hopper_tex) { printf("Error Loading Texture"); return false; }
+
+    ballon_tex = LoadTexture("assets/entities/ballon.bmp", &ballon_tex_width, &ballon_tex_height);
+    if (!ballon_tex) { printf("Error Loading Texture"); return false; }
+    killed_ballon_tex = LoadTexture("assets/damaged_entities/ballon_damaged.bmp", &killed_ballon_tex_width, &killed_ballon_tex_height);
+    if (!killed_ballon_tex) { printf("Error Loading Texture"); return false; }
+
+    car_tex = LoadTexture("assets/entities/car.bmp", &car_tex_width, &car_tex_height);
+    if (!car_tex) { printf("Error Loading Texture"); return false; }
+    killed_car_tex = LoadTexture("assets/damaged_entities/car_damaged.bmp", &killed_car_tex_width, &killed_car_tex_height);
+    if (!killed_car_tex) { printf("Error Loading Texture"); return false; }
+
+    warthog_tex = LoadTexture("assets/entities/warthog.bmp", &warthog_tex_width, &warthog_tex_height);
+    if (!warthog_tex) { printf("Error Loading Texture"); return false; }
+    killed_warthog_tex = LoadTexture("assets/damaged_entities/warthog_damaged.bmp", &killed_warthog_tex_width, &killed_warthog_tex_height);
+    if (!killed_warthog_tex) { printf("Error Loading Texture"); return false; }
+
+    titan_tex = LoadTexture("assets/entities/Dark Dirigible Titan.bmp", &titan_tex_width, &titan_tex_height);
+    if (!titan_tex) { printf("Error Loading Texture"); return false; }
+    killed_titan_tex = LoadTexture("assets/damaged_entities/Dark Dirigible Titan_damaged.bmp", &killed_titan_tex_width, &killed_titan_tex_height);
+    if (!killed_titan_tex) { printf("Error Loading Texture"); return false; }
+
+    // === Tower Texturen ===
+    cannon_tex = LoadTexture("assets/towers/cannon.bmp", &cannon_tex_width, &cannon_tex_height);
+    if (!cannon_tex) { printf("Error Loading Texture"); return false; }
+    gray_cannon_tex = LoadTexture("assets/gray_towers/gray_cannon.bmp", &gray_cannon_tex_width, &gray_cannon_tex_height);
+    if (!gray_cannon_tex) { printf("Error Loading Texture"); return false; }
+
+    crossbow_tex = LoadTexture("assets/towers/crossbow.bmp", &crossbow_tex_width, &crossbow_tex_height);
+    if (!crossbow_tex) { printf("Error Loading Texture"); return false; }
+    gray_crossbow_tex = LoadTexture("assets/gray_towers/gray_crossbow.bmp", &gray_crossbow_tex_width, &gray_crossbow_tex_height);
+    if (!gray_crossbow_tex) { printf("Error Loading Texture"); return false; }
+
+    minigun_tex = LoadTexture("assets/towers/minigun.bmp", &minigun_tex_width, &minigun_tex_height);
+    if (!minigun_tex) { printf("Error Loading Texture"); return false; }
+    gray_minigun_tex = LoadTexture("assets/gray_towers/gray_minigun.bmp", &gray_minigun_tex_width, &gray_minigun_tex_height);
+    if (!gray_minigun_tex) { printf("Error Loading Texture"); return false; }
+
+    launcher_tex = LoadTexture("assets/towers/launcher.bmp", &launcher_tex_width, &launcher_tex_height);
+    if (!launcher_tex) { printf("Error Loading Texture"); return false; }
+    gray_launcher_tex = LoadTexture("assets/gray_towers/gray_launcher.bmp", &gray_launcher_tex_width, &gray_launcher_tex_height);
+    if (!gray_launcher_tex) { printf("Error Loading Texture"); return false; }
+
+    saw_tex = LoadTexture("assets/towers/saw.bmp", &saw_tex_width, &saw_tex_height);
+    if (!saw_tex) { printf("Error Loading Texture"); return false; }
+    gray_saw_tex = LoadTexture("assets/gray_towers/gray_saw.bmp", &gray_saw_tex_width, &gray_saw_tex_height);
+    if (!gray_saw_tex) { printf("Error Loading Texture"); return false; }
+
+    sniper_tex = LoadTexture("assets/towers/sniper.bmp", &sniper_tex_width, &sniper_tex_height);
+    if (!sniper_tex) { printf("Error Loading Texture"); return false; }
+    gray_sniper_tex = LoadTexture("assets/gray_towers/gray_sniper.bmp", &gray_sniper_tex_width, &gray_sniper_tex_height);
+    if (!gray_sniper_tex) { printf("Error Loading Texture"); return false; }
+
+
+
+    map_tex = LoadTexture("assets/misc/map_2.0.bmp", &map_tex_width, &map_tex_height);
+    if (!map_tex) { printf("Error Loading Texture"); return false; }
+
+    place_indicator_tex = LoadTexture("assets/misc/place_indicator.bmp", &place_indicator_tex_width, &place_indicator_tex_height);
     if (!place_indicator_tex) { printf("Error Loading Texture"); return false; }
 
-    range_200_tex = LoadTexture("assets/range_indicator_200.bmp", &range_200_tex_width, &range_200_tex_height);
+    range_200_tex = LoadTexture("assets/ranges/range_indicator_200.bmp", &range_200_tex_width, &range_200_tex_height);
     if (!range_200_tex) { printf("Error Loading Texture"); return false; }
 
     return true;
@@ -227,12 +279,34 @@ void renderEntity(int index, int x_offset, int y_offset) {
 
   //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
-    case 1: renderTexture(chicken_tex, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+    case 1: renderTexture(chicken_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
     
-    case 2: renderTexture(boar_tex, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+    case 2: renderTexture(boar_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
     
+    case 3: renderTexture(hopper_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 101: renderTexture(killed_chicken_tex, 0 - 32, 0 - 32, 64, 64, x_offset, y_offset); break;
+    case 4: renderTexture(ballon_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 5: renderTexture(car_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 6: renderTexture(warthog_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 7: renderTexture(titan_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+
+    case 101: renderTexture(chicken_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 102: renderTexture(boar_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 103: renderTexture(hopper_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 104: renderTexture(ballon_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 105: renderTexture(car_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 106: renderTexture(warthog_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 107: renderTexture(titan_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
     }
 
@@ -245,12 +319,30 @@ void renderTower(int index, int x_offset, int y_offset) {
 
   //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
-    case 1: renderTexture(cannon_tex, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+    case 1: renderTexture(crossbow_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 2: renderTexture(crossbow_tex, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+    case 2: renderTexture(cannon_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 3: renderTexture(minigun_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 4: renderTexture(launcher_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 5: renderTexture(saw_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 6: renderTexture(sniper_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
 
-    case 101: renderTexture(gray_cannon_tex, 0 - 64, 0 - 64, 128, 128, x_offset, y_offset); break;
+    case 101: renderTexture(gray_crossbow_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 102: renderTexture(gray_cannon_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 103: renderTexture(gray_minigun_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 104: renderTexture(gray_launcher_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 105: renderTexture(gray_saw_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+
+    case 106: renderTexture(gray_sniper_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
     }
 }
 

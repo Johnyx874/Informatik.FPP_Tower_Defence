@@ -183,6 +183,19 @@ void killEntity(EntityData* e, int id) {
 }
 
 
+void checkHealth(void) {
+
+    for (int i = entityCount - 1; i >= 0; i--) {
+
+        if (entities[i].health <= 0) {
+
+            entities[i].kill_it = true;
+        }
+        printf("E: %s, HP: %d\n", entities[i].type, entities[i].health);
+    }
+}
+
+
 // Bewegt eine einzelne Entity entlang des Pfads
 void moveAlongPath(EntityData* e) {
     if (path.points == NULL || path.count <= 0) return;
@@ -227,6 +240,10 @@ void moveEntities(void) {
         else {
             moveAlongPath(&entities[i]);
             renderEntity(entities[i].textureIndex, entities[i].position.x, entities[i].position.y);
+            
+            if (entities[i].textureIndex > 100) {
+                entities[i].textureIndex -= 100;
+            }
         }
     }
 }
@@ -238,8 +255,13 @@ void entityManager(InputState input) {
     spawnAndCloneEntity(theChicken, 5, 100);
     //spawnEntity(theChicken, 0);
 
+
+    checkHealth();
+
     moveEntities();
 
+
+    printf("---------\n");
     //spawnAndCloneEntity(theSecond, 3, 150);
     /*if (input.key_c) {
 

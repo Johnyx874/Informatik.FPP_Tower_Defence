@@ -174,36 +174,38 @@ void damageAsInRange(EntityData* e, TowerData t) {
 
 		e->health -= t.damage;
 
+		e->textureIndex += 100;
 	}
 }
 
 
-void dealDamage(int index) {
+void dealDamage(TowerData t, int id) {
 
-	if (passedFrames((index + 100), towers[index].reload_time)) {
+	if (passedFrames((id + 100), t.reload_time)) {
 
 		for (int i = 0; i < entityCount; i++) {
 
 			if (entities[i].attr_air) {
-				if (towers[index].hits_air) {
-					damageAsInRange(&entities[i], towers[index]);
-					break;
+				if (t.hits_air) {
+					damageAsInRange(&entities[i], t);
+					
 				}
 			}
 			else if (entities[i].attr_armored) {
-				if (towers[index].hits_armored) {
-					damageAsInRange(&entities[i], towers[index]);
-					break;
+				if (t.hits_armored) {
+					damageAsInRange(&entities[i], t);
+					
 				}
 			}
 			else {
-				if (!towers[index].hits_air) {
-					damageAsInRange(&entities[i], towers[index]);
-					break;
+				if (!t.hits_air) {
+					damageAsInRange(&entities[i], t);
+					
 				}
 			}
 		}
 	}
+	
 }
 
 
@@ -213,7 +215,7 @@ void processActiveTowers(void) {
 	for (int i = 0; i < activeTowerCount; i++) {		// Liste der aktiven Towers durchgehen
 
 		// aktiver Tower macht damage
-		dealDamage(i);
+		dealDamage(activeTowers[i], i);
 
 		// aktiven Tower rendern
 		renderTower(activeTowers[i].textureIndex, activeTowers[i].position.x, activeTowers[i].position.y);
@@ -263,6 +265,8 @@ void placeTower(TowerData t, InputState input) {
 
 			player.cash -= t.price;
 
+			printf("%s\n", t.type);
+
 			place = (Place){ 0 };
 		}
 	}
@@ -280,26 +284,58 @@ void placeController(InputState input) {
 		place = (Place){ 0 }; // (Place) wichtig für Compiler, handelt sich um Place-Struct
 	}
 
-	// Wenn 1 gedrückt: Cannon Tower platzieren
+	// Wenn 1 gedrückt: Crossbow Tower platzieren
 	if (input.key_1) {
-		place.cannon = true;
-	}
-	if (place.cannon) { placeTower(cannon, input); }
-
-	// Wenn 2 gedrückt: Crossbow Tower platzieren
-	if (input.key_2) {
 		place.crossbow = true;
 	}
 	if (place.crossbow) { placeTower(crossbow, input); }
+
+	// Wenn 2 gedrückt: Cannon Tower platzieren
+	if (input.key_2) {
+		place.cannon = true;
+	}
+	if (place.cannon) { placeTower(cannon, input); }
 	
+	// Wenn 3 gedrückt: Minigun Tower platzieren
+	if (input.key_3) {
+		place.minigun = true;
+	}
+	if (place.minigun) { placeTower(minigun, input); }
+
+	// Wenn 4 gedrückt: Launcher Tower platzieren
+	if (input.key_4) {
+		place.launcher = true;
+	}
+	if (place.launcher) { placeTower(launcher, input); }
+
+	// Wenn 5 gedrückt: Saw Tower platzieren
+	if (input.key_5) {
+		place.saw = true;
+	}
+	if (place.saw) { placeTower(saw, input); }
+
+	// Wenn 6 gedrückt: Sniper Tower platzieren
+	if (input.key_6) {
+		place.sniper = true;
+	}
+	if (place.sniper) { placeTower(sniper, input); }
 }
 
 // Tower verwalten
 void towerManager(InputState input) {
 
-	addTower(cannon, 5);
-	
 	addTower(crossbow, 5);
+
+	addTower(cannon, 5);
+
+	addTower(minigun, 5);
+
+	addTower(launcher, 5);
+
+	addTower(saw, 5);
+
+	addTower(sniper, 5);
+
 
 	placeController(input);
 
