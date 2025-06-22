@@ -15,7 +15,7 @@
 #define WINDOW_WIDTH 1300   // std: 1000                  // Breite & Höhe des Fensters festlegen
 #define WINDOW_HEIGHT 900  // std: 700
 
-#define MAX_FRAME_TRACKERS 200  // 0-99 -> für Entities
+#define MAX_FRAME_TRACKERS 500  // 0-99 -> für Entities
                                 // 100-200 -> für Tower
 
 static SDL_Window* window = NULL;       // Wertespeicher für Fenster 
@@ -93,7 +93,7 @@ void countFrame(void) {
 
 
 // Funktion: an beliebig vielen Stellen im Code X Frames abzuwarten
-bool passedFrames(int id, int waitFrames) {
+bool passedFramesInternal(int id, int waitFrames) {
 
     static int counters[MAX_FRAME_TRACKERS] = { 0 };
 

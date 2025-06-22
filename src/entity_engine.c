@@ -7,7 +7,7 @@
 
 #include "../include/structs.h"
 #include "../include/library.h"
-    bool running_first_frame;
+    bool add_entities;
 
 #include "../include/entity_engine.h"
 #include "../include/graphics_engine.h"
@@ -135,16 +135,16 @@ void spawnEntity(EntityData e, int offset) {
         return;
     }
 
-    if (running_first_frame) {
+    entities[entityCount] = e;  // Sämtliche Daten von e nach entities[entityCount] kopieren
 
-        entities[entityCount] = e;  // Sämtliche Daten von e nach entities[entityCount] kopieren
-
-        entities[entityCount].position.x = e.position.x - offset;      // X Position ändern
+    entities[entityCount].position.x = e.position.x - offset;      // X Position ändern
     
-        entityCount++;      // Anzahl erhöhen
+    entityCount++;      // Anzahl erhöhen
 
-        printf("  - Entity '%s' added\n", entities[entityCount - 1].type);  // Debug Text
-    }
+    printf("  - Entity '%s' added\n", entities[entityCount - 1].type);  // Debug Text
+
+    add_entities = false;
+    
 }
 
 
@@ -178,7 +178,7 @@ void removeFromList(EntityData* list, int* counter, int indexToRemove) {
 
 void killEntity(EntityData* e, int i) {
 
-    if (passedFrames(i, 15)) {
+    if (passedFrames(15)) {
         
         *e = (EntityData){ 0 };
 
@@ -248,13 +248,84 @@ void moveEntities(void) {
 
 
 // Haupt-Entity-Manager: verwaltet alle "Brains"
-void entityManager(InputState input) {
+void entityManager(void) {
 
     //spawnAndCloneEntity(theChicken, 5, 100);
-    spawnEntity(theWarthog, 0);
+    //spawnEntity(theWarthog, 0);
+
+    
+    /*spawnAndCloneEntity(theChicken, 10, 200);*/
+
+    //if (entityCount == 0) {
+    //    if (passedFrames(150)) {
+
+    //    }
+
+    //}
+
+
+
+    //if (passedFrames(2000)) {
+
+    //    spawnAndCloneEntity(theHopper, 5, 100);
+
+    //    if (entityCount == 0) {
+
+
+
+    //        spawnAndCloneEntity(theChicken, 10, 100);
+    //        spawnEntity(theBoar, 0);
+    //    }
+    //}
+
+
+
+
+
+
+    //if (level.3) {
+
+    //    spawnAndCloneEntity(theChicken, 15, 0);
+
+    //}
+    //if (level.4) {
+
+    //    spawnAndCloneEntity(theChicken, 20, 100);
+
+    //    spawnAndCloneEntity(theBallon, 3, 100);
+
+    //    // wait 5 sec
+
+    //    spawnAndCloneEntity(theChicken, 20, 50);
+
+    //    spawnAndCloneEntity(theHopper, 7, 100);
+    //}
+    //if (level.5) {
+
+    //    spawnAndCloneEntity(theWarthog, 5, 100);
+    //}
+    //if (level.6) {
+
+    //    spawnAndCloneEntity(theCar, 3, 200);
+
+    //    // wait 5 sec
+
+    //    spawnAndCloneEntity(theChicken, 30, 50);
+    //}
+    //if (level.7) {
+
+    //    spawnAndCloneEntity(theWarthog, 12, 200);
+
+    //    spawnAndCloneEntity(theBallon, 40, 50);
+
+    //    // wait 5 sec
+
+    //    spawnAndCloneEntity(theTitan, 3, 200);
+    //}
+
+
 
     moveEntities();
-
 
     //printf("---------\n");
     

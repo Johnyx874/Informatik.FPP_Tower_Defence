@@ -26,4 +26,4 @@ void spawnAndCloneEntity(EntityData e, int amount, int spacing);
 void killEntity(EntityData* e, int id);
 void moveAlongPath(EntityData* e);
 void moveEntities(void);
-void entityManager(InputState input);
+void entityManager(void);

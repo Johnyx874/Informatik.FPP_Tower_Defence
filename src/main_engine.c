@@ -8,12 +8,12 @@
 
 #include "../include/structs.h"		// Zugriff auf Header-Datei
 #include "../include/library.h"		// Zugriff auf Header-Datei
-	bool running_first_frame;
 
 #include "../include/graphics_engine.h"
 #include "../include/entity_engine.h"
 #include "../include/tower_engine.h"
 #include "../include/player_engine.h"
+#include "../include/level_engine.h"
 
 	
 void GameLoop(void) {
@@ -27,12 +27,13 @@ void GameLoop(void) {
 
 		if (input.quit) { running = false; }		// spiel bei Quit-Input beenden
 
-
 		renderClear();	// Bildschirm leeren
 
 		renderStatic();	// Statische Objekte rendern
 
-        entityManager(input);	// Entitys berechnen und rendern
+		levelManager();
+
+		entityManager();
 
 		towerManager(input);
 
@@ -45,8 +46,6 @@ void GameLoop(void) {
 
 		printf("-------\n");
 
-		running_first_frame = false;
-
         SDL_Delay(20);
 
     }
@@ -57,8 +56,6 @@ int main(void) {
 
 	// SDL hochfahren
 	startSDL();
-
-	running_first_frame = true;
 
 	// Game Loop
 	GameLoop();

@@ -39,6 +39,9 @@
     <ClCompile Include="src\player_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\level_engine.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\library.h">
@@ -63,6 +66,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\player_engine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\level_engine.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

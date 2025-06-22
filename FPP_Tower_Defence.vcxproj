@@ -139,6 +139,9 @@
     <ClCompile Include="src\entity_engine.c" />
     <ClCompile Include="src\event_engine.c" />
     <ClCompile Include="src\graphics_engine.c" />
+    <ClCompile Include="src\level_engine.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\main_engine.c" />
     <ClCompile Include="src\menu_engine.c" />
     <ClCompile Include="src\player_engine.c" />
@@ -148,6 +151,9 @@
     <ClInclude Include="include\entity_engine.h" />
     <ClInclude Include="include\event_engine.h" />
     <ClInclude Include="include\graphics_engine.h" />
+    <ClInclude Include="include\level_engine.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="include\library.h" />
     <ClInclude Include="include\main_engine.h" />
     <ClInclude Include="include\player_engine.h" />

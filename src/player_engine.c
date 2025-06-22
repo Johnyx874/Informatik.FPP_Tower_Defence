@@ -15,6 +15,8 @@ Player player = {
 	10				// Health
 };			
 
+
+
 // wenn Entity die gesamte Map durchlaufen hat, Damage von Entity auf Player übertragen
 void checkDamage(void) {
 

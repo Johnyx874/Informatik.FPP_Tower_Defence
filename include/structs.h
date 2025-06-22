@@ -94,3 +94,16 @@ typedef struct {
     bool hits_multiple;       // Attribut: macht Splash Damage
     
 } TowerData;
+
+// Struktur für einen Tower
+typedef struct {
+
+    bool lvl1;
+    bool lvl2;
+    bool lvl3;
+    bool lvl4;
+    bool lvl5;
+    bool lvl6;
+    bool lvl7;
+
+} Level;

@@ -215,7 +215,7 @@ void processActiveTowers(void) {
 
 	for (int t = 0; t < activeTowerCount; t++) {		// Liste der aktiven Towers durchgehen
 
-		if (passedFrames((t + 100), activeTowers[t].reload_time)) {
+		if (passedFrames(activeTowers[t].reload_time)) {
 
 			printf("reloaded\n");
 

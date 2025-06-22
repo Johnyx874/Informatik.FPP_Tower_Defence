@@ -4,8 +4,10 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #define MAX_FRAME_TRACKERS 64
 
+#define passedFrames(waitFrames) passedFramesInternal(__LINE__, waitFrames)
+
 // Funktionen
-bool passedFrames(int id, int waitFrames);
+bool passedFramesInternal(int id, int waitFrames);
 void renderClear(); // Renderer leeren
 void renderStatic(); // Statische Objekte rendern (zB: Map)
 void renderPresent(); // Alle geladenen Objekte rendern

@@ -5,7 +5,7 @@
 #include "structs.h"
 
 
-extern bool running_first_frame;
+extern bool add_entities;
 extern bool placing;
 
 extern float old_x, old_y;

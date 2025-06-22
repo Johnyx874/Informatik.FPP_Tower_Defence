@@ -1,0 +1,233 @@
+enemies:
+chicken:
+- 15 hp
+- fast Speed
+- Drops 2$
+
+boar:
+- 40 hp
+- medium Speed
+- Drops 5$
+
+Grasshopper:
+- 10 hp
+- very fast speed
+- Drops 4$
+
+ballon:
+- 30 hp
+- medium Speed
+- Drops 8$
+
+car:
+- 100 hp
+- very slow Speed
+- Drops 20$
+
+warthog:
+- 70 hp
+- slow Speed
+- Drops 15$
+- armored
+
+Dark Dirigible Titan:
+- 50 hp
+- fast Speed
+- Drops 20$
+- armored 
+
+
+Towers:
+crossbow:
+- 90$
+- 5 DMG
+- 1 sec cooldown
+- large range
+- hits air
+
+cannon:
+- 120
+- 20 DMG
+- 3 sec cooldown
+- medium range
+- hits armored
+
+minigun:
+- 175$
+- 1 DMG
+- 0,25 sec cooldown
+- medium range
+- hits air
+
+rocket launcher:
+- 200
+- 15 DMG
+- 2 sec cooldown
+- very large range
+- hits air
+
+saw:
+- 200
+- 2 DMG
+- 0,1 sec cooldown
+- very small range 
+
+sniper:
+- 225$
+- 30 DMG
+- 5 sec cooldown
+- infinite range
+- hits air and armored
+
+
+General:
+- start with 150$
+- start with 10 hp (every enemy deals 1 DMG)
+
+
+ROUNDS:
+		round1:
+		- 10 chickens with large spacing
+round2:
+- 15 chickens with large spacing
+- 5 sec break
+- 5 chickens with medium spacing
+round3:
+- 15 chicken with medium spacing
+- 5 sec break
+- 1 boar
+round4:
+- 3 boars with large spacing
+round5:
+- 20 chickens with medium spacing
+- break
+- 5 chickens with small spacing
+
+		round6:
+		- 5 Grasshoppers with medium spacing
+		- 5 sec break
+		- 10 chickens with medium spacing
+		- 1 boar
+
+		round7:
+		- 15 chickens without spacing
+
+		round8:
+		- 20 chickens with medium spacing
+		- 3 Ballons with medium spacing
+		- 5 sec break
+		- 20 chickens with small spacing
+		- 7 Grasshoppers with large spacing
+		
+round9:
+- 10 boars with medium spacing
+- 5 sec break
+- 5 Ballons with medium spacing
+round10:
+- 20 Ballons with large spacing
+- 25 chickens with medium spacing
+- 15 sec break
+- 1 warthog
+round11: 
+- 30 chickens with small spacing
+- break
+- 15 Grasshoppers with small spacing
+- 5 sec break
+- 10 boars with medium spacing
+round12:
+- 30 chickens with small spacing
+- 10 Grasshoppers with  small spacing
+- 5 sec break
+- 2 warthogs with large spacing
+round13:
+- 22 ballon with medium spacing
+- 20 Grasshoppers with medium spacing
+- 3 sec break
+- 40 chickens without spacing
+
+		round14:
+		- 5 warthogs with medium spacing
+		
+round15:
+- 40 Grasshoppers with medium spacing
+- break
+- 20 chickens with small spacing
+- break
+- 10 boars with small spacing
+- break
+- 5 warthogs with medium spacing
+- break
+- 1 car
+round16:
+- 10 warthogs with large spacing
+- 30 Ballons with small spacing
+round17:
+- 10 warthogs with medium spacing
+- 30 boars with small spacing
+- 3 sec break
+- 20 Grasshoppers with small spacing
+
+			round18:
+			- 3 cars with large spacing
+			- break
+			- 30 chickens with small spacing
+			
+round19:
+- 1 car
+- 5 warthogs with small spacing
+- 20 Ballons with medium spacing
+- 25 boars with small spacing
+- 10 Grasshoppers with small spacing
+round20:
+- 3 cars with large spacing
+- 60 chickens with small spacing
+- 20 Ballons with small spacing
+- 5 sec break
+- 10 warthogs with small spacing
+- 10 sec break
+- 1 DDT
+round21:
+- 50 boars with small spacing
+- 30 Ballons with small spacin
+- 10 warthogs with small spacing
+
+		round22:
+		- 12 warthogs with large spacing
+		- 40 Ballons with small spacing
+		- break
+		- 3 DDTs with large spacing
+		
+round23:
+- 5 cars with small spacing
+- 10 sec break
+- 10 DDTs with medium spacing
+round24:
+- 30 DDTs with large spacing
+- 5 sec break
+- 5 DDTs with small spacing
+round25
+- 100 chickens with small spacing
+- 30 Grasshoppers with medium spacing
+- break
+- 50 boars with small spacing
+- 25 warthogs with medium spacing
+- 50 Ballons with medium spacing
+- 15 sec break
+- 15 cars with small spacing
+- 30 DDTs with medium spacing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
