@@ -12,6 +12,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 // #include <SDL3/SDL_main.h>
 
+// Feste Größen festlegen
 #define WINDOW_WIDTH 1300   // std: 1000                  // Breite & Höhe des Fensters festlegen
 #define WINDOW_HEIGHT 900  // std: 700
 
@@ -20,11 +21,11 @@
 
 static SDL_Window* window = NULL;       // Wertespeicher für Fenster 
 static SDL_Renderer* renderer = NULL;   // Wertespeicher für Renderer
-static TTF_Font* font = NULL;
+static TTF_Font* font = NULL;           // Wertespeicher für Font
 
-static SDL_Color white = { 255, 255, 255, 255 };
+static SDL_Color white = { 255, 255, 255, 255 };    // Farbe weiß initialisieren
 
-// Wertespeicher für Texturen
+// Wertespeicher für Texturen und deren Dimensionen
 static SDL_Texture* chicken_tex = NULL; static int chicken_tex_width = 0; static int chicken_tex_height = 0;
 static SDL_Texture* killed_chicken_tex = NULL; static int killed_chicken_tex_width = 0; static int killed_chicken_tex_height = 0;
 
@@ -69,13 +70,19 @@ static SDL_Texture* map_tex = NULL; static int map_tex_width = 0; static int map
 
 static SDL_Texture* place_indicator_tex = NULL; static int place_indicator_tex_width = 0; static int place_indicator_tex_height = 0;
 
-static SDL_Texture* range_200_tex = NULL; static int range_200_tex_width = 0; static int range_200_tex_height = 0;
+static SDL_Texture* range_50_tex = NULL; static int range_50_tex_width = 0; static int range_50_tex_height = 0;
+
+static SDL_Texture* range_250_tex = NULL; static int range_250_tex_width = 0; static int range_250_tex_height = 0;
+
+static SDL_Texture* range_500_tex = NULL; static int range_500_tex_width = 0; static int range_500_tex_height = 0;
+
+static SDL_Texture* range_1000_tex = NULL; static int range_1000_tex_width = 0; static int range_1000_tex_height = 0;
 
 
 static int frame_counter = 0;
 
 
-// Funktion: insgesamt gerenderte Frames anzeigen
+// Funktion um insgesamt gerenderte Frames anzuzeigen
 void totalFrames(void) {
 
     printf("----------------------------------------------------------\n");
@@ -92,41 +99,48 @@ void countFrame(void) {
 }
 
 
-// Funktion: an beliebig vielen Stellen im Code X Frames abzuwarten
+// Funktion um an beliebig vielen Stellen im Code X Frames abzuwarten
+// Verwendung von ID um Zählstand beizubehalten
 bool passedFramesInternal(int id, int waitFrames) {
 
     static int counters[MAX_FRAME_TRACKERS] = { 0 };
 
+    // Sicherheitscheck
     if (id < 0 || id >= MAX_FRAME_TRACKERS) {
         SDL_Log("passedFrames: Ungültige ID");
         return false;
     }
 
+    // Counter "funktionstüchtig" machen
     if (counters[id] == -1) {
         counters[id] = 0;
         return false;
     }
 
+    // Bei jedem Aufruf (aka jeden Frame) gezählte Frames + 1
     if (counters[id] < waitFrames) {
         counters[id]++;
         return false;
     }
 
-    counters[id] = -1; // Reset für nächste Nutzung
+    // Reset für nächste Nutzung
+    counters[id] = -1; 
     return true;
 }
 
 
 // Funktion: Textur laden
-SDL_Texture* LoadTexture(const char* path, int* out_width, int* out_height)
-{
-    SDL_Surface* surface = SDL_LoadBMP(path);         // BMP auf Surface übertragen
+SDL_Texture* LoadTexture(const char* path, int* out_width, int* out_height) {
+
+    // BMP auf Surface übertragen
+    SDL_Surface* surface = SDL_LoadBMP(path);         
     if (!surface) {
         SDL_Log("SDL_LoadBMP failed for '%s': %s", path, SDL_GetError());
         return NULL;
     }
 
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);  // Texture anhand von Surface erstellen
+    // Texture anhand von Surface erstellen
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);  
     if (!tex) {
         SDL_Log("CreateTextureFromSurface failed for '%s': %s", path, SDL_GetError());
         SDL_DestroySurface(surface);
@@ -137,37 +151,43 @@ SDL_Texture* LoadTexture(const char* path, int* out_width, int* out_height)
     if (out_width) *out_width = surface->w;
     if (out_height) *out_height = surface->h;
 
-    SDL_DestroySurface(surface);  // Surface bereinigen
+    // Surface bereinigen
+    SDL_DestroySurface(surface);  
+
+    // Textur zurückgeben
     return tex;
 }
 
 
 bool startSDL(void){
 
-    SDL_SetAppMetadata("Centered Texture Example", "1.0", "com.example.centeredtexture");
-
+    // Video Element von SDL initialisieren
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
         return false;
     }
 
+    // TTF Element von SDL_ttf initialisieren
     if (!TTF_Init()) {
         SDL_Log("TTF_Init fehlgeschlagen: %s\n", SDL_GetError());
         return false;
     }
 
+    // SDL Fenster erstellen
     window = SDL_CreateWindow("SDL3 Textures Test", WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     if (!window) {
         SDL_Log("SDL_CreateWindow failed: %s", SDL_GetError());
         return false;
     }
 
+    // SDL Renderer (aka Leinwand) erstellen
     renderer = SDL_CreateRenderer(window, NULL);
     if (!renderer) {
         SDL_Log("SDL_CreateRenderer failed: %s", SDL_GetError());
         return false;
     }
 
+    // SDL_ttf Font laden
     font = TTF_OpenFont("assets/misc/ByteBounce.ttf", 50);
     if (!font) {
         SDL_Log("Fehler beim Laden der Schriftart: %s\n", SDL_GetError());
@@ -175,9 +195,7 @@ bool startSDL(void){
     }
 
 
-    
-
-    // === Entity Texturen ===
+    // === Entity Texturen laden ===
     chicken_tex = LoadTexture("assets/entities/chicken.bmp", &chicken_tex_width, &chicken_tex_height);
     if (!chicken_tex) { printf("Error Loading Texture"); return false; }
     killed_chicken_tex = LoadTexture("assets/damaged_entities/chicken_damaged.bmp", &killed_chicken_tex_width, &killed_chicken_tex_height);
@@ -213,7 +231,7 @@ bool startSDL(void){
     killed_titan_tex = LoadTexture("assets/damaged_entities/Dark Dirigible Titan_damaged.bmp", &killed_titan_tex_width, &killed_titan_tex_height);
     if (!killed_titan_tex) { printf("Error Loading Texture"); return false; }
 
-    // === Tower Texturen ===
+    // === Tower Texturen laden ===
     cannon_tex = LoadTexture("assets/towers/cannon.bmp", &cannon_tex_width, &cannon_tex_height);
     if (!cannon_tex) { printf("Error Loading Texture"); return false; }
     gray_cannon_tex = LoadTexture("assets/gray_towers/gray_cannon.bmp", &gray_cannon_tex_width, &gray_cannon_tex_height);
@@ -245,20 +263,31 @@ bool startSDL(void){
     if (!gray_sniper_tex) { printf("Error Loading Texture"); return false; }
 
 
-
+    // == zusätzliche Texturen laden ==
     map_tex = LoadTexture("assets/misc/map_2.0.bmp", &map_tex_width, &map_tex_height);
     if (!map_tex) { printf("Error Loading Texture"); return false; }
 
     place_indicator_tex = LoadTexture("assets/misc/place_indicator.bmp", &place_indicator_tex_width, &place_indicator_tex_height);
     if (!place_indicator_tex) { printf("Error Loading Texture"); return false; }
 
-    range_200_tex = LoadTexture("assets/ranges/range_indicator_200.bmp", &range_200_tex_width, &range_200_tex_height);
-    if (!range_200_tex) { printf("Error Loading Texture"); return false; }
+    range_50_tex = LoadTexture("assets/ranges/range_indicator_50.bmp", &range_50_tex_width, &range_50_tex_height);
+    if (!range_50_tex) { printf("Error Loading Texture"); return false; }
+
+    range_250_tex = LoadTexture("assets/ranges/range_indicator_250.bmp", &range_250_tex_width, &range_250_tex_height);
+    if (!range_250_tex) { printf("Error Loading Texture"); return false; }
+
+    range_500_tex = LoadTexture("assets/ranges/range_indicator_500.bmp", &range_500_tex_width, &range_500_tex_height);
+    if (!range_500_tex) { printf("Error Loading Texture"); return false; }
+
+    range_1000_tex = LoadTexture("assets/ranges/range_indicator_1000.bmp", &range_1000_tex_width, &range_1000_tex_height);
+    if (!range_1000_tex) { printf("Error Loading Texture"); return false; }
+
 
     return true;
 }
 
 
+// Funktion um eine Textur auf den Renderer zu laden
 void renderTexture(SDL_Texture* texture, float x_texture_position, float y_texture_position, float texture_width, float texture_height, int x_offset, int y_offset) {
 
     SDL_FRect dst_rect;     // Platzhalter für Position & Größe der Textur
@@ -272,7 +301,7 @@ void renderTexture(SDL_Texture* texture, float x_texture_position, float y_textu
 
 }
 
-
+// Funktion um von überall aus eine Textur (für Entitys) an jeder Stelle im Fenster zu laden
 void renderEntity(int index, int x_offset, int y_offset) {
 
     switch(index) {
@@ -312,7 +341,7 @@ void renderEntity(int index, int x_offset, int y_offset) {
 
 }
 
-
+// Funktion um von überall aus eine Textur (für Tower) an jeder Stelle im Fenster zu laden
 void renderTower(int index, int x_offset, int y_offset) {
 
     switch (index) {
@@ -346,68 +375,78 @@ void renderTower(int index, int x_offset, int y_offset) {
     }
 }
 
-
+// Funktion um von überall aus eine Textur (für Indicator) an jeder Stelle im Fenster zu laden
 void renderIndicator(int index, int x_offset, int y_offset) {
 
     switch (index) {
 
-        //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
+  //case index: renderTexture(SDL_Texture, X Coordinate, Y Coordinate, width, height, X Offset, Y Offset)
 
     case 1: renderTexture(place_indicator_tex, 0, 0, 1300, 900, 0, 0); break;
 
-    case 200: renderTexture(range_200_tex, 0 - 200, 0 - 168, 400, 400, x_offset, y_offset); break;
+    case 50: renderTexture(range_50_tex, 0 - 50, 0 - 50, 100, 100, x_offset, y_offset); break;
 
+    case 250: renderTexture(range_250_tex, 0 - 250, 0 - 250, 500, 500, x_offset, y_offset); break;
 
+    case 500: renderTexture(range_500_tex, 0 - 500, 0 - 500, 1000, 1000, x_offset, y_offset); break;
+
+    case 1000: renderTexture(range_1000_tex, 0 - 1000, 0 - 1000, 2000, 2000, x_offset, y_offset); break;
     }
 }
 
-
+// Funktion um von überall aus einen Text an jeder Stelle im Fenster zu laden
 void renderText(const char* message, int x, int y, bool center) {
 
+    // länge von Text ermitteln
     size_t len = strlen(message);
 
+    // Surface mit Text erstellen
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, message, len, white);
     if (!textSurface) {
         SDL_Log("Fehler beim Rendern des Textes: %s", SDL_GetError());
         return;
     }
 
+    // Textur aufgrund von Surface erstellen
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     if (!textTexture) {
         SDL_Log("Fehler beim Erstellen der Textur: %s", SDL_GetError());
         return;
     }
 
+    // Textur wenn nötig auf X Koordinate zentrieren
     int x_final = x;
 
     if (center) {
         x_final = x - (textSurface->w / 2);
     }
 
+    // Text rendern
     SDL_FRect dst_rect = { x_final, y, textSurface->w, textSurface->h };
     SDL_RenderTexture(renderer, textTexture, NULL, &dst_rect);
 
+    // Hilfsmittel zerstören
     SDL_DestroySurface(textSurface);
     SDL_DestroyTexture(textTexture);
 }
 
-
+// Funktion um den renderer zu leeren (= system("cls") )
 void renderClear(void) {
     SDL_RenderClear(renderer);
 }
 
-
+// Funktion um statische Objekte zu rendern (derzeitig nur Map)
 void renderStatic(void) {
     renderTexture(map_tex, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
 }
 
-
+// Funktion um alle derzeitig gerenderten Objekte anzuzeigen
 void renderPresent(void) {
     SDL_RenderPresent(renderer);
 }
 
 
-
+// Funktion um SDL memoryleak-frei herunterzufahren
 void quitSDL(void) {
 
     if (font) { TTF_CloseFont(font); }

@@ -22,7 +22,6 @@ extern EntityData theTitan;
 // Funktionen
 void spawnEntity(EntityData e, int offset);
 void spawnAndCloneEntity(EntityData e, int amount, int spacing);
-//void deleteEntity(EntityData* e);
 void killEntity(EntityData* e, int id);
 void moveAlongPath(EntityData* e);
 void moveEntities(void);

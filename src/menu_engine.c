@@ -4,3 +4,13 @@
 
 #include <SDL3/SDL.h>
 
+// Hier sollen später die Menüs verwaltet werden
+
+// Zum Beispiel:
+
+
+// Haubtmenü
+
+// Einstellungen
+
+// usw

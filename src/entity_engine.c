@@ -7,7 +7,6 @@
 
 #include "../include/structs.h"
 #include "../include/library.h"
-    bool add_entities;
 
 #include "../include/entity_engine.h"
 #include "../include/graphics_engine.h"
@@ -142,12 +141,10 @@ void spawnEntity(EntityData e, int offset) {
     entityCount++;      // Anzahl erhöhen
 
     printf("  - Entity '%s' added\n", entities[entityCount - 1].type);  // Debug Text
-
-    add_entities = false;
     
 }
 
-
+// spawnt [amount] Entities mit dem Abstand [spacing]
 void spawnAndCloneEntity(EntityData e, int amount, int spacing) {
 
     for (int i = 0; i < amount; i++) {
@@ -158,7 +155,7 @@ void spawnAndCloneEntity(EntityData e, int amount, int spacing) {
 
 
 void removeFromList(EntityData* list, int* counter, int indexToRemove) {
-    if (indexToRemove < 0 || indexToRemove >= *counter) {
+    if (indexToRemove < 0 || indexToRemove >= *counter) { // Sicherheitscheck
         printf("Invalid index!\n");
         return;
     }
@@ -168,27 +165,27 @@ void removeFromList(EntityData* list, int* counter, int indexToRemove) {
         list[i] = list[i + 1];  // Kopiere nächsten Eintrag auf die aktuelle Position
     }
 
-    // Letzten Eintrag leeren (optional, zur Sicherheit)
+    // Letzten Eintrag leeren (zur Sicherheit)
     memset(&list[*counter - 1], 0, sizeof(EntityData));
 
     // Counter anpassen
     (*counter)--;
 }
 
-
+// killt ein Entity mit Kill-Animation
 void killEntity(EntityData* e, int i) {
 
-    if (passedFrames(15)) {
+    if (passedFrames(15)) {     // Nach 15 Frames:
         
-        giveBonus(entities[i].bonus);
+        giveBonus(entities[i].bonus);   // Bonus an Spieler übertragen
 
-        *e = (EntityData){ 0 };
+        *e = (EntityData){ 0 }; // Entity technisch löschen
 
-        removeFromList(entities, &entityCount, i);
-        printf("Entity killed..\n");
+        removeFromList(entities, &entityCount, i);  // Liste neu sortieren
+        printf("Entity killed..\n");    // Debug Text
     }
     else {
-        renderEntity((e->textureIndex + 100), e->position.x, e->position.y);
+        renderEntity((e->textureIndex + 100), e->position.x, e->position.y);    // Kill-Textur des Entitys anzeigen
     }
     
 }
@@ -196,22 +193,26 @@ void killEntity(EntityData* e, int i) {
 
 // Bewegt eine einzelne Entity entlang des Pfads
 void moveAlongPath(EntityData* e) {
+    // Sicherheitschecks
     if (path.points == NULL || path.count <= 0) return;
     if (e->currentTargetIndex >= path.count) return;
 
+    // Ziel Wegpunkt festlegen
     Vector2 target = path.points[e->currentTargetIndex];
 
+    // Richtung bestimmen
     Vector2 dir = {
         target.x - e->position.x,
         target.y - e->position.y
     };
-
     if (dir.x != 0) dir.x = (dir.x > 0) ? 1 : -1;
     if (dir.y != 0) dir.y = (dir.y > 0) ? 1 : -1;
 
+    // Mit speed in die Richtung bewegen
     e->position.x += dir.x * e->speed;
     e->position.y += dir.y * e->speed;
 
+    // Wenn Ziel Wegpunkt erreicht, Entity auf genaue Wegpunkt koordinaten setzen
     bool reachedX = (dir.x > 0 && e->position.x >= target.x) ||
         (dir.x < 0 && e->position.x <= target.x) ||
         (dir.x == 0);
@@ -230,15 +231,16 @@ void moveAlongPath(EntityData* e) {
 // Bewegt alle Entitys eines Types
 void moveEntities(void) {
 
+    // Entity Liste iterieren
     for (int i = entityCount - 1; i >= 0; i--) {
 
+        // Entity killen wenn Leben zu niedrig sind
         if (entities[i].health <= 0) {
-
             killEntity(&entities[i], i);
-
         }
         else {
 
+            // Ansonsten Entity über Pfad bewegen
             moveAlongPath(&entities[i]);
             renderEntity(entities[i].textureIndex, entities[i].position.x, entities[i].position.y);
             
@@ -247,16 +249,9 @@ void moveEntities(void) {
 }
 
 
-// Haupt-Entity-Manager: verwaltet alle "Brains"
+// Haupt-Entity-Manager
 void entityManager(void) {
 
-    
-
-
-
-    moveEntities();
-
-    //printf("---------\n");
-    
-    
+    // bewegt zurzeit nur die Entitys
+    moveEntities();    
 }

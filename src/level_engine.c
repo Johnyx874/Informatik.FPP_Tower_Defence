@@ -9,7 +9,7 @@
 #include "../include/entity_engine.h"
 #include "../include/graphics_engine.h"
 
-
+// Initialisieren von Variablen
 int currentLevel = 0;
 int currentWave = 0;
 const int totalLevels = 7;
@@ -17,7 +17,7 @@ const int totalLevels = 7;
 bool waveSpawned = false;
 bool waitingForNextWave = false;
 
-
+// Preview Funktion um aktuelle Runde anzuzeigen, aktuell nicht in Verwendung
 void levelScreen(int nextLevel) {
 
     char buffer[64];
@@ -26,7 +26,7 @@ void levelScreen(int nextLevel) {
     renderText(buffer, 650, 450, true);
 }
 
-
+// Funktion um Welle an Gegner zu spawnen, basierend auf aktuellem Level und Welle
 void spawnWave(int level, int wave) {
     if (level == 0) {
         if (wave == 0) {
@@ -81,7 +81,7 @@ void spawnWave(int level, int wave) {
     }
 }
 
-
+// Funktion um Wellen anzahlen für Level abzurufen
 int getWaveCount(int level) {
     if (level == 0) return 1;  // Anzahl Waves in Level 0
     if (level == 1) return 2;  // Anzahl Waves in Level 1
@@ -93,7 +93,9 @@ int getWaveCount(int level) {
     return 0;
 }
 
+// Funktion um Level zu aktualisieren
 void updateLevel(void) {
+    // Überprüfung ob alle Level absolviert wurden
     if (currentLevel >= totalLevels) {
         if (entityCount == 0) {
             // endGame();
@@ -101,32 +103,36 @@ void updateLevel(void) {
         return;
     }
 
+    // Welle spawnen
     if (!waveSpawned) {
         spawnWave(currentLevel, currentWave);  // nur einmal
         waveSpawned = true;
     }
 
+    // Ende der Welle abwarten
     if (waveSpawned && entityCount == 0) {
         int delayId = 100 + currentLevel * 10 + currentWave;  // eindeutige ID für passedFramesInternal
 
+        // Bei Ende kurzes Päuschen einlegen
         if (passedFramesInternal(delayId, 150)) {
-            // Zeit abgelaufen -> nächste Welle
+            // nächste Welle vorbereiten
             currentWave++;
             waveSpawned = false;
 
+            // eventuell nächstes Level aufrufen
             if (currentWave >= getWaveCount(currentLevel)) {
                 currentLevel++;
                 currentWave = 0;
-                levelScreen(currentLevel);
+                //levelScreen(currentLevel);
             }
         }
         else {
-            levelScreen(currentWave + 2);
+            //levelScreen(currentWave + 2);
         }
     }
 }
 
-
+// Funktion um Level zu Verwalten
 void levelManager(void) {
 
     updateLevel();

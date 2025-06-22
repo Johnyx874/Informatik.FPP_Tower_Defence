@@ -16,24 +16,25 @@ Player player = {
 };			
 
 
-
 // wenn Entity die gesamte Map durchlaufen hat, Damage von Entity auf Player übertragen
 void checkDamage(void) {
 
+	// Entity Liste iterieren
 	for (int i = 0; i <= entityCount; i++) {
 
+		// Entitys außerhalb der Map löschen
 		if (entities[i].position.x >= 1300) {
 
 			player.health -= 1;
 
-			printf("Player HP: %d\n", player.health);
+			printf("Player HP: %d\n", player.health); // Debug Text
 
-			entities[i] = (EntityData){ 0 };
+			entities[i] = (EntityData){ 0 };	// Entity Listeneintrag bereinigen
 		}
 	}
 }
 
-// Bonus von Entity auf Player übertragen
+// Bonus von gekilltem Entity auf Player übertragen
 void giveBonus(int bonus) {
 
 	player.cash += bonus;
@@ -48,6 +49,7 @@ void playerManager(void) {
 
 	char buffer[64];
 
+	// Werte des Spielers auf Bildschirm anzeigen
 	snprintf(buffer, sizeof(buffer), "HP: %d", player.health);
 	renderText(buffer, 70, 30, false);
 

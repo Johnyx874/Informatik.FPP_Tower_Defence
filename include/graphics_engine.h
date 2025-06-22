@@ -4,6 +4,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #define MAX_FRAME_TRACKERS 64
 
+// Aufrufen von passedFrames mit automatisch festgelegter ID, basierend auf Aufrufzeile
 #define passedFrames(waitFrames) passedFramesInternal(__LINE__, waitFrames)
 
 // Funktionen

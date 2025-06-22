@@ -73,7 +73,7 @@ typedef struct {
     bool attr_air;            // Attribut: Fliegend
     bool attr_armored;        // Attribut: Gepanzert
 
-    bool kill_it;             // bool, ob das Entity getötet werden muss
+    bool kill_it;             // bool, ob das Entity getötet werden muss, aktuell nicht in Verwendung
 
 } EntityData;
 

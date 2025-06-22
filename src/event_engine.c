@@ -8,6 +8,7 @@ bool spawnEntity_this_frame;
 #include <SDL3/SDL.h>
 
 
+// Sucht nach SDL Events, Abspeicherung erfolgt in einen Struct
 void checkEvents(InputState* input) {
 
     // Aktuelle Maus-Position

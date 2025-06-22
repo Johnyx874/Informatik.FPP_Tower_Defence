@@ -22,7 +22,7 @@
 #include "../include/tower_engine.h"	
 #include "../include/player_engine.h"
 
-
+// Deklarieren / Initialisieren von Variablen
 Place place;
 
 TowerData towers[MAX_TOWERS];
@@ -41,7 +41,7 @@ TowerData crossbow = {
 	90,								// Price
 	5,								// Damage
 	50,								// Reload Time in Frames
-	500,							    // Range
+	500,							// Range
 	true,							// Trifft Luft?
 	false,							// Trifft Gepanzert?
 	false							// Macht Splash Damage?
@@ -54,7 +54,7 @@ TowerData cannon = {
 
 	120,							// Price
 	20,								// Damage
-	150,							// Reload Time in Frames
+	100,							// Reload Time in Frames
 	250,							// Range
 	false,							// Trifft Luft?
 	true,							// Trifft Gepanzert?
@@ -69,13 +69,13 @@ TowerData minigun = {
 	175,							// Price
 	1,								// Damage
 	1,								// Reload Time in Frames
-	250,							    // Range
+	250,							// Range
 	true,							// Trifft Luft?
 	false,							// Trifft Gepanzert?
 	false							// Macht Splash Damage?
 };
 TowerData launcher = {
-	"Rocket Launcher",						// Type
+	"Rocket Launcher",				// Type
 	"Does nothing at the moment.",  // Description
 	4,								// Texture Index
 	{0, 0},							// Position
@@ -89,15 +89,15 @@ TowerData launcher = {
 	true							// Macht Splash Damage?
 };
 TowerData saw = {
-	"Saw",						// Type
+	"Saw",							// Type
 	"Does nothing at the moment.",  // Description
 	5,								// Texture Index
 	{0, 0},							// Position
 
 	200,							// Price
 	2,								// Damage
-	5,							// Reload Time in Frames
-	50,							// Range
+	5,								// Reload Time in Frames
+	50,								// Range
 	false,							// Trifft Luft?
 	false,							// Trifft Gepanzert?
 	false							// Macht Splash Damage?
@@ -140,7 +140,7 @@ float getDistanceAB(Vector2 A, Vector2 B) {
 // Tower zur generellen Towerliste hinzufügen
 void addTower(TowerData t, int amount) {
 
-	if (running_first_frame) {
+	if (running_first_frame) {	// Nur im ersten Frame durchlaufen
 
 		for (int i = 0; i < amount; i++) {
 
@@ -158,7 +158,7 @@ void addTower(TowerData t, int amount) {
 	}                                    
 }
 
-// Tower zur Liste der aktiven Towers hinzufügen
+// platzierten Tower zur Liste der aktiven Towers hinzufügen
 void addToActiveTowers(TowerData t) {
 
 	if (activeTowerCount >= MAX_ACTIVE_TOWERS) {
@@ -170,7 +170,7 @@ void addToActiveTowers(TowerData t) {
 	activeTowerCount++;
 }
 
-
+// Funktion um zu bestimmen ob Entity in Reichweite des Towers ist
 bool entityInRange(TowerData t, EntityData* e) {
 
 	float distance = getDistanceAB(t.position, e->position);
@@ -179,13 +179,16 @@ bool entityInRange(TowerData t, EntityData* e) {
 
 		return true;
 	}
+
+	return false;
 }
 
-
+// Funktion um zu bestimmen ob Tower Entity schaden zufügen kann
 void dealDamage(TowerData t, EntityData* e) {
 
 	if (e->health <= 0) return;
 
+	// nur Anti-Luft kann Luft angreifen
 	if (e->attr_air) {
 		if (t.hits_air) {
 
@@ -193,6 +196,7 @@ void dealDamage(TowerData t, EntityData* e) {
 			printf("dealt damage\nHP: %d\n", e->health);
 		}
 	}
+	// nur Anti-Panzerung kann Gepanzert angreifen
 	else if (e->attr_armored) {
 		if (t.hits_armored) {
 
@@ -202,6 +206,7 @@ void dealDamage(TowerData t, EntityData* e) {
 	}
 	else {
 
+		// normale Entitys können von allen Towers angegriffen werden
 		e->health -= t.damage;
 		printf("dealt damage\nHP: %d\n", e->health);
 	}
@@ -211,24 +216,24 @@ void dealDamage(TowerData t, EntityData* e) {
 // Liste der aktiven Towers durchgehen und alle Einträge berechnen
 void processActiveTowers(void) {
 
-	for (int t = 0; t < activeTowerCount; t++) {		// Liste der aktiven Towers durchgehen
+	for (int t = 0; t < activeTowerCount; t++) {		// Liste der aktiven Towers iterieren
 
 		int attacked_entitys = 0;
 
-		if (passedFrames(activeTowers[t].reload_time)) {
+		if (passedFrames(activeTowers[t].reload_time)) {	// Nachladezeit abwarten
 
 			printf("reloaded\n");
 
-			for (int e = 0; e < entityCount; e++) {
+			for (int e = 0; e < entityCount; e++) {	// Liste der Entitys iterieren
 
-				if (entityInRange(activeTowers[t], &entities[e])) {
+				if (entityInRange(activeTowers[t], &entities[e])) {	// überprüfen ob Entity in Reichweite ist
 
 					printf("entity found\n");
 
-					dealDamage(activeTowers[t], &entities[e]);
+					dealDamage(activeTowers[t], &entities[e]);	// Versuch Entity anzugreifen
 					attacked_entitys++;
 
-
+					// für Splash Damage, Schleife mehrfach durchlaufen
 					if (activeTowers[t].hits_multiple) {
 						if (attacked_entitys == 3) {
 							break;
@@ -241,24 +246,21 @@ void processActiveTowers(void) {
 			}
 		}
 		
-
 		// aktiven Tower rendern
 		renderTower(activeTowers[t].textureIndex, activeTowers[t].position.x, activeTowers[t].position.y);
-
-		
 	}
-
-	
 }
 
 
 // Platziere Tower mit Maus
 void placeTower(TowerData t, InputState input) {
 
+	// Place Indicator rendern
 	renderIndicator(1, 0, 0);
 
 	int unused_tower = -1;
 
+	// Nach "freiem" Tower suchen
 	for (int i = 0; i < towerCount; i++) {
 
 		if (strcmp(towers[i].type, t.type) == 0) {
@@ -268,21 +270,25 @@ void placeTower(TowerData t, InputState input) {
 			}
 		}
 	}
-	if (unused_tower == -1) { place = (Place){ 0 }; printf("no tower found"); }
+	if (unused_tower == -1) { place = (Place){ 0 }; printf("no tower found\n"); }
 
-
+	// Tower bei Mauszeiger rendern
 	if (unused_tower >= 0) {
 
+		// Normale Textur wenn genug Cash
 		if (player.cash >= t.price) {
 			renderTower(towers[unused_tower].textureIndex, input.x_mouse_position, input.y_mouse_position);
 		}
+		// Ausgegraute Textur wenn zu wenig Cash
 		else {
 			renderTower((towers[unused_tower].textureIndex + 100), input.x_mouse_position, input.y_mouse_position);
 		}
 
+		// Range Indicator bei Mauszeiger (= Tower) rendern
 		renderIndicator(t.range, input.x_mouse_position, input.y_mouse_position);
 	}
 	
+	// Bei linker Maustaste Tower platzieren und Cash abziehen
 	if (input.button_left) {
 		if (unused_tower >= 0) {
 			if (player.cash >= t.price) {
@@ -303,6 +309,7 @@ void placeTower(TowerData t, InputState input) {
 		}
 	}
 
+	// Name und Beschreibung des Towers anzeigen
 	renderText(t.type, 650, 700, true);
 	renderText(t.description, 650, 740, true);
 
@@ -356,6 +363,7 @@ void placeController(InputState input) {
 // Tower verwalten
 void towerManager(InputState input) {
 
+	// Tower hinterlegt hinzufügen
 	addTower(crossbow, 5);
 
 	addTower(cannon, 5);
@@ -368,9 +376,9 @@ void towerManager(InputState input) {
 
 	addTower(sniper, 5);
 
-
+	// Platzieren verwalten
 	placeController(input);
 
+	// platzierte Tower verwalten
 	processActiveTowers();
-
 }
