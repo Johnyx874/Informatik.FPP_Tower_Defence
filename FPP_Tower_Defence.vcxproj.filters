@@ -18,12 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="window.c">
-      <Filter>Dateienspeicher</Filter>
-    </ClCompile>
-    <ClCompile Include="simple_window.c">
-      <Filter>Dateienspeicher</Filter>
-    </ClCompile>
     <ClCompile Include="src\entity_engine.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>

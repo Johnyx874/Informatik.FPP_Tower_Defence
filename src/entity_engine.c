@@ -250,8 +250,8 @@ void moveEntities(void) {
 // Haupt-Entity-Manager: verwaltet alle "Brains"
 void entityManager(InputState input) {
 
-    spawnAndCloneEntity(theChicken, 5, 100);
-    //spawnEntity(theBoar, 0);
+    //spawnAndCloneEntity(theChicken, 5, 100);
+    spawnEntity(theWarthog, 0);
 
     moveEntities();
 

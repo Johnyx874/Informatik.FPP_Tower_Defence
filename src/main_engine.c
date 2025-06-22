@@ -15,7 +15,7 @@
 #include "../include/tower_engine.h"
 #include "../include/player_engine.h"
 
-
+	
 void GameLoop(void) {
 
     bool running = true;

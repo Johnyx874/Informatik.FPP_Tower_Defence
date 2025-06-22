@@ -117,6 +117,7 @@ TowerData sniper = {
 	false							// Macht Splash Damage?
 };
 
+
 // Abstand zwischen Punkt A & B berechnen
 float getDistanceAB(Vector2 A, Vector2 B) {
 

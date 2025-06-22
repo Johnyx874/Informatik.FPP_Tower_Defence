@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36109.1 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL3_C_Test", "SDL3_C_Test.vcxproj", "{E8A995D9-0145-4C73-A377-0A5E19BE23B5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FPP_Tower_Defence", "FPP_Tower_Defence.vcxproj", "{E8A995D9-0145-4C73-A377-0A5E19BE23B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0FB3FFFC-FF81-4E7B-B60C-D4E705186A25}
+		SolutionGuid = {6FCFE4C5-3F1A-4E1E-8F28-B258B7EEE605}
 	EndGlobalSection
 EndGlobal
