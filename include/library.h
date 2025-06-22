@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "structs.h"
 
+// externe Variablen
 extern bool running_first_frame;
 extern bool placing;
 

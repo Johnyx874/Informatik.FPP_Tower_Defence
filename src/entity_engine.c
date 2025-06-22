@@ -255,3 +255,9 @@ void entityManager(void) {
     // bewegt zurzeit nur die Entitys
     moveEntities();    
 }
+
+
+
+
+
+// This File contains Code provided by ChatGPT

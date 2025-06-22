@@ -458,3 +458,9 @@ void quitSDL(void) {
     SDL_DestroyWindow(window);
     
 }
+
+
+
+
+
+// This File partitially contains Code provided by ChatGPT

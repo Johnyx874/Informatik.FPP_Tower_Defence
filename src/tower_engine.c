@@ -382,3 +382,8 @@ void towerManager(InputState input) {
 	// platzierte Tower verwalten
 	processActiveTowers();
 }
+
+
+
+
+// This File partially contains Code provided by ChatGPT
