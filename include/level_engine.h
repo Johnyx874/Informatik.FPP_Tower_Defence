@@ -3,8 +3,5 @@
 
 #include "structs.h"
 
-// externe Variablen
-extern Level level;
-
 // Funktionen
 void levelManager(void);

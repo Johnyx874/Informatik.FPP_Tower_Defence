@@ -11,7 +11,7 @@
 // Initialisierung des Players
 Player player = { 
 	"Player 1",		// Name
-	150,				// Cash
+	150,			// Cash
 	10				// Health
 };			
 

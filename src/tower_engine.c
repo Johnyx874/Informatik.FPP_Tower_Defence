@@ -211,15 +211,15 @@ void dealDamage(TowerData t, EntityData* e) {
 // Liste der aktiven Towers durchgehen und alle Einträge berechnen
 void processActiveTowers(void) {
 
-	int attacked_entitys = 0;
-
 	for (int t = 0; t < activeTowerCount; t++) {		// Liste der aktiven Towers durchgehen
+
+		int attacked_entitys = 0;
 
 		if (passedFrames(activeTowers[t].reload_time)) {
 
 			printf("reloaded\n");
 
-			for (int e = entityCount - 1; e >= 0; e--) {
+			for (int e = 0; e < entityCount; e++) {
 
 				if (entityInRange(activeTowers[t], &entities[e])) {
 
@@ -268,7 +268,7 @@ void placeTower(TowerData t, InputState input) {
 			}
 		}
 	}
-	if (unused_tower == -1) { place = (Place){ 0 }; }
+	if (unused_tower == -1) { place = (Place){ 0 }; printf("no tower found"); }
 
 
 	if (unused_tower >= 0) {
@@ -285,17 +285,21 @@ void placeTower(TowerData t, InputState input) {
 	
 	if (input.button_left) {
 		if (unused_tower >= 0) {
+			if (player.cash >= t.price) {
+				towers[unused_tower].position.x = input.x_mouse_position;
+				towers[unused_tower].position.y = input.y_mouse_position;
 
-			towers[unused_tower].position.x = input.x_mouse_position;
-			towers[unused_tower].position.y = input.y_mouse_position;
+				addToActiveTowers(towers[unused_tower]);
 
-			addToActiveTowers(towers[unused_tower]);
+				player.cash -= t.price;
 
-			player.cash -= t.price;
+				printf("%s\n", t.type);
 
-			printf("%s\n", t.type);
-
-			place = (Place){ 0 };
+				place = (Place){ 0 };
+			}
+			else {
+				renderText("Too expensive!", input.x_mouse_position, input.y_mouse_position, false);
+			}
 		}
 	}
 

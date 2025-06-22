@@ -8,7 +8,7 @@
 
 #include "../include/structs.h"		// Zugriff auf Header-Datei
 #include "../include/library.h"		// Zugriff auf Header-Datei
-
+	bool running_first_frame = true;
 #include "../include/graphics_engine.h"
 #include "../include/entity_engine.h"
 #include "../include/tower_engine.h"
@@ -41,10 +41,11 @@ void GameLoop(void) {
 
 		renderPresent();	// Bildschirm füllen
 
+		running_first_frame = false;
 
 		countFrame();	// gerenderten Frame zählen
 
-		printf("-------\n");
+		//printf("-------\n");
 
         SDL_Delay(20);
 
