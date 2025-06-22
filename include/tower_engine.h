@@ -19,7 +19,7 @@ extern TowerData crossbow;
 float getDistanceAB(Vector2 A, Vector2 B);
 void addTower(TowerData t, int amount);
 void addToActiveTowers(TowerData t);
-void dealDamage(int index);
+void dealDamage(TowerData t, EntityData* e);
 void processActiveTowers(void);
 void placeTower(TowerData t, InputState input);
 void placeController(InputState input);

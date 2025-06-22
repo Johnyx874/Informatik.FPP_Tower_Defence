@@ -12,6 +12,7 @@
 #include "../include/entity_engine.h"
 #include "../include/graphics_engine.h"
 #include "../include/tower_engine.h"
+#include "../include/player_engine.h"
 
 // Definition der Punkte des Pfads
 Vector2 pathPoints[] = {
@@ -156,43 +157,40 @@ void spawnAndCloneEntity(EntityData e, int amount, int spacing) {
 }
 
 
-void deleteEntity(EntityData* e) {
+void removeFromList(EntityData* list, int* counter, int indexToRemove) {
+    if (indexToRemove < 0 || indexToRemove >= *counter) {
+        printf("Invalid index!\n");
+        return;
+    }
 
-    strcpy_s(e->type, 50, "");
-    e->textureIndex = 0;
-    e->position.x = 0;
-    e->position.y = 0;
-    e->currentTargetIndex = 0;
-    e->speed = 0;
-    e->health = 0;
+    // Nachrutschen ab indexToRemove
+    for (int i = indexToRemove; i < (*counter - 1); i++) {
+        list[i] = list[i + 1];  // Kopiere nächsten Eintrag auf die aktuelle Position
+    }
 
+    // Letzten Eintrag leeren (optional, zur Sicherheit)
+    memset(&list[*counter - 1], 0, sizeof(EntityData));
+
+    // Counter anpassen
+    (*counter)--;
 }
 
 
-void killEntity(EntityData* e, int id) {
+void killEntity(EntityData* e, int i) {
 
-    if (passedFrames(id, 15)) {
-        deleteEntity(e);
-        e->kill_it = false;
+    if (passedFrames(i, 15)) {
+        
+        *e = (EntityData){ 0 };
+
+        giveBonus(entities[i].bonus);
+
+        removeFromList(entities, &entityCount, i);
         printf("Entity killed..\n");
     }
     else {
         renderEntity((e->textureIndex + 100), e->position.x, e->position.y);
     }
     
-}
-
-
-void checkHealth(void) {
-
-    for (int i = entityCount - 1; i >= 0; i--) {
-
-        if (entities[i].health <= 0) {
-
-            entities[i].kill_it = true;
-        }
-        printf("E: %s, HP: %d\n", entities[i].type, entities[i].health);
-    }
 }
 
 
@@ -234,16 +232,16 @@ void moveEntities(void) {
 
     for (int i = entityCount - 1; i >= 0; i--) {
 
-        if (entities[i].kill_it) {
+        if (entities[i].health <= 0) {
+
             killEntity(&entities[i], i);
+
         }
         else {
+
             moveAlongPath(&entities[i]);
             renderEntity(entities[i].textureIndex, entities[i].position.x, entities[i].position.y);
             
-            if (entities[i].textureIndex > 100) {
-                entities[i].textureIndex -= 100;
-            }
         }
     }
 }
@@ -253,50 +251,12 @@ void moveEntities(void) {
 void entityManager(InputState input) {
 
     spawnAndCloneEntity(theChicken, 5, 100);
-    //spawnEntity(theChicken, 0);
-
-
-    checkHealth();
+    //spawnEntity(theBoar, 0);
 
     moveEntities();
 
 
-    printf("---------\n");
-    //spawnAndCloneEntity(theSecond, 3, 150);
-    /*if (input.key_c) {
-
-        deleteEntity(&entities[0]);
-    }*/
-
-
-    
-
-    //moveEntity(theSecond);
+    //printf("---------\n");
     
     
 }
-
-
-// Maybe gut? Maybe nötig?
-// 
-//    || 
-//    ||
-//    \/
-
-//void removeFromList(TowerData* list, int* counter, int indexToRemove) {
-//    if (indexToRemove < 0 || indexToRemove >= *counter) {
-//        printf("Invalid index!\n");
-//        return;
-//    }
-//
-//    // Nachrutschen ab indexToRemove
-//    for (int i = indexToRemove; i < (*counter - 1); i++) {
-//        list[i] = list[i + 1];  // Kopiere nächsten Eintrag auf die aktuelle Position
-//    }
-//
-//    // Letzten Eintrag leeren (optional, zur Sicherheit)
-//    memset(&list[*counter - 1], 0, sizeof(TowerData));
-//
-//    // Counter anpassen
-//    (*counter)--;
-//}

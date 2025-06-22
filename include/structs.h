@@ -91,5 +91,6 @@ typedef struct {
     int range;                // Reichweite in Pixeln
     bool hits_air;            // Attribut: Fliegend
     bool hits_armored;        // Attribut: Gepanzert
+    bool hits_multiple;       // Attribut: macht Splash Damage
     
 } TowerData;

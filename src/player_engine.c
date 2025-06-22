@@ -24,9 +24,9 @@ void checkDamage(void) {
 
 			player.health -= 1;
 
-			printf("HP: %d\n", player.health);
+			printf("Player HP: %d\n", player.health);
 
-			deleteEntity(&entities[i]);
+			entities[i] = (EntityData){ 0 };
 		}
 	}
 }
@@ -36,7 +36,7 @@ void giveBonus(int bonus) {
 
 	player.cash += bonus;
 
-	printf("Cash: %d\n", player.cash);
+	printf("Player Cash: %d\n", player.cash);
 }
 
 // Verwaltung von player

@@ -294,19 +294,19 @@ void renderEntity(int index, int x_offset, int y_offset) {
     case 7: renderTexture(titan_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
 
-    case 101: renderTexture(chicken_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 101: renderTexture(killed_chicken_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 102: renderTexture(boar_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 102: renderTexture(killed_boar_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 103: renderTexture(hopper_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 103: renderTexture(killed_hopper_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 104: renderTexture(ballon_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 104: renderTexture(killed_ballon_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 105: renderTexture(car_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 105: renderTexture(killed_car_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 106: renderTexture(warthog_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 106: renderTexture(killed_warthog_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
-    case 107: renderTexture(titan_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
+    case 107: renderTexture(killed_titan_tex, 0 - 48, 0 - 48, 96, 96, x_offset, y_offset); break;
 
     }
 

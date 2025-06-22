@@ -43,6 +43,7 @@ void GameLoop(void) {
 
 		countFrame();	// gerenderten Frame zählen
 
+		printf("-------\n");
 
 		running_first_frame = false;
 

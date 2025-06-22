@@ -43,7 +43,8 @@ TowerData crossbow = {
 	50,								// Reload Time in Frames
 	500,							    // Range
 	true,							// Trifft Luft?
-	false							// Trifft Gepanzert?
+	false,							// Trifft Gepanzert?
+	false							// Macht Splash Damage?
 };
 TowerData cannon = {
 	"Cannon",						// Type
@@ -54,9 +55,10 @@ TowerData cannon = {
 	120,							// Price
 	20,								// Damage
 	150,							// Reload Time in Frames
-	250,							    // Range
+	250,							// Range
 	false,							// Trifft Luft?
-	true							// Trifft Gepanzert?
+	true,							// Trifft Gepanzert?
+	true							// Macht Splash Damage?
 };
 TowerData minigun = {
 	"Minigun",						// Type
@@ -66,10 +68,11 @@ TowerData minigun = {
 
 	175,							// Price
 	1,								// Damage
-	12,								// Reload Time in Frames
+	1,								// Reload Time in Frames
 	250,							    // Range
 	true,							// Trifft Luft?
-	false							// Trifft Gepanzert?
+	false,							// Trifft Gepanzert?
+	false							// Macht Splash Damage?
 };
 TowerData launcher = {
 	"Rocket Launcher",						// Type
@@ -82,7 +85,8 @@ TowerData launcher = {
 	100,							// Reload Time in Frames
 	1000,							// Range
 	true,							// Trifft Luft?
-	false							// Trifft Gepanzert?
+	false,							// Trifft Gepanzert?
+	true							// Macht Splash Damage?
 };
 TowerData saw = {
 	"Saw",						// Type
@@ -95,7 +99,8 @@ TowerData saw = {
 	5,							// Reload Time in Frames
 	50,							// Range
 	false,							// Trifft Luft?
-	false							// Trifft Gepanzert?
+	false,							// Trifft Gepanzert?
+	false							// Macht Splash Damage?
 };
 TowerData sniper = {
 	"Sniper",						// Type
@@ -108,7 +113,8 @@ TowerData sniper = {
 	250,							// Reload Time in Frames
 	1500,							// Range
 	true,							// Trifft Luft?
-	true							// Trifft Gepanzert?
+	true,							// Trifft Gepanzert?
+	false							// Macht Splash Damage?
 };
 
 // Abstand zwischen Punkt A & B berechnen
@@ -164,63 +170,84 @@ void addToActiveTowers(TowerData t) {
 }
 
 
-void damageAsInRange(EntityData* e, TowerData t) {
+bool entityInRange(TowerData t, EntityData* e) {
 
 	float distance = getDistanceAB(t.position, e->position);
 
-	if (distance <= t.range && !e->kill_it) {
+	if (distance <= t.range && e->health > 0) {
 
-		giveBonus(e->bonus);
-
-		e->health -= t.damage;
-
-		e->textureIndex += 100;
+		return true;
 	}
 }
 
 
-void dealDamage(TowerData t, int id) {
+void dealDamage(TowerData t, EntityData* e) {
 
-	if (passedFrames((id + 100), t.reload_time)) {
+	if (e->health <= 0) return;
 
-		for (int i = 0; i < entityCount; i++) {
+	if (e->attr_air) {
+		if (t.hits_air) {
 
-			if (entities[i].attr_air) {
-				if (t.hits_air) {
-					damageAsInRange(&entities[i], t);
-					
-				}
-			}
-			else if (entities[i].attr_armored) {
-				if (t.hits_armored) {
-					damageAsInRange(&entities[i], t);
-					
-				}
-			}
-			else {
-				if (!t.hits_air) {
-					damageAsInRange(&entities[i], t);
-					
-				}
-			}
+			e->health -= t.damage;
+			printf("dealt damage\nHP: %d\n", e->health);
 		}
 	}
-	
+	else if (e->attr_armored) {
+		if (t.hits_armored) {
+
+			e->health -= t.damage;
+			printf("dealt damage\nHP: %d\n", e->health);
+		}
+	}
+	else {
+
+		e->health -= t.damage;
+		printf("dealt damage\nHP: %d\n", e->health);
+	}
 }
 
 
 // Liste der aktiven Towers durchgehen und alle Einträge berechnen
 void processActiveTowers(void) {
 
-	for (int i = 0; i < activeTowerCount; i++) {		// Liste der aktiven Towers durchgehen
+	int attacked_entitys = 0;
 
-		// aktiver Tower macht damage
-		dealDamage(activeTowers[i], i);
+	for (int t = 0; t < activeTowerCount; t++) {		// Liste der aktiven Towers durchgehen
+
+		if (passedFrames((t + 100), activeTowers[t].reload_time)) {
+
+			printf("reloaded\n");
+
+			for (int e = entityCount - 1; e >= 0; e--) {
+
+				if (entityInRange(activeTowers[t], &entities[e])) {
+
+					printf("entity found\n");
+
+					dealDamage(activeTowers[t], &entities[e]);
+					attacked_entitys++;
+
+
+					if (activeTowers[t].hits_multiple) {
+						if (attacked_entitys == 3) {
+							break;
+						}
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
+		
 
 		// aktiven Tower rendern
-		renderTower(activeTowers[i].textureIndex, activeTowers[i].position.x, activeTowers[i].position.y);
+		renderTower(activeTowers[t].textureIndex, activeTowers[t].position.x, activeTowers[t].position.y);
+
+		
 	}
 
+	
 }
 
 
