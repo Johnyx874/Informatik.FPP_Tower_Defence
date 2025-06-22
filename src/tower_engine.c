@@ -34,7 +34,7 @@ int activeTowerCount = 0;
 // Initialisierung der Towers
 TowerData crossbow = {				
 	"Crossbow",						// Type
-	"Does nothing at the moment.",  // Description
+	"Shots at single Entitys over long range",	  // Description
 	1,								// Texture Index
 	{0, 0},							// Position
 
@@ -48,7 +48,7 @@ TowerData crossbow = {
 };
 TowerData cannon = {
 	"Cannon",						// Type
-	"Does nothing at the moment.",  // Description
+	"Deals Splash damage over medium range",  // Description
 	2,								// Texture Index
 	{0, 0},							// Position
 
@@ -62,7 +62,7 @@ TowerData cannon = {
 };
 TowerData minigun = {
 	"Minigun",						// Type
-	"Does nothing at the moment.",  // Description
+	"Fastly shots at single Entitys over medium range",  // Description
 	3,								// Texture Index
 	{0, 0},							// Position
 
@@ -76,7 +76,7 @@ TowerData minigun = {
 };
 TowerData launcher = {
 	"Rocket Launcher",				// Type
-	"Does nothing at the moment.",  // Description
+	"Deals Splash damage over long range",  // Description
 	4,								// Texture Index
 	{0, 0},							// Position
 
@@ -90,7 +90,7 @@ TowerData launcher = {
 };
 TowerData saw = {
 	"Saw",							// Type
-	"Does nothing at the moment.",  // Description
+	"Cuts through everything over small range",  // Description
 	5,								// Texture Index
 	{0, 0},							// Position
 
@@ -104,7 +104,7 @@ TowerData saw = {
 };
 TowerData sniper = {
 	"Sniper",						// Type
-	"Does nothing at the moment.",  // Description
+	"Shots with precision and infinite range",  // Description
 	6,								// Texture Index
 	{0, 0},							// Position
 
